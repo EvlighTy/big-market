@@ -12,7 +12,7 @@ public interface Constants {
         String STRATEGY_AWARD_KEY = "strategy:award:";
         String STRATEGY_RATE_MAP_KEY = "strategy:rate_map:";
         String STRATEGY_RATE_RANGE_KEY = "strategy:rate_range:";
-        String STRATEGY_RULE_KEY = "strategy:rule:";
+        String STRATEGY_RULE_KEY = "strategy:entity:";
         String STRATEGY_RULE_VALUE_KEY = "strategy:rule_value:";
     }
 

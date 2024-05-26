@@ -39,3 +39,5 @@ build/
 /.idea/
 /docs/
 /data/
+/big-market-app/data/
+/big-market-app/data/log/

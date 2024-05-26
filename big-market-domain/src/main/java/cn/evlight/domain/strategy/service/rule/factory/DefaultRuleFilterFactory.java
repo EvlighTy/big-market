@@ -39,12 +39,31 @@ public class DefaultRuleFilterFactory {
     @AllArgsConstructor
     public enum RuleModel {
 
-        RULE_WIGHT("rule_weight","权重抽奖"),
-        RULE_BLACKLIST("rule_blacklist","黑名单抽奖"),
+        RULE_WIGHT("rule_weight", "权重抽奖", "before"),
+        RULE_BLACKLIST("rule_blacklist", "黑名单抽奖", "before"),
+        RULE_LOCK("rule_lock", "解锁抽奖", "during"),
+        RULE_LUCKY("rule_lucky", "兜底抽奖", "after"),
         ;
 
         private final String code;
         private final String info;
+        private final String type;
+
+        public static boolean isDuringRuleModel(String ruleModel){
+            try {
+                return RuleModel.valueOf(ruleModel.toUpperCase()).type.equals("during");
+            }catch (Exception e){
+                return false;
+            }
+        }
+
+        public static boolean isAfterRuleModel(String ruleModel){
+            try {
+                return RuleModel.valueOf(ruleModel.toUpperCase()).type.equals("after");
+            }catch (Exception e){
+                return false;
+            }
+        }
 
     }
 

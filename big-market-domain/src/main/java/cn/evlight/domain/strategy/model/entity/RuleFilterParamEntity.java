@@ -21,6 +21,5 @@ public class RuleFilterParamEntity {
     private Long strategyId;
     private Integer awardId;
     private String ruleModel;
-    private Long userIntegral;
 
 }

@@ -35,9 +35,10 @@ public class RuleWeightRuleFilter implements IRuleFilter<RuleFilterResultEntity.
     @Override
     public RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("规则权重过滤...");
-        //根据用户id查询积分值 todo
-        ruleFilterParamEntity.setUserIntegral(6100L);
+        //查询用户积分值 todo
+        long userScore = 2000L;
 
+        //查询策略权重规则
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleFilterParamEntity.getRuleModel());
         if(strategyRuleEntity == null){
             return RuleFilterResultEntity.<RuleFilterResultEntity.BeforeRaffleRuleResult>builder()
@@ -51,9 +52,8 @@ public class RuleWeightRuleFilter implements IRuleFilter<RuleFilterResultEntity.
                 .sorted()
                 .collect(Collectors.toList());
         Collections.reverse(thresholdList);
-        Long userIntegral = ruleFilterParamEntity.getUserIntegral();
         Integer reachedThreshold = thresholdList.stream()
-                .filter(threshold -> userIntegral >= threshold)
+                .filter(threshold -> userScore >= threshold)
                 .findFirst()
                 .orElse(null);
         if (reachedThreshold != null){

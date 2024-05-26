@@ -32,6 +32,7 @@ public class RuleBlackListRuleFilter implements IRuleFilter<RuleFilterResultEnti
     @Override
     public RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("黑名单过滤...");
+        //查询黑名单
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleFilterParamEntity.getRuleModel());
         HashMap<String, Set<String>> ruleBlacklistValues = strategyRuleEntity.getRuleBlacklistValues();
         //过滤黑名单用户

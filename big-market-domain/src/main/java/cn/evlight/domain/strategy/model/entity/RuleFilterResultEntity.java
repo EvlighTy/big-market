@@ -48,6 +48,10 @@ public class RuleFilterResultEntity <T extends RuleFilterResultEntity.RuleFilter
         private Integer awardId;
     }
 
+    public static class DuringRaffleRuleResult extends RuleFilterResult{
+
+    }
+
     public static class AfterRaffleRuleResult extends RuleFilterResult{
 
     }

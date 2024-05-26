@@ -3,6 +3,7 @@ package cn.evlight.infrastructure.persistent.repository;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.infrastructure.persistent.dao.StrategyAwardMapper;
 import cn.evlight.infrastructure.persistent.dao.StrategyMapper;
@@ -159,6 +160,18 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         StrategyRule strategyRule = strategyRuleMapper.selectOne(queryWrapper);
         if (strategyRule == null) return null;
         return strategyRule.getRuleValue();
+    }
+
+    @Override
+    public AwardRuleModelVO getAwardRuleModels(Long strategyId, Integer awardId) {
+        LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
+                .eq(StrategyAward::getStrategyId, strategyId)
+                .eq(StrategyAward::getAwardId, awardId);
+        StrategyAward strategyAward = strategyAwardMapper.selectOne(queryWrapper);
+        if(strategyAward == null) return null;
+        return AwardRuleModelVO.builder()
+                .ruleModels(strategyAward.getRuleModels())
+                .build();
     }
 
 }

@@ -28,8 +28,16 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
 
     @Override
     public RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> beforeRaffle(RaffleParamEntity raffleParamEntity, String... ruleModels) {
+        //如果规则模型为空则直接放行
+        RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> resultEntity = RuleFilterResultEntity.<RuleFilterResultEntity.BeforeRaffleRuleResult>builder()
+                .stateCode(RuleFilterStateVO.ALLOW.getCode())
+                .stateInfo(RuleFilterStateVO.ALLOW.getInfo())
+                .build();
+        if(ruleModels == null || ruleModels.length == 0){
+            return resultEntity;
+        }
+        /*执行过滤器*/
         Map<String, IRuleFilter<RuleFilterResultEntity.BeforeRaffleRuleResult>> ruleFilterMap = ruleFilterFactory.getRuleFilterMap();
-        RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> resultEntity = null;
         //执行黑名单过滤器
         String isBlacklist = Arrays.stream(ruleModels)
                 .filter(ruleModel -> ruleModel.equals(DefaultRuleFilterFactory.RuleModel.RULE_BLACKLIST.getCode()))
@@ -52,11 +60,42 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
         List<String> ruleList = Arrays.stream(ruleModels)
                 .filter(ruleModel -> !ruleModel.equals(DefaultRuleFilterFactory.RuleModel.RULE_BLACKLIST.getCode()))
                 .collect(Collectors.toList());
+        if(ruleList.isEmpty()){
+            return resultEntity;
+        }
         for (String rule : ruleList) {
             IRuleFilter<RuleFilterResultEntity.BeforeRaffleRuleResult> ruleFilter = ruleFilterMap.get(rule);
             RuleFilterParamEntity ruleFilterParamEntity = RuleFilterParamEntity.builder()
                     .strategyId(raffleParamEntity.getStrategyId())
                     .userId(raffleParamEntity.getUserId())
+                    .ruleModel(rule)
+                    .build();
+            resultEntity = ruleFilter.doFilter(ruleFilterParamEntity);
+            if(resultEntity.getStateCode().equals(RuleFilterStateVO.TAKE_OVER.getCode())){
+                return resultEntity;
+            }
+        }
+        return resultEntity;
+    }
+
+    @Override
+    public RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> duringRaffle(RaffleParamEntity raffleParamEntity, String... ruleModels) {
+        //如果规则模型为空则直接放行
+        RuleFilterResultEntity<RuleFilterResultEntity.BeforeRaffleRuleResult> resultEntity = RuleFilterResultEntity.<RuleFilterResultEntity.BeforeRaffleRuleResult>builder()
+                .stateCode(RuleFilterStateVO.ALLOW.getCode())
+                .stateInfo(RuleFilterStateVO.ALLOW.getInfo())
+                .build();
+        if(ruleModels == null || ruleModels.length == 0){
+            return resultEntity;
+        }
+        /*执行过滤器*/
+        Map<String, IRuleFilter<RuleFilterResultEntity.BeforeRaffleRuleResult>> ruleFilterMap = ruleFilterFactory.getRuleFilterMap();
+        for (String rule : ruleModels) {
+            IRuleFilter<RuleFilterResultEntity.BeforeRaffleRuleResult> ruleFilter = ruleFilterMap.get(rule);
+            RuleFilterParamEntity ruleFilterParamEntity = RuleFilterParamEntity.builder()
+                    .strategyId(raffleParamEntity.getStrategyId())
+                    .userId(raffleParamEntity.getUserId())
+                    .awardId(raffleParamEntity.getAwardId())
                     .ruleModel(rule)
                     .build();
             resultEntity = ruleFilter.doFilter(ruleFilterParamEntity);
