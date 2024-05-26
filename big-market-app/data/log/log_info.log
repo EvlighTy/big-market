@@ -1,0 +1,463 @@
+24-05-26.16:58:28.535 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 1724 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.16:58:28.537 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.16:58:29.597 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.16:58:29.600 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.16:58:29.678 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 0 Redis repository interfaces.
+24-05-26.16:58:32.291 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.16:58:33.161 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.16:58:33.177 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.16:58:35.294 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.16:58:35.356 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 7.233 seconds (JVM running for 9.464)
+24-05-26.16:58:35.870 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.16:58:36.318 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.16:58:36.425 [main            ] INFO  StrategyArmory         - 最小概率:0.0001
+24-05-26.16:58:36.426 [main            ] INFO  StrategyArmory         - 概率总和:1.0000
+24-05-26.16:58:36.426 [main            ] INFO  StrategyArmory         - 概率范围:10000
+24-05-26.16:58:36.426 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.16:58:36.453 [main            ] INFO  StrategyArmory         - 最小概率:0.0400
+24-05-26.16:58:36.453 [main            ] INFO  StrategyArmory         - 概率总和:0.6900
+24-05-26.16:58:36.453 [main            ] INFO  StrategyArmory         - 概率范围:18
+24-05-26.16:58:36.453 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.16:58:36.455 [main            ] INFO  StrategyArmory         - 最小概率:0.0001
+24-05-26.16:58:36.455 [main            ] INFO  StrategyArmory         - 概率总和:0.7000
+24-05-26.16:58:36.455 [main            ] INFO  StrategyArmory         - 概率范围:7000
+24-05-26.16:58:36.455 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.16:58:36.458 [main            ] INFO  StrategyArmory         - 最小概率:0.1000
+24-05-26.16:58:36.458 [main            ] INFO  StrategyArmory         - 概率总和:0.6000
+24-05-26.16:58:36.458 [main            ] INFO  StrategyArmory         - 概率范围:6
+24-05-26.16:58:36.458 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.16:58:36.499 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.16:58:36.513 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:01:10.766 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 22080 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:01:10.766 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:01:11.754 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:01:11.761 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:01:11.839 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 0 Redis repository interfaces.
+24-05-26.17:01:14.773 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:01:15.476 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:01:15.495 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:01:17.746 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:01:17.854 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 7.668 seconds (JVM running for 9.18)
+24-05-26.17:01:18.374 [main            ] INFO  StrategyArmory         - 最小概率:0.0001
+24-05-26.17:01:18.376 [main            ] INFO  StrategyArmory         - 概率总和:1.0000
+24-05-26.17:01:18.376 [main            ] INFO  StrategyArmory         - 概率范围:10000
+24-05-26.17:01:18.376 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.17:01:18.449 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.17:01:18.754 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.17:01:18.802 [main            ] INFO  StrategyArmory         - 最小概率:0.0400
+24-05-26.17:01:18.802 [main            ] INFO  StrategyArmory         - 概率总和:0.6900
+24-05-26.17:01:18.802 [main            ] INFO  StrategyArmory         - 概率范围:18
+24-05-26.17:01:18.802 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.17:01:18.806 [main            ] INFO  StrategyArmory         - 最小概率:0.0001
+24-05-26.17:01:18.806 [main            ] INFO  StrategyArmory         - 概率总和:0.7000
+24-05-26.17:01:18.806 [main            ] INFO  StrategyArmory         - 概率范围:7000
+24-05-26.17:01:18.806 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.17:01:18.809 [main            ] INFO  StrategyArmory         - 最小概率:0.1000
+24-05-26.17:01:18.810 [main            ] INFO  StrategyArmory         - 概率总和:0.6000
+24-05-26.17:01:18.810 [main            ] INFO  StrategyArmory         - 概率范围:6
+24-05-26.17:01:18.810 [main            ] INFO  StrategyArmory         - ==================================
+24-05-26.17:01:18.850 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.17:01:18.855 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:08:31.612 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 9128 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:08:31.612 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:08:32.395 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:08:32.397 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:08:32.454 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 0 Redis repository interfaces.
+24-05-26.17:08:34.822 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:08:35.563 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:08:35.578 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:08:37.384 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:08:37.440 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.253 seconds (JVM running for 7.161)
+24-05-26.17:08:37.623 [main            ] ERROR TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@58a9760d] to prepare test instance [cn.evlight.test.domain.StrategyArmoryTest@47fa3671]
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'cn.evlight.test.domain.StrategyArmoryTest': Unsatisfied dependency expressed through field 'raffleStrategy'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'cn.evlight.domain.strategy.service.IRaffleStrategy' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireBeanProperties(AbstractAutowireCapableBeanFactory.java:417)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:119)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:43)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:248)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:232)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'cn.evlight.domain.strategy.service.IRaffleStrategy' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1801)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1357)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657)
+	... 32 common frames omitted
+24-05-26.17:12:08.555 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 9004 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:12:08.555 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:12:09.411 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:12:09.414 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:12:09.485 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 0 Redis repository interfaces.
+24-05-26.17:12:11.869 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:12:12.564 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:12:12.580 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:12:14.299 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:12:14.355 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.261 seconds (JVM running for 7.222)
+24-05-26.17:12:14.736 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.17:12:15.010 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.17:12:15.078 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.17:12:15.081 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:13:11.150 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 8224 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:13:11.151 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:13:12.005 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:13:12.008 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:13:12.069 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:13:14.465 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:13:15.172 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:13:15.187 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:13:16.692 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:13:16.746 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.025 seconds (JVM running for 7.013)
+24-05-26.17:13:17.138 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.17:13:17.421 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.17:13:17.485 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.17:13:17.488 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:13:21.928 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 8472 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:13:21.929 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:13:22.811 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:13:22.814 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:13:22.878 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:13:25.375 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:13:26.080 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:13:26.095 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:13:28.207 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:13:28.267 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.798 seconds (JVM running for 7.963)
+24-05-26.17:13:59.693 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.17:14:00.822 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.17:14:18.555 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.17:14:18.561 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:14:37.511 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 228 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:14:37.512 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:14:38.382 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:14:38.386 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:14:38.451 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 0 Redis repository interfaces.
+24-05-26.17:14:40.861 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:14:41.561 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:14:41.579 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:14:43.352 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:14:43.446 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.362 seconds (JVM running for 7.357)
+24-05-26.17:14:43.909 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:14:43.965 [main            ] INFO  HikariDataSource       - HikariPool-1 - Starting...
+24-05-26.17:14:44.247 [main            ] INFO  HikariDataSource       - HikariPool-1 - Start completed.
+24-05-26.17:14:44.327 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown initiated...
+24-05-26.17:14:44.331 [SpringApplicationShutdownHook] INFO  HikariDataSource       - HikariPool-1 - Shutdown completed.
+24-05-26.17:16:13.263 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 19396 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:16:13.265 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:16:14.142 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:16:14.146 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:16:14.211 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 0 Redis repository interfaces.
+24-05-26.17:16:16.694 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:16:17.424 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:16:17.439 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:16:19.475 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:16:19.545 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.748 seconds (JVM running for 7.829)
+24-05-26.17:16:19.890 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:18:53.724 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 15164 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:18:53.725 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:18:54.605 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:18:54.609 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:18:54.673 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+24-05-26.17:18:57.188 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:18:57.910 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:18:57.926 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:18:59.879 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:18:59.938 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.686 seconds (JVM running for 7.832)
+24-05-26.17:19:00.267 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:19:38.253 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 2272 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:19:38.254 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:19:39.192 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:19:39.196 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:19:39.261 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 0 Redis repository interfaces.
+24-05-26.17:19:41.790 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:19:42.497 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:19:42.516 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:19:44.476 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:19:44.595 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.804 seconds (JVM running for 7.961)
+24-05-26.17:19:45.090 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:20:00.821 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 20148 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:20:00.822 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:20:01.716 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:20:01.719 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:20:01.787 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 51 ms. Found 0 Redis repository interfaces.
+24-05-26.17:20:04.284 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:20:05.005 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:20:05.020 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:20:06.938 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:20:07.006 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.668 seconds (JVM running for 7.788)
+24-05-26.17:20:07.308 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:20:31.058 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 13704 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:20:31.059 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:20:31.978 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:20:31.981 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:20:32.047 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 51 ms. Found 0 Redis repository interfaces.
+24-05-26.17:20:34.557 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:20:35.280 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:20:35.295 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:20:37.206 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:20:37.271 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.696 seconds (JVM running for 7.836)
+24-05-26.17:20:37.596 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:21:04.233 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 20900 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:21:04.234 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:21:05.211 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:21:05.215 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:21:05.282 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+24-05-26.17:21:07.771 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:21:08.504 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:21:08.519 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:21:10.450 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:21:10.515 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.767 seconds (JVM running for 7.905)
+24-05-26.17:21:10.853 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:22:43.401 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 18772 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:22:43.403 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:22:44.400 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:22:44.404 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:22:44.472 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+24-05-26.17:22:47.034 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:22:47.762 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:22:47.782 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:22:49.788 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:22:49.852 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.922 seconds (JVM running for 8.119)
+24-05-26.17:22:50.196 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:26:04.687 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 18584 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:26:04.688 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:26:05.567 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:26:05.571 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:26:05.633 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:26:08.068 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:26:08.767 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:26:08.782 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:26:10.652 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:26:10.713 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.49 seconds (JVM running for 7.567)
+24-05-26.17:26:30.052 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:27:09.837 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 368 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:27:09.838 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:27:10.765 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:27:10.769 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:27:10.832 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:27:13.285 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:27:13.999 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:27:14.014 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:27:15.998 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:27:16.060 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.693 seconds (JVM running for 7.794)
+24-05-26.17:27:19.547 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:27:50.441 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 20300 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:27:50.442 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:27:51.357 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:27:51.359 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:27:51.423 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:27:53.987 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:27:54.720 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:27:54.747 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:27:56.770 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:27:56.885 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.905 seconds (JVM running for 8.104)
+24-05-26.17:27:57.337 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:28:15.904 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 12728 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:28:15.905 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:28:16.706 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:28:16.710 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:28:16.765 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 0 Redis repository interfaces.
+24-05-26.17:28:19.140 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:28:19.802 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:28:19.817 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:28:21.333 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:28:21.390 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 5.932 seconds (JVM running for 6.831)
+24-05-26.17:28:21.770 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:28:21.776 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:28:42.628 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 22300 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:28:42.629 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:28:43.535 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:28:43.539 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:28:43.600 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:28:46.066 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:28:46.792 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:28:46.807 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:28:48.726 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:28:48.792 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.619 seconds (JVM running for 7.707)
+24-05-26.17:28:49.112 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:29:43.424 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:31:03.896 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 16428 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:31:03.897 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:31:04.770 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:31:04.773 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:31:04.834 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:31:07.308 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:31:08.010 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:31:08.026 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:31:09.955 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:31:10.016 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.582 seconds (JVM running for 7.688)
+24-05-26.17:31:10.354 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:31:13.730 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:32:37.260 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 14556 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:32:37.261 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:32:38.144 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:32:38.147 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:32:38.211 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+24-05-26.17:32:40.678 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:32:41.376 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:32:41.391 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:32:43.382 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:32:43.444 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.648 seconds (JVM running for 7.706)
+24-05-26.17:32:43.780 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:33:43.695 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:34:42.473 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 15464 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:34:42.474 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:34:43.347 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:34:43.350 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:34:43.412 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:34:45.880 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:34:46.596 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:34:46.612 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:34:48.534 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:34:48.596 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.596 seconds (JVM running for 7.693)
+24-05-26.17:34:48.912 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:34:48.917 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:34:48.920 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:35:41.522 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 13392 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:35:41.523 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:35:42.399 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:35:42.402 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:35:42.463 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:35:44.927 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:35:45.640 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:35:45.656 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:35:47.527 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:35:47.589 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.515 seconds (JVM running for 7.613)
+24-05-26.17:35:47.910 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:35:47.915 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:35:47.918 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:41:49.127 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 19340 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:41:49.128 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:41:50.008 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:41:50.010 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:41:50.073 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:41:52.537 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:41:53.236 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:41:53.252 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:41:55.170 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:41:55.232 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.566 seconds (JVM running for 7.68)
+24-05-26.17:41:55.573 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:41:55.579 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:41:55.581 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:43:12.099 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 5272 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:43:12.100 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:43:13.057 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:43:13.062 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:43:13.135 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 53 ms. Found 0 Redis repository interfaces.
+24-05-26.17:43:15.619 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:43:16.318 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:43:16.333 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:43:18.317 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:43:18.378 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.758 seconds (JVM running for 7.849)
+24-05-26.17:43:18.703 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:43:18.709 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:43:18.712 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:44:03.956 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 17340 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:44:03.957 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:44:04.881 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:44:04.886 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:44:04.950 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:44:07.523 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:44:08.238 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:44:08.253 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:44:10.297 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:44:10.363 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.863 seconds (JVM running for 7.976)
+24-05-26.17:44:10.711 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:44:10.716 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:44:10.719 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:49:27.170 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 20008 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:49:27.171 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:49:28.011 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:49:28.015 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:49:28.075 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:49:30.445 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:49:31.147 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:49:31.160 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:49:32.718 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:49:32.778 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.072 seconds (JVM running for 6.987)
+24-05-26.17:49:33.156 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:49:33.162 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:49:33.164 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:49:53.053 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 4472 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:49:53.054 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:49:53.855 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:49:53.858 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:49:53.925 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 0 Redis repository interfaces.
+24-05-26.17:49:56.341 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:49:57.050 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:49:57.065 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:49:59.760 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 19700 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:49:59.761 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:50:00.662 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:50:00.666 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:50:00.727 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+24-05-26.17:50:03.175 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:50:03.885 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:50:03.902 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:50:05.766 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:50:05.827 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.537 seconds (JVM running for 7.693)
+24-05-26.17:50:06.186 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:50:06.192 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:50:06.194 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:51:01.783 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 1920 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:51:01.784 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:51:02.670 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:51:02.673 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:51:02.739 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:51:05.265 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:51:05.976 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:51:05.991 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:51:07.915 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:51:07.977 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.671 seconds (JVM running for 7.77)
+24-05-26.17:51:08.300 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:51:08.306 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:51:08.309 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:4000
+24-05-26.17:52:03.609 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 20932 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:52:03.610 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:52:04.479 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:52:04.482 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:52:04.543 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 46 ms. Found 0 Redis repository interfaces.
+24-05-26.17:52:07.043 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:52:07.767 [redisson-netty-2-5] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:52:07.782 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:52:09.668 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:52:09.731 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.603 seconds (JVM running for 7.7)
+24-05-26.17:52:10.056 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:52:10.058 [main            ] INFO  RuleBlackListRuleFilter - 黑名单用户被拦截:16
+24-05-26.17:52:49.885 [main            ] INFO  StrategyArmoryTest     - Starting StrategyArmoryTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 12368 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-05-26.17:52:49.886 [main            ] INFO  StrategyArmoryTest     - The following 1 profile is active: "dev"
+24-05-26.17:52:50.705 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-05-26.17:52:50.708 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-05-26.17:52:50.775 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 50 ms. Found 0 Redis repository interfaces.
+24-05-26.17:52:53.156 [main            ] INFO  Version                - Redisson 3.23.4
+24-05-26.17:52:53.845 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:52:53.861 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-05-26.17:52:55.472 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-05-26.17:52:55.529 [main            ] INFO  StrategyArmoryTest     - Started StrategyArmoryTest in 6.061 seconds (JVM running for 6.969)
+24-05-26.17:52:55.908 [main            ] INFO  RuleBlackListRuleFilter - 黑名单过滤...
+24-05-26.17:52:55.914 [main            ] INFO  RuleWeightRuleFilter   - 规则权重过滤...
+24-05-26.17:52:55.916 [main            ] INFO  RuleWeightRuleFilter   - 达到门槛值:6000

@@ -1,4 +1,4 @@
-package cn.evlight.config;
+package cn.evlight.config.guava;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
