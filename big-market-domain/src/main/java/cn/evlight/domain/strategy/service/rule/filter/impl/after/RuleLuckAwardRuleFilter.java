@@ -27,7 +27,7 @@ public class RuleLuckAwardRuleFilter extends AbstractAfterRuleFilter {
         log.info("奖项兜底...");
         return DefaultRuleFilterTreeFactory.Result.builder()
                 .state(RuleFilterStateVO.TAKE_OVER)
-                .data(DefaultRuleFilterTreeFactory.StrategyAwardData.builder()
+                .data(DefaultRuleFilterTreeFactory.ResultData.builder()
                         .awardRuleValue("1,100")
                         .build())
                 .build();

@@ -4,6 +4,7 @@ import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
+import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,5 +77,14 @@ public interface IStrategyRepository {
     * @return:
     * @Date: 2024/5/26
     */
-    AwardRuleModelVO getAwardRuleModels(Long strategyId, Integer awardId);
+    AwardRuleModelVO getStrategyAwardRuleModels(Long strategyId, Integer awardId);
+
+    /**
+     * table: rule_tree, rule_tree_node, rule_tree_node_line
+    * @Description: 获取规则树
+    * @Param: [treeId] 树ID
+    * @return: 树实体
+    * @Date: 2024/5/28
+    */
+    RuleTreeVO getRuleTree(String treeId);
 }

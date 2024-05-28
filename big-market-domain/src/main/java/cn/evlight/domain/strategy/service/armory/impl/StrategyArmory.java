@@ -3,9 +3,11 @@ package cn.evlight.domain.strategy.service.armory.impl;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.armory.IManagerStrategyArmory;
 import cn.evlight.domain.strategy.service.armory.IUserStrategyArmory;
+import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +26,27 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
 
     @Override
     public boolean generateStrategyRandomMap(Long strategyId) {
-        //配置策略奖项
+        //配置策略总奖项
+        log.info("配置策略总奖项:{}", strategyId);
         List<StrategyAwardEntity> strategyAwardEntities = strategyRepository.getList(strategyId);
         doGenerateStrategyRandomMap(strategyId.toString(), strategyAwardEntities);
-        //配置策略权重
+        //配置策略权重奖项
         StrategyEntity strategyEntity = strategyRepository.getStrategyEntity(strategyId);
-        if(strategyEntity == null) return true;
+        if(strategyEntity == null){
+            //策略无规则
+            return true;
+        }
         String ruleWeight = strategyEntity.getRuleWeight();
-        if(ruleWeight == null) return true;
-        //配置策略权重值
+        if(ruleWeight == null) {
+            //策略无权重规则
+            return true;
+        }
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(strategyId, ruleWeight);
-        if(strategyRuleEntity == null) return true;
+        if(strategyRuleEntity == null) {
+            //权重规则没有配置值
+            throw new AppException(strategyId + ":权重规则没有配置值");
+        }
+        log.info("配置策略权重奖项:{}", strategyId);
         Map<String, Set<String>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
         for (String key : ruleWeightValues.keySet()) {
             Set<String> ruleWeightValue = ruleWeightValues.get(key);
@@ -68,7 +80,6 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
         log.info("概率范围:{}", rateRange);
         log.info("==================================");
 
-        /*使用轮盘赌算法*/
         //每项概率
         LinkedHashMap<Integer, Integer> rateMap = new LinkedHashMap<>(strategyAwardEntities.size());
         int sum = 0;
@@ -89,38 +100,8 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
             rateMap.put(awardId, rate);
             sum += rate;
         }
-        System.err.println(rateMap);
         //缓存概率范围，奖项概率数组到redis
         strategyRepository.saveAwardRateList2Redis(key, rateRange.intValue(), rateMap);
-
-        /*使用集合*/
-        /*//根据占位数量生成策略查找list
-        ArrayList<Integer> strategyArrayList = new ArrayList<>(rateRange.intValue());
-        Iterator<StrategyAwardEntity> iterator = strategyAwardEntities.iterator();
-        while (iterator.hasNext()){
-            StrategyAwardEntity strategyAwardEntity = iterator.next();
-            Integer awardId = strategyAwardEntity.getAwardId();
-            if(iterator.hasNext()){
-                //最后一个元素
-                for (int i = strategyArrayList.size(); i < rateRange.intValue(); i++) {
-                    strategyArrayList.add(awardId);
-                }
-            }
-            //循环次数
-            int roundTimes = rateRange.multiply(strategyAwardEntity.getAwardRate()).setScale(0, RoundingMode.CEILING).intValue();
-            for (int i = 0; i < roundTimes; i++) {
-                strategyArrayList.add(awardId);
-            }
-        }
-        //打乱策略查找list
-        Collections.shuffle(strategyArrayList);
-        //生成策略查找map
-        LinkedHashMap<Integer, Integer> strategyRandomMap = new LinkedHashMap<>(strategyArrayList.size());
-        for (int i = 0; i < strategyArrayList.size(); i++) {
-            strategyRandomMap.put(i,strategyArrayList.get(i));
-        }
-        //缓存概率范围，策略查找map到redis
-        strategyRepository.saveStrategyRandomMap2Redis(strategyId,rateRange.intValue(),strategyRandomMap);*/
     }
 
     @Override
@@ -132,6 +113,11 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
     public Integer getRandomAwardId(String key) {
         Integer rateRange = strategyRepository.getRateRange(key);
         return strategyRepository.getRandomAwardId(key, new SecureRandom().nextInt(rateRange));
+    }
+
+    @Override
+    public RuleTreeVO getRuleTree(String treeId) {
+        return strategyRepository.getRuleTree(treeId);
     }
 
 }

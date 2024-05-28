@@ -27,7 +27,7 @@ public class RuleStockRuleFilter extends AbstractAfterRuleFilter {
         log.info("库存检查...");
         return DefaultRuleFilterTreeFactory.Result.builder()
                 .state(RuleFilterStateVO.TAKE_OVER)
-                .data(DefaultRuleFilterTreeFactory.StrategyAwardData.builder()
+                .data(DefaultRuleFilterTreeFactory.ResultData.builder()
                         .awardId(ruleFilterParamEntity.getAwardId())
                         .build())
                 .build();

@@ -28,8 +28,8 @@ public class RuleFilterTreeEngine implements IRuleFilterTreeEngine {
     }
 
     @Override
-    public DefaultRuleFilterTreeFactory.StrategyAwardData process(RuleFilterParamEntity ruleFilterParamEntity) {
-        DefaultRuleFilterTreeFactory.StrategyAwardData data = null;
+    public DefaultRuleFilterTreeFactory.ResultData process(RuleFilterParamEntity ruleFilterParamEntity) {
+        DefaultRuleFilterTreeFactory.ResultData data = null;
         //根节点
         Map<String, RuleTreeNodeVO> treeNodeMap = ruleTreeVO.getTreeNodeMap();
         String rootNodeName = ruleTreeVO.getTreeRootRuleNode();

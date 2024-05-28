@@ -10,6 +10,6 @@ import cn.evlight.domain.strategy.service.rule.filter.factory.after.DefaultRuleF
  */
 public interface IRuleFilterTreeEngine {
 
-    DefaultRuleFilterTreeFactory.StrategyAwardData process(RuleFilterParamEntity ruleFilterParamEntity);
+    DefaultRuleFilterTreeFactory.ResultData process(RuleFilterParamEntity ruleFilterParamEntity);
 
 }

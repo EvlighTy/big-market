@@ -5,6 +5,7 @@ import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.armory.IUserStrategyArmory;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractBeforeRuleFilter;
+import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
     private IUserStrategyArmory userStrategyArmory;
 
     @Override
-    public Integer doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
+    public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("规则权重过滤...");
         //查询用户积分值 todo
         long userScore = 2000L;
@@ -58,7 +59,11 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
             log.info("达到门槛值:{}", reachedThreshold);
             //权重抽奖
             String key = ruleFilterParamEntity.getStrategyId() + ":" + reachedThreshold;
-            return userStrategyArmory.getRandomAwardId(key);
+            Integer awardId = userStrategyArmory.getRandomAwardId(key);
+            return DefaultRuleFilterChainFactory.ResultData.builder()
+                    .awardId(awardId)
+                    .ruleModel(ruleModel())
+                    .build();
         }
         //放行
         return next().doFilter(ruleFilterParamEntity);
@@ -66,7 +71,7 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
 
     @Override
     protected String ruleModel() {
-        return "rule_weight";
+        return DefaultRuleFilterChainFactory.RuleModel.RULE_WEIGHT.getCode();
     }
 
 }

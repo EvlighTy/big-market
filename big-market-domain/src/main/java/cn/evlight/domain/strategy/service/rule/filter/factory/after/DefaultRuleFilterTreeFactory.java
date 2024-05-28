@@ -4,10 +4,7 @@ import cn.evlight.domain.strategy.model.valobj.RuleFilterStateVO;
 import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractAfterRuleFilter;
 import cn.evlight.domain.strategy.service.rule.filter.factory.after.engine.impl.RuleFilterTreeEngine;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,18 +33,30 @@ public class DefaultRuleFilterTreeFactory {
     @NoArgsConstructor
     public static class Result {
         private RuleFilterStateVO state;
-        private StrategyAwardData data;
+        private ResultData data;
     }
 
     @Data
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class StrategyAwardData {
+    public static class ResultData {
         /** 抽奖奖品ID - 内部流转使用 */
         private Integer awardId;
         /** 抽奖奖品规则 */
         private String awardRuleValue;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum TreeModel {
+
+        TREE_LOCK("tree_lock", "抽奖次数达到阈值解锁奖品"),
+        ;
+
+        private final String code;
+        private final String info;
+
     }
 
 }

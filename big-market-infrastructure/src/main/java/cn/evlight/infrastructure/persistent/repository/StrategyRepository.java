@@ -3,14 +3,10 @@ package cn.evlight.infrastructure.persistent.repository;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
-import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
+import cn.evlight.domain.strategy.model.valobj.*;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
-import cn.evlight.infrastructure.persistent.dao.StrategyAwardMapper;
-import cn.evlight.infrastructure.persistent.dao.StrategyMapper;
-import cn.evlight.infrastructure.persistent.dao.StrategyRuleMapper;
-import cn.evlight.infrastructure.persistent.po.Strategy;
-import cn.evlight.infrastructure.persistent.po.StrategyAward;
-import cn.evlight.infrastructure.persistent.po.StrategyRule;
+import cn.evlight.infrastructure.persistent.dao.*;
+import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -19,10 +15,7 @@ import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> implements IStrategyRepository {
@@ -37,7 +30,17 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     private StrategyRuleMapper strategyRuleMapper;
 
     @Autowired
+    private RuleTreeMapper ruleTreeMapper;
+
+    @Autowired
+    private RuleTreeNodeMapper ruleTreeNodeMapper;
+
+    @Autowired
+    private RuleTreeNodeLineMapper ruleTreeNodeLineMapper;
+
+    @Autowired
     private IRedisService redisService;
+
 
     @Override
     public List<StrategyAwardEntity> getList(Long strategyId) {
@@ -86,6 +89,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     @Override
     public Integer getRandomAwardId(String key, int randomIndex) {
         RMap<Integer, Integer> rateMap = redisService.getMap(Constants.RedisKey.STRATEGY_RATE_MAP_KEY + key);
+        //使用轮盘赌算法
         int sum = 0;
         for (Map.Entry<Integer, Integer> entry : rateMap.entrySet()) {
             sum += entry.getValue();
@@ -163,7 +167,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     }
 
     @Override
-    public AwardRuleModelVO getAwardRuleModels(Long strategyId, Integer awardId) {
+    public AwardRuleModelVO getStrategyAwardRuleModels(Long strategyId, Integer awardId) {
         LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
                 .eq(StrategyAward::getStrategyId, strategyId)
                 .eq(StrategyAward::getAwardId, awardId);
@@ -172,6 +176,64 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         return AwardRuleModelVO.builder()
                 .ruleModels(strategyAward.getRuleModels())
                 .build();
+    }
+
+    @Override
+    public RuleTreeVO getRuleTree(String treeId) {
+        //先查询redis
+        String key = Constants.RedisKey.STRATEGY_RULE_TREE_KEY + treeId;
+        RuleTreeVO tree = redisService.getValue(key);
+        if(tree != null) return tree;
+        //根节点
+        LambdaQueryWrapper<RuleTree> queryWrapper1 = new LambdaQueryWrapper<RuleTree>()
+                .eq(RuleTree::getTreeId, treeId);
+        RuleTree ruleTree = ruleTreeMapper.selectOne(queryWrapper1);
+        //节点
+        LambdaQueryWrapper<RuleTreeNode> queryWrapper2 = new LambdaQueryWrapper<RuleTreeNode>()
+                .eq(RuleTreeNode::getTreeId, treeId);
+        List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeMapper.selectList(queryWrapper2);
+        //节点分支
+        LambdaQueryWrapper<RuleTreeNodeLine> queryWrapper3 = new LambdaQueryWrapper<RuleTreeNodeLine>()
+                .eq(RuleTreeNodeLine::getTreeId, treeId);
+        List<RuleTreeNodeLine> ruleTreeNodeLines = ruleTreeNodeLineMapper.selectList(queryWrapper3);
+        //组合
+        HashMap<String, RuleTreeNodeVO> nodeMap = new HashMap<>();
+        for (RuleTreeNode ruleTreeNode : ruleTreeNodes) {
+            //遍历每个节点
+            String ruleKey = ruleTreeNode.getRuleKey();
+            RuleTreeNodeVO ruleTreeNodeVO = RuleTreeNodeVO.builder()
+                        .treeId(ruleTreeNode.getTreeId())
+                        .ruleKey(ruleTreeNode.getRuleKey())
+                        .ruleDesc(ruleTreeNode.getRuleDesc())
+                        .ruleValue(ruleTreeNode.getRuleValue())
+                        .build();
+            ArrayList<RuleTreeNodeLineVO> treeLines = new ArrayList<>();
+            for (RuleTreeNodeLine ruleTreeNodeLine : ruleTreeNodeLines) {
+                //遍历每个节点分支
+                if(ruleTreeNodeLine.getRuleNodeFrom().equals(ruleKey)){
+                    //是该节点的节点分支
+                    RuleTreeNodeLineVO nodeLine = RuleTreeNodeLineVO.builder()
+                                        .treeId(ruleTreeNodeLine.getTreeId())
+                                        .ruleNodeFrom(ruleTreeNodeLine.getRuleNodeFrom())
+                                        .ruleNodeTo(ruleTreeNodeLine.getRuleNodeTo())
+                                        .ruleLimitType(RuleLimitTypeVO.valueOf(ruleTreeNodeLine.getRuleLimitType()))
+                                        .ruleLimitValue(RuleFilterStateVO.valueOf(ruleTreeNodeLine.getRuleLimitValue()))
+                                        .build();
+                    treeLines.add(nodeLine);
+                }
+                ruleTreeNodeVO.setTreeNodeLineVOList(treeLines);
+            }
+            nodeMap.put(ruleKey, ruleTreeNodeVO);
+        }
+        tree = RuleTreeVO.builder()
+                .treeId(ruleTree.getTreeId())
+                .treeName(ruleTree.getTreeName())
+                .treeDesc(ruleTree.getTreeDesc())
+                .treeRootRuleNode(ruleTree.getTreeNodeRuleKey())
+                .treeNodeMap(nodeMap)
+                .build();
+        redisService.setValue(key, tree);
+        return tree;
     }
 
 }

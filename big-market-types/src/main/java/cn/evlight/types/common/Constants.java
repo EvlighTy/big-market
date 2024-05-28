@@ -14,6 +14,7 @@ public interface Constants {
         String STRATEGY_RATE_RANGE_KEY = "strategy:rate_range:";
         String STRATEGY_RULE_KEY = "strategy:entity:";
         String STRATEGY_RULE_VALUE_KEY = "strategy:rule_value:";
+        String STRATEGY_RULE_TREE_KEY = "strategy:rule_tree:";
     }
 
 }

@@ -4,6 +4,7 @@ import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractBeforeRuleFilter;
+import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class RuleBlackListRuleFilter extends AbstractBeforeRuleFilter {
     private IStrategyRepository strategyRepository;
 
     @Override
-    public Integer doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
+    public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("黑名单过滤...");
         //查询黑名单
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleModel());
@@ -36,7 +37,10 @@ public class RuleBlackListRuleFilter extends AbstractBeforeRuleFilter {
             if (blacklist.contains(ruleFilterParamEntity.getUserId().toString())){
                 //是黑名单用户
                 log.info("黑名单用户被拦截:{}", ruleFilterParamEntity.getUserId());
-                return Integer.parseInt(key);
+                return DefaultRuleFilterChainFactory.ResultData.builder()
+                        .awardId(Integer.parseInt(key))
+                        .ruleModel(ruleModel())
+                        .build();
             }
         }
         //放行
@@ -45,7 +49,7 @@ public class RuleBlackListRuleFilter extends AbstractBeforeRuleFilter {
 
     @Override
     protected String ruleModel() {
-        return "rule_blacklist";
+        return DefaultRuleFilterChainFactory.RuleModel.RULE_BLACKLIST.getCode();
     }
 
 }

@@ -19,6 +19,5 @@ public class RaffleParamEntity {
 
     private Long userId;
     private Long strategyId;
-    private Integer awardId;
 
 }

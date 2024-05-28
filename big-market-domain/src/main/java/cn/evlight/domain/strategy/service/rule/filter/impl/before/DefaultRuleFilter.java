@@ -3,6 +3,7 @@ package cn.evlight.domain.strategy.service.rule.filter.impl.before;
 import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.service.armory.IUserStrategyArmory;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractBeforeRuleFilter;
+import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,14 +22,18 @@ public class DefaultRuleFilter extends AbstractBeforeRuleFilter {
     private IUserStrategyArmory userStrategyArmory;
 
     @Override
-    public Integer doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
+    public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("执行默认抽奖规则...");
-        return userStrategyArmory.getRandomAwardId(ruleFilterParamEntity.getStrategyId());
+        Integer awardId = userStrategyArmory.getRandomAwardId(ruleFilterParamEntity.getStrategyId());
+        return DefaultRuleFilterChainFactory.ResultData.builder()
+                .awardId(awardId)
+                .ruleModel(ruleModel())
+                .build();
     }
 
     @Override
     protected String ruleModel() {
-        return "default";
+        return DefaultRuleFilterChainFactory.RuleModel.RULE_DEFAULT.getCode();
     }
 
 }

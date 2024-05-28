@@ -1,11 +1,13 @@
 package cn.evlight.domain.strategy.service.rule.filter;
 
+import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
+
 /**
  * @Description: 前置过滤器抽象类
  * @Author: evlight
  * @Date: 2024/5/27
  */
-public abstract class AbstractBeforeRuleFilter extends AbstractRuleFilter<Integer> {
+public abstract class AbstractBeforeRuleFilter extends AbstractRuleFilter<DefaultRuleFilterChainFactory.ResultData> {
 
     AbstractBeforeRuleFilter next;
 

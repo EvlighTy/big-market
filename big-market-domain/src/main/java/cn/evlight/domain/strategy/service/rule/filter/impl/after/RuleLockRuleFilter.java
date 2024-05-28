@@ -2,11 +2,10 @@ package cn.evlight.domain.strategy.service.rule.filter.impl.after;
 
 import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.model.valobj.RuleFilterStateVO;
-import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractAfterRuleFilter;
 import cn.evlight.domain.strategy.service.rule.filter.factory.after.DefaultRuleFilterTreeFactory;
+import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,29 +18,29 @@ import org.springframework.stereotype.Component;
 @Component("rule_lock")
 public class RuleLockRuleFilter extends AbstractAfterRuleFilter {
 
-    @Autowired
-    private IStrategyRepository strategyRepository;
-
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("奖品解锁门槛检查...");
         //查询用户抽奖次数
         int raffleCount = 6;
         //查询奖项解锁阈值
-        String strategyRuleValue = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleFilterParamEntity.getAwardId(), ruleModel());
-        if(raffleCount >= Integer.parseInt(strategyRuleValue)){
+        String ruleValue = ruleFilterParamEntity.getRuleValue();
+        if(ruleValue == null){
+            throw new AppException("奖品门槛没有配置");
+        }
+        if(raffleCount >= Integer.parseInt(ruleValue)){
             //大于阈值放行
             return DefaultRuleFilterTreeFactory.Result.builder()
                     .state(RuleFilterStateVO.ALLOW)
-                    .data(DefaultRuleFilterTreeFactory.StrategyAwardData.builder()
+                    .data(DefaultRuleFilterTreeFactory.ResultData.builder()
                             .awardId(ruleFilterParamEntity.getAwardId())
                             .build())
                     .build();
         }
-        log.info("用户:{}抽奖次数不足", ruleFilterParamEntity.getUserId());
+        log.info("用户:{} 抽奖次数不足", ruleFilterParamEntity.getUserId());
         return DefaultRuleFilterTreeFactory.Result.builder()
                 .state(RuleFilterStateVO.TAKE_OVER)
-                .data(DefaultRuleFilterTreeFactory.StrategyAwardData.builder()
+                .data(DefaultRuleFilterTreeFactory.ResultData.builder()
                         .build())
                 .build();
     }

@@ -3,8 +3,7 @@ package cn.evlight.domain.strategy.service.rule.filter.factory.before;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractBeforeRuleFilter;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,26 +43,29 @@ public class DefaultRuleFilterChainFactory {
         return head;
     }
 
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResultData {
+        /** 抽奖奖品ID - 内部流转使用 */
+        private Integer awardId;
+        /**  */
+        private String ruleModel;
+    }
 
     @Getter
     @AllArgsConstructor
     public enum RuleModel {
 
-        RULE_LOCK("rule_lock", "【抽奖中规则】抽奖n次后，对应奖品可解锁抽奖", "during"),
-        RULE_LUCK_AWARD("rule_luck_award", "【抽奖后规则】抽奖n次后，对应奖品可解锁抽奖", "after"),
+        RULE_DEFAULT("rule_default", "默认抽奖"),
+        RULE_BLACKLIST("rule_blacklist", "黑名单抽奖"),
+        RULE_WEIGHT("rule_weight", "权重规则"),
         ;
 
         private final String code;
         private final String info;
-        private final String type;
-
-        public static boolean isDuringRuleModel(String code){
-            return "during".equals(RuleModel.valueOf(code.toUpperCase()).type);
-        }
-
-        public static boolean isAfterRuleModel(String code){
-            return "after".equals(RuleModel.valueOf(code.toUpperCase()).type);
-        }
 
     }
+
 }

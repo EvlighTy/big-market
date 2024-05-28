@@ -1,11 +1,8 @@
 package cn.evlight.domain.strategy.model.valobj;
 
-import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
-import cn.evlight.types.common.Constants;
+import cn.evlight.domain.strategy.service.rule.filter.factory.after.DefaultRuleFilterTreeFactory;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 /**
  * @Description: 奖项规则模型值对象
@@ -19,16 +16,11 @@ public class AwardRuleModelVO {
 
     private String ruleModels;
 
-    public String[] getDuringRuleModels(){
-        return Arrays.stream(ruleModels.split(Constants.Split.COMMA))
-                .filter(DefaultRuleFilterChainFactory.RuleModel::isDuringRuleModel)
-                .toArray(String[]::new);
+    public String getTreeModel(){
+        try {
+            return DefaultRuleFilterTreeFactory.TreeModel.valueOf(ruleModels.toUpperCase()).getCode();
+        }catch (Exception e){
+            return null;
+        }
     }
-
-    public String[] getAfterRuleModels(){
-        return Arrays.stream(ruleModels.split(Constants.Split.COMMA))
-                .filter(DefaultRuleFilterChainFactory.RuleModel::isAfterRuleModel)
-                .toArray(String[]::new);
-    }
-
 }
