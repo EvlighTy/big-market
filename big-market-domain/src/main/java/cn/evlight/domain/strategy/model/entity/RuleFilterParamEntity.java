@@ -20,6 +20,6 @@ public class RuleFilterParamEntity {
     private Long userId;
     private Long strategyId;
     private Integer awardId;
-    private String ruleModel;
+    private String ruleValue;
 
 }

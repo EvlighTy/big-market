@@ -149,7 +149,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     @Override
     public String getStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
         //先从redis中查询
-        String key = Constants.RedisKey.STRATEGY_RULE_VALUE_KEY + strategyId + ruleModel;
+        String key = Constants.RedisKey.STRATEGY_RULE_VALUE_KEY + strategyId + ":" + ruleModel;
         StrategyRuleEntity strategyRuleEntity = redisService.getValue(key);
         if(strategyRuleEntity != null) return strategyRuleEntity.getRuleValue();
         //再查询数据区

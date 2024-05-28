@@ -1,6 +1,6 @@
 package cn.evlight.domain.strategy.model.valobj;
 
-import cn.evlight.domain.strategy.service.rule.factory.DefaultRuleFilterFactory;
+import cn.evlight.domain.strategy.service.rule.filter.factory.before.DefaultRuleFilterChainFactory;
 import cn.evlight.types.common.Constants;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,13 +21,13 @@ public class AwardRuleModelVO {
 
     public String[] getDuringRuleModels(){
         return Arrays.stream(ruleModels.split(Constants.Split.COMMA))
-                .filter(DefaultRuleFilterFactory.RuleModel::isDuringRuleModel)
+                .filter(DefaultRuleFilterChainFactory.RuleModel::isDuringRuleModel)
                 .toArray(String[]::new);
     }
 
     public String[] getAfterRuleModels(){
         return Arrays.stream(ruleModels.split(Constants.Split.COMMA))
-                .filter(DefaultRuleFilterFactory.RuleModel::isAfterRuleModel)
+                .filter(DefaultRuleFilterChainFactory.RuleModel::isAfterRuleModel)
                 .toArray(String[]::new);
     }
 
