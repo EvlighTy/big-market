@@ -9,6 +9,7 @@ import cn.evlight.infrastructure.persistent.dao.*;
 import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
+import cn.evlight.types.exception.AppException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.redisson.api.RMap;
@@ -43,29 +44,26 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
 
 
     @Override
-    public List<StrategyAwardEntity> getList(Long strategyId) {
+    public List<StrategyAwardEntity> getStrategyAwardList(Long strategyId) {
         //先查询redis
-        String key = Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId;
+        String key = Constants.RedisKey.STRATEGY_AWARD_LIST_KEY + strategyId;
         List<StrategyAwardEntity> strategyAwardEntities = redisService.getValue(key);
         if(strategyAwardEntities != null && !strategyAwardEntities.isEmpty()) return strategyAwardEntities;
         //再查询数据库
         LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
-                /*.select(StrategyAward::getStrategyId)
-                .select(StrategyAward::getAwardId)
-                .select(StrategyAward::getAwardCount)
-                .select(StrategyAward::getAwardCountSurplus)
-                .select(StrategyAward::getAwardRate)*/
                 .eq(StrategyAward::getStrategyId, strategyId);
         List<StrategyAward> strategyAwards = strategyAwardMapper.selectList(queryWrapper);
-        System.err.println(strategyAwards);
         strategyAwardEntities = new ArrayList<>(strategyAwards.size());
         for (StrategyAward strategyAward : strategyAwards) {
             StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
                         .strategyId(strategyAward.getStrategyId())
+                        .awardTitle(strategyAward.getAwardTitle())
+                        .awardSubtitle(strategyAward.getAwardSubtitle())
                         .awardId(strategyAward.getAwardId())
                         .awardCount(strategyAward.getAwardCount())
                         .awardCountSurplus(strategyAward.getAwardCountSurplus())
                         .awardRate(strategyAward.getAwardRate())
+                        .sort(strategyAward.getSort())
                         .build();
             strategyAwardEntities.add(strategyAwardEntity);
         }
@@ -75,15 +73,12 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     }
 
     @Override
-    public void saveStrategyRandomMap2Redis(Long strategyId, int rateRange, LinkedHashMap<Integer, Integer> strategyRandomMap) {
-        /*redisService.setValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + strategyId, rateRange);
-        RMap<Integer, Integer> redisCacheMap = redisService.getMap(Constants.RedisKey.STRATEGY_RATE_MAP_KEY);
-        redisCacheMap.putAll(strategyRandomMap);*/
-    }
-
-    @Override
     public Integer getRateRange(String key) {
-        return redisService.getValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key);
+        Integer rateRange = redisService.getValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key);
+        if(rateRange == null){
+            throw new AppException("未装配策略库:" + key);
+        }
+        return rateRange;
     }
 
     @Override
@@ -110,7 +105,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     @Override
     public StrategyEntity getStrategyEntity(Long strategyId) {
         //先查询redis
-        String key = Constants.RedisKey.STRATEGY_RULE_KEY + strategyId;
+        String key = Constants.RedisKey.STRATEGY_KEY + strategyId;
         StrategyEntity strategyEntity = redisService.getValue(key);
         if(strategyEntity != null) return strategyEntity;
         //再查询数据库
@@ -128,7 +123,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
     }
 
     @Override
-    public StrategyRuleEntity getStrategyRuleValue(Long strategyId, String ruleModel) {
+    public StrategyRuleEntity getStrategyRuleEntity(Long strategyId, String ruleModel) {
         //先从redis中查询
         String key = Constants.RedisKey.STRATEGY_RULE_VALUE_KEY + strategyId + ":" + ruleModel;
         StrategyRuleEntity strategyRuleEntity = redisService.getValue(key);
@@ -157,13 +152,8 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         StrategyRuleEntity strategyRuleEntity = redisService.getValue(key);
         if(strategyRuleEntity != null) return strategyRuleEntity.getRuleValue();
         //再查询数据区
-        LambdaQueryWrapper<StrategyRule> queryWrapper = new LambdaQueryWrapper<StrategyRule>()
-                .eq(StrategyRule::getStrategyId, strategyId)
-                .eq(StrategyRule::getRuleModel, ruleModel)
-                .eq(awardId!=null, StrategyRule::getAwardId, awardId);
-        StrategyRule strategyRule = strategyRuleMapper.selectOne(queryWrapper);
-        if (strategyRule == null) return null;
-        return strategyRule.getRuleValue();
+        strategyRuleEntity = getStrategyRuleEntity(strategyId, ruleModel);
+        return strategyRuleEntity.getRuleValue();
     }
 
     @Override
@@ -234,6 +224,34 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
                 .build();
         redisService.setValue(key, tree);
         return tree;
+    }
+
+    @Override
+    public StrategyAwardEntity getStrategyAwardEntity(Long strategyId, Integer awardId) {
+        //先查询redis
+        String key = Constants.RedisKey.STRATEGY_ENTITY_MAP_KEY + strategyId;
+        RMap<Integer, StrategyAwardEntity> strategyAwardEntityMap = redisService.getMap(key);
+        StrategyAwardEntity strategyAwardEntity = strategyAwardEntityMap.get(awardId);
+        if(strategyAwardEntity != null){
+            return strategyAwardEntity;
+        }
+        //再查询数据库
+        LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
+                .eq(StrategyAward::getStrategyId, strategyId)
+                .eq(StrategyAward::getAwardId, awardId);
+        StrategyAward strategyAward = strategyAwardMapper.selectOne(queryWrapper);
+        strategyAwardEntity = StrategyAwardEntity.builder()
+                .strategyId(strategyAward.getStrategyId())
+                .awardTitle(strategyAward.getAwardTitle())
+                .awardSubtitle(strategyAward.getAwardSubtitle())
+                .awardId(strategyAward.getAwardId())
+                .awardCount(strategyAward.getAwardCount())
+                .awardCountSurplus(strategyAward.getAwardCountSurplus())
+                .awardRate(strategyAward.getAwardRate())
+                .sort(strategyAward.getSort())
+                .build();
+        strategyAwardEntityMap.put(strategyAward.getAwardId(), strategyAwardEntity);
+        return strategyAwardEntity;
     }
 
 }

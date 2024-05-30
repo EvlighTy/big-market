@@ -28,7 +28,7 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
     public boolean generateStrategyRandomMap(Long strategyId) {
         //配置策略总奖项
         log.info("配置策略总奖项:{}", strategyId);
-        List<StrategyAwardEntity> strategyAwardEntities = strategyRepository.getList(strategyId);
+        List<StrategyAwardEntity> strategyAwardEntities = strategyRepository.getStrategyAwardList(strategyId);
         doGenerateStrategyRandomMap(strategyId.toString(), strategyAwardEntities);
         //配置策略权重奖项
         StrategyEntity strategyEntity = strategyRepository.getStrategyEntity(strategyId);
@@ -41,7 +41,7 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
             //策略无权重规则
             return true;
         }
-        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(strategyId, ruleWeight);
+        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleEntity(strategyId, ruleWeight);
         if(strategyRuleEntity == null) {
             //权重规则没有配置值
             throw new AppException(strategyId + ":权重规则没有配置值");
@@ -76,8 +76,10 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         log.info("概率总和:{}", totalRate);
         //概率范围
-        BigDecimal rateRange = totalRate.divide(minRate, 0, RoundingMode.CEILING);
+        BigDecimal rateRange = totalRate.divide(minRate, 10, RoundingMode.CEILING);
         log.info("概率范围:{}", rateRange);
+        rateRange = smoothRateRange(rateRange);
+        log.info("平滑后概率范围:{}", rateRange);
         log.info("==================================");
 
         //每项概率
@@ -92,16 +94,35 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
                 rateMap.put(awardId, rateRange.intValue() - sum);
             }
             int rate = strategyAwardEntity.getAwardRate()
-                    .divide(totalRate, 10, RoundingMode.CEILING)
                     .multiply(rateRange)
-                    .setScale(0, RoundingMode.FLOOR)
+                    .setScale(10, RoundingMode.CEILING)
+                    .divide(totalRate, 0, RoundingMode.CEILING)
                     .intValue();
-//            log.info("每项概率:{}->{}->{}", awardId, strategyAwardEntity.getAwardRate(), rate);
             rateMap.put(awardId, rate);
             sum += rate;
         }
         //缓存概率范围，奖项概率数组到redis
         strategyRepository.saveAwardRateList2Redis(key, rateRange.intValue(), rateMap);
+    }
+
+    /**
+    * @Description: 平滑概率范围
+    * @Param: [rateRange]
+    * @return:
+    * @Date: 2024/5/29
+    */
+    private BigDecimal smoothRateRange(BigDecimal rateRange) {
+        if(rateRange.stripTrailingZeros().scale() == 0){
+            return rateRange;
+        }
+        BigDecimal result = rateRange.multiply(BigDecimal.valueOf(2));
+        if(result.stripTrailingZeros().scale() == 0){
+            return result;
+        }
+        while (rateRange.stripTrailingZeros().scale() > 0){
+            rateRange = rateRange.multiply(BigDecimal.valueOf(10));
+        }
+        return rateRange;
     }
 
     @Override

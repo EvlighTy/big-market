@@ -7,7 +7,6 @@ import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 import cn.evlight.domain.strategy.service.rule.filter.AbstractAfterRuleFilter;
 import cn.evlight.domain.strategy.service.rule.filter.factory.after.DefaultRuleFilterTreeFactory;
 import cn.evlight.domain.strategy.service.rule.filter.factory.after.engine.IRuleFilterTreeEngine;
-import cn.evlight.types.exception.AppException;
 
 import java.util.List;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class RuleFilterTreeEngine implements IRuleFilterTreeEngine {
                 return nodeLine.getRuleNodeTo();
             }
         }
-        throw new AppException(nodeLines + "找不到下一个可执行的节点!");
+        return null;
     }
 
     private boolean matchState(String state, RuleTreeNodeLineVO nodeLine) {

@@ -47,16 +47,4 @@ public class DefaultRuleFilterTreeFactory {
         private String awardRuleValue;
     }
 
-    @Getter
-    @AllArgsConstructor
-    public enum TreeModel {
-
-        TREE_LOCK("tree_lock", "抽奖次数达到阈值解锁奖品"),
-        ;
-
-        private final String code;
-        private final String info;
-
-    }
-
 }

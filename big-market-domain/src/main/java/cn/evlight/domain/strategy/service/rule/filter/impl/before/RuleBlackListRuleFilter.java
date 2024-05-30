@@ -29,7 +29,7 @@ public class RuleBlackListRuleFilter extends AbstractBeforeRuleFilter {
     public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("黑名单过滤...");
         //查询黑名单
-        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleModel());
+        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleEntity(ruleFilterParamEntity.getStrategyId(), ruleModel());
         HashMap<String, Set<String>> ruleBlacklistValues = strategyRuleEntity.getRuleBlacklistValues();
         //过滤黑名单用户
         for (String key : ruleBlacklistValues.keySet()) {

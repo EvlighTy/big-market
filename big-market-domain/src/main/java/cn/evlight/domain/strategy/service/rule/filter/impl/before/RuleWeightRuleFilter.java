@@ -39,7 +39,7 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
         long userScore = 2000L;
 
         //查询策略权重规则
-        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleValue(ruleFilterParamEntity.getStrategyId(), ruleModel());
+        StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleEntity(ruleFilterParamEntity.getStrategyId(), ruleModel());
         if(strategyRuleEntity == null){
             //没有配置权重规则
             return next().doFilter(ruleFilterParamEntity);
