@@ -18,6 +18,13 @@ public interface Constants {
         String STRATEGY_RULE_TREE_KEY = "strategy:rule_tree:";
         String STRATEGY_AWARD_KEY = "strategy:award:";
         String STRATEGY_ENTITY_MAP_KEY = "strategy:entity_map:";
+        String ACTIVITY_KEY = "activity:";
+        String ACTIVITY_COUNT_KEY = "activity:count:";
+    }
+
+    interface ExceptionInfo {
+        String INVALID_PARAMS = "参数不合法";
+        String DUPLICATE_KEY = "主键冲突";
     }
 
 }

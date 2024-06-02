@@ -10,8 +10,6 @@ import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,25 +17,25 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> implements IStrategyRepository {
+public class StrategyRepository implements IStrategyRepository {
 
     @Autowired
-    private StrategyAwardMapper strategyAwardMapper;
+    private IStrategyAwardDao strategyAwardMapper;
 
     @Autowired
-    private StrategyMapper strategyMapper;
+    private IStrategyDao strategyMapper;
 
     @Autowired
-    private StrategyRuleMapper strategyRuleMapper;
+    private IStrategyRuleDao strategyRuleMapper;
 
     @Autowired
-    private RuleTreeMapper ruleTreeMapper;
+    private IRuleTreeDao ruleTreeMapper;
 
     @Autowired
-    private RuleTreeNodeMapper ruleTreeNodeMapper;
+    private IRuleTreeNodeDao ruleTreeNodeMapper;
 
     @Autowired
-    private RuleTreeNodeLineMapper ruleTreeNodeLineMapper;
+    private IRuleTreeNodeLineDao ruleTreeNodeLineMapper;
 
     @Autowired
     private IRedisService redisService;
@@ -50,9 +48,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         List<StrategyAwardEntity> strategyAwardEntities = redisService.getValue(key);
         if(strategyAwardEntities != null && !strategyAwardEntities.isEmpty()) return strategyAwardEntities;
         //再查询数据库
-        LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
-                .eq(StrategyAward::getStrategyId, strategyId);
-        List<StrategyAward> strategyAwards = strategyAwardMapper.selectList(queryWrapper);
+        List<StrategyAward> strategyAwards = strategyAwardMapper.queryStrategyAwardListByStrategyId(strategyId);
         strategyAwardEntities = new ArrayList<>(strategyAwards.size());
         for (StrategyAward strategyAward : strategyAwards) {
             StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
@@ -109,9 +105,7 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         StrategyEntity strategyEntity = redisService.getValue(key);
         if(strategyEntity != null) return strategyEntity;
         //再查询数据库
-        LambdaQueryWrapper<Strategy> queryWrapper = new LambdaQueryWrapper<Strategy>()
-                .eq(Strategy::getStrategyId, strategyId);
-        Strategy strategy = strategyMapper.selectOne(queryWrapper);
+        Strategy strategy = strategyMapper.queryStrategyByStrategyId(strategyId);
         if(strategy == null) return null;
         strategyEntity = StrategyEntity.builder()
                 .strategyId(strategy.getStrategyId())
@@ -129,10 +123,10 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         StrategyRuleEntity strategyRuleEntity = redisService.getValue(key);
         if(strategyRuleEntity != null) return strategyRuleEntity;
         //再查询数据区
-        LambdaQueryWrapper<StrategyRule> queryWrapper = new LambdaQueryWrapper<StrategyRule>()
-                .eq(StrategyRule::getStrategyId, strategyId)
-                .eq(StrategyRule::getRuleModel, ruleModel);
-        StrategyRule strategyRule = strategyRuleMapper.selectOne(queryWrapper);
+        StrategyRule strategyRule = strategyRuleMapper.queryStrategyRule(StrategyRule.builder()
+                .strategyId(strategyId)
+                .ruleModel(ruleModel)
+                .build());
         strategyRuleEntity = StrategyRuleEntity.builder()
                 .strategyId(strategyRule.getStrategyId())
                 .awardId(strategyRule.getAwardId())
@@ -158,13 +152,13 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
 
     @Override
     public AwardRuleModelVO getStrategyAwardRuleModels(Long strategyId, Integer awardId) {
-        LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
-                .eq(StrategyAward::getStrategyId, strategyId)
-                .eq(StrategyAward::getAwardId, awardId);
-        StrategyAward strategyAward = strategyAwardMapper.selectOne(queryWrapper);
-        if(strategyAward == null) return null;
+        String ruleModels = strategyAwardMapper.queryStrategyAwardRuleModels(StrategyAward.builder()
+                .strategyId(strategyId)
+                .awardId(awardId)
+                .build());
+        if(ruleModels == null) return null;
         return AwardRuleModelVO.builder()
-                .ruleModels(strategyAward.getRuleModels())
+                .ruleModels(ruleModels)
                 .build();
     }
 
@@ -175,17 +169,11 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
         RuleTreeVO tree = redisService.getValue(key);
         if(tree != null) return tree;
         //根节点
-        LambdaQueryWrapper<RuleTree> queryWrapper1 = new LambdaQueryWrapper<RuleTree>()
-                .eq(RuleTree::getTreeId, treeId);
-        RuleTree ruleTree = ruleTreeMapper.selectOne(queryWrapper1);
+        RuleTree ruleTree = ruleTreeMapper.queryRuleTreeByTreeId(treeId);
         //节点
-        LambdaQueryWrapper<RuleTreeNode> queryWrapper2 = new LambdaQueryWrapper<RuleTreeNode>()
-                .eq(RuleTreeNode::getTreeId, treeId);
-        List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeMapper.selectList(queryWrapper2);
+        List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeMapper.queryRuleTreeNodeListByTreeId(treeId);
         //节点分支
-        LambdaQueryWrapper<RuleTreeNodeLine> queryWrapper3 = new LambdaQueryWrapper<RuleTreeNodeLine>()
-                .eq(RuleTreeNodeLine::getTreeId, treeId);
-        List<RuleTreeNodeLine> ruleTreeNodeLines = ruleTreeNodeLineMapper.selectList(queryWrapper3);
+        List<RuleTreeNodeLine> ruleTreeNodeLines = ruleTreeNodeLineMapper.queryRuleTreeNodeLineListByTreeId(treeId);
         //组合
         HashMap<String, RuleTreeNodeVO> nodeMap = new HashMap<>();
         for (RuleTreeNode ruleTreeNode : ruleTreeNodes) {
@@ -236,10 +224,10 @@ public class StrategyRepository extends ServiceImpl<StrategyMapper, Strategy> im
             return strategyAwardEntity;
         }
         //再查询数据库
-        LambdaQueryWrapper<StrategyAward> queryWrapper = new LambdaQueryWrapper<StrategyAward>()
-                .eq(StrategyAward::getStrategyId, strategyId)
-                .eq(StrategyAward::getAwardId, awardId);
-        StrategyAward strategyAward = strategyAwardMapper.selectOne(queryWrapper);
+        StrategyAward strategyAward = strategyAwardMapper.queryStrategyAward(StrategyAward.builder()
+                        .strategyId(strategyId)
+                        .awardId(awardId)
+                .build());
         strategyAwardEntity = StrategyAwardEntity.builder()
                 .strategyId(strategyAward.getStrategyId())
                 .awardTitle(strategyAward.getAwardTitle())

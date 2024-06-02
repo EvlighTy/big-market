@@ -1,13 +1,15 @@
 package cn.evlight.infrastructure.persistent.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,6 +20,7 @@ import lombok.experimental.Accessors;
  * @since 2024-05-25
  */
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("strategy_rule")
@@ -34,7 +37,7 @@ public class StrategyRule implements Serializable {
     /**
      * 抽奖策略ID
      */
-    private Integer strategyId;
+    private Long strategyId;
 
     /**
      * 抽奖奖品ID【规则类型为策略，则不需要奖品ID】
