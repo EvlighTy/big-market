@@ -45,7 +45,7 @@ public abstract class AbstractRaffleActivity extends RaffleActivitySupport imple
                 JSON.toJSONString(activityCountEntity));
         //活动信息校验
         ICheckChain checkChain = defaultCheckChainFactory.openCheckChain();
-        boolean result = checkChain.doCheck(activitySkuEntity, activityEntity, activityCountEntity);
+        checkChain.doCheck(activitySkuEntity, activityEntity, activityCountEntity);
         //构建活动订单聚合对象
         CreateOrderAggregate createOrderAggregate = buildOrderAggregate(skuRechargeEntity, activitySkuEntity, activityEntity, activityCountEntity);
         //保存订单

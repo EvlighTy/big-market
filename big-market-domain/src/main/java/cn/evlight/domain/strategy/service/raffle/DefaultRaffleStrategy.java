@@ -1,5 +1,6 @@
 package cn.evlight.domain.strategy.service.raffle;
 
+import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
@@ -71,5 +72,15 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     @Override
     public List<StrategyAwardEntity> getStrategyAwardList(Long strategyId) {
         return strategyRepository.getStrategyAwardList(strategyId);
+    }
+
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return strategyRepository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        strategyRepository.updateStrategyAwardStock(strategyId, awardId);
     }
 }

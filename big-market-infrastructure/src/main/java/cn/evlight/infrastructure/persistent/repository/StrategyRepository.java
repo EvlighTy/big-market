@@ -1,5 +1,6 @@
 package cn.evlight.infrastructure.persistent.repository;
 
+import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
@@ -10,6 +11,7 @@ import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
+import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -240,6 +242,21 @@ public class StrategyRepository implements IStrategyRepository {
                 .build();
         strategyAwardEntityMap.put(strategyAward.getAwardId(), strategyAwardEntity);
         return strategyAwardEntity;
+    }
+
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+        return blockingQueue.poll();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        strategyAwardMapper.updateStrategyAwardStock(StrategyAward.builder()
+                        .strategyId(strategyId)
+                        .awardId(awardId)
+                .build());
     }
 
 }

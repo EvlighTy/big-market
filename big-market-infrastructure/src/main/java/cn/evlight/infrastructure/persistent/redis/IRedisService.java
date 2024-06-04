@@ -2,6 +2,8 @@ package cn.evlight.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Redis 服务
  *
@@ -60,6 +62,21 @@ public interface IRedisService {
      * @return 队列
      */
     <T> RDelayedQueue<T> getDelayedQueue(RBlockingQueue<T> rBlockingQueue);
+
+    /**
+     * 设置值
+     *
+     * @param key   key 键
+     * @param value 值
+     */
+    void setAtomicLong(String key, long value);
+
+    /**
+     * 获取值
+     *
+     * @param key key 键
+     */
+    Long getAtomicLong(String key);
 
     /**
      * 自增 Key 的值；1、2、3、4
@@ -125,14 +142,6 @@ public interface IRedisService {
      * @return 如果是集合的成员返回 true，否则返回 false
      */
     boolean isSetMember(String key, String value);
-
-    /**
-    * @Description: 获取List
-    * @Param: [key]
-    * @return: List
-    * @Date: 2024/5/25
-    */
-    <V> RList<V> getList(String key);
 
     /**
      * 将指定的值添加到列表中
@@ -253,5 +262,9 @@ public interface IRedisService {
      * @return 返回结果
      */
     <T> RBloomFilter<T> getBloomFilter(String key);
+
+    Boolean setNx(String key);
+
+    Boolean setNx(String key, long expired, TimeUnit timeUnit);
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Redis 服务 - Redisson
@@ -47,6 +48,16 @@ public class RedissonService implements IRedisService {
     }
 
     @Override
+    public void setAtomicLong(String key, long value) {
+        redissonClient.getAtomicLong(key).set(value);
+    }
+
+    @Override
+    public Long getAtomicLong(String key) {
+        return redissonClient.getAtomicLong(key).get();
+    }
+
+    @Override
     public long incr(String key) {
         return redissonClient.getAtomicLong(key).incrementAndGet();
     }
@@ -84,11 +95,6 @@ public class RedissonService implements IRedisService {
     public boolean isSetMember(String key, String value) {
         RSet<String> set = redissonClient.getSet(key);
         return set.contains(value);
-    }
-
-    @Override
-    public <V> RList<V> getList(String key) {
-        return redissonClient.getList(key);
     }
 
     public void addToList(String key, String value) {
@@ -161,5 +167,14 @@ public class RedissonService implements IRedisService {
         return redissonClient.getBloomFilter(key);
     }
 
+    @Override
+    public Boolean setNx(String key) {
+        return redissonClient.getBucket(key).trySet("lock");
+    }
+
+    @Override
+    public Boolean setNx(String key, long expired, TimeUnit timeUnit) {
+        return redissonClient.getBucket(key).trySet("lock", expired, timeUnit);
+    }
 
 }

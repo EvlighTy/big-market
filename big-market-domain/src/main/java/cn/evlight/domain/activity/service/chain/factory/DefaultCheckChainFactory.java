@@ -26,7 +26,7 @@ public class DefaultCheckChainFactory {
         //头节点
         ICheckChain head = checkChainMap.get(CheckModels.base_check.getCode());
         ICheckChain current = head;
-        current = current.add(checkChainMap.get(CheckModels.sku_check.code));
+        current = current.add(checkChainMap.get(CheckModels.sku_check.getCode()));
         return head;
     }
 

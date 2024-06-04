@@ -1,5 +1,6 @@
 package cn.evlight.domain.strategy.repository;
 
+import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
@@ -96,4 +97,20 @@ public interface IStrategyRepository {
     * @Date: 2024/5/30
     */
     StrategyAwardEntity getStrategyAwardEntity(Long strategyId, Integer awardId);
+
+    /**
+    * @Description: 获取奖品库存更新延迟队列
+    * @Param: []
+    * @return:
+    * @Date: 2024/6/4
+    */
+    StrategyAwardStockKeyVO takeQueueValue();
+
+    /**
+    * @Description: 更新奖品库存
+    * @Param: [strategyId, awardId]
+    * @return:
+    * @Date: 2024/6/4
+    */
+    void updateStrategyAwardStock(Long strategyId, Integer awardId);
 }
