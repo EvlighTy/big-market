@@ -1,9 +1,8 @@
 package cn.evlight.domain.activity.repository;
 
-import cn.evlight.domain.activity.model.aggregate.CreateOrderAggregate;
-import cn.evlight.domain.activity.model.entity.ActivityCountEntity;
-import cn.evlight.domain.activity.model.entity.ActivityEntity;
-import cn.evlight.domain.activity.model.entity.ActivitySkuEntity;
+import cn.evlight.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
+import cn.evlight.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import cn.evlight.domain.activity.model.entity.*;
 import cn.evlight.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
 import java.util.Date;
@@ -40,12 +39,13 @@ public interface IActivityRepository {
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
 
     /**
+     * table: raffle_activity_order, raffle_activity_account
     * @Description: 保存订单
-    * @Param: [createOrderAggregate]
+    * @Param: [createQuotaOrderAggregate]
     * @return:
     * @Date: 2024/6/2
     */
-    void saveOrder(CreateOrderAggregate createOrderAggregate);
+    void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
 
     /**
     * @Description: 缓存商品库存
@@ -88,6 +88,7 @@ public interface IActivityRepository {
     void clearQueueValue();
 
     /**
+     * table: raffle_activity_sku
     * @Description: 更新数据库sku库存
     * @Param: [sku]
     * @return:
@@ -96,10 +97,56 @@ public interface IActivityRepository {
     void updateActivitySkuStock(Long sku);
 
     /**
+     * table: raffle_activity_sku
     * @Description: 清空数据库sku库存
     * @Param: [sku]
     * @return:
     * @Date: 2024/6/4
     */
     void clearActivitySkuStock(Long sku);
+
+    /**
+     * table: user_raffle_order
+    * @Description: 查询未使用的抽奖单
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/6
+    */
+    UserRaffleOrderEntity queryUnUsedRaffleOrder(Long activityId, String userId);
+
+    /**
+     * table: raffle_activity_account
+    * @Description: 查询用户总额度
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/6
+    */
+    RaffleActivityAccountEntity queryRaffleActivityAccount(Long activityId, String userId);
+
+    /**
+     * table: raffle_activity_account_month
+    * @Description: 查询用户月额度
+    * @Param: [activityId, userId, monthDateTime]
+    * @return:
+    * @Date: 2024/6/6
+    */
+    RaffleActivityAccountMonthEntity queryRaffleActivityAccountMonth(Long activityId, String userId, String monthDateTime);
+
+    /**
+     * table: raffle_activity_account_day
+    * @Description: 查询用户日额度
+    * @Param: [activityId, userId, dayDateTime]
+    * @return:
+    * @Date: 2024/6/6
+    */
+    RaffleActivityAccountDayEntity queryRaffleActivityAccountDay(Long activityId, String userId, String dayDateTime);
+
+    /**
+     * table: raffle_activity_account, raffle_activity_account_month, raffle_activity_account_day, raffle_activity_order
+    * @Description: 保存抽奖活动参与聚合对象
+    * @Param: [createPartakeOrderAggregate]
+    * @return:
+    * @Date: 2024/6/6
+    */
+    void savePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
 }

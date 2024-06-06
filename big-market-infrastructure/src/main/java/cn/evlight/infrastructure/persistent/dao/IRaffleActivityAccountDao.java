@@ -1,5 +1,6 @@
 package cn.evlight.infrastructure.persistent.dao;
 
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.evlight.infrastructure.persistent.po.RaffleActivityAccount;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,12 @@ public interface IRaffleActivityAccountDao {
 
     int updateAccountQuota(RaffleActivityAccount raffleActivityAccount);
 
+    @DBRouter
+    RaffleActivityAccount queryRaffleActivityAccount(RaffleActivityAccount raffleActivityAccount);
+
+    int raffleOrderConsume(RaffleActivityAccount raffleActivityAccount);
+
+    void updateAccountMonth(RaffleActivityAccount raffleActivityAccount);
+
+    void updateAccountDay(RaffleActivityAccount raffleActivityAccount);
 }

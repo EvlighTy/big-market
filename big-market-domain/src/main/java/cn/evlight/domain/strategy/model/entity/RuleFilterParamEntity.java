@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RuleFilterParamEntity {
 
-    private Long userId;
+    private String userId;
     private Long strategyId;
     private Integer awardId;
     private String ruleValue;

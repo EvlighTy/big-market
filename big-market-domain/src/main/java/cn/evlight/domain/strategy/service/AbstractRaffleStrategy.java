@@ -27,7 +27,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
     public RaffleResultEntity doRaffle(RaffleParamEntity raffleParamEntity) {
         //参数校验
         Long strategyId = raffleParamEntity.getStrategyId();
-        Long userId = raffleParamEntity.getUserId();
+        String userId = raffleParamEntity.getUserId();
         if(strategyId == null || userId == null) throw new AppException("invalid params");
 
         RuleFilterParamEntity ruleFilterParamEntity = RuleFilterParamEntity.builder()

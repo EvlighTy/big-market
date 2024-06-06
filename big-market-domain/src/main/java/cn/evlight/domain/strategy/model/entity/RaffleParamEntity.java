@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RaffleParamEntity {
 
-    private Long userId;
+    private String userId;
     private Long strategyId;
 
 }

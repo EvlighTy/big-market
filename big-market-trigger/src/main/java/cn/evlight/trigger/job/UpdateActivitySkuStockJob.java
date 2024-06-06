@@ -1,7 +1,7 @@
 package cn.evlight.trigger.job;
 
 import cn.evlight.domain.activity.model.valobj.ActivitySkuStockKeyVO;
-import cn.evlight.domain.activity.service.ISkuStock;
+import cn.evlight.domain.activity.service.IRaffleActivitySkuStock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 public class UpdateActivitySkuStockJob {
 
     @Resource
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStock skuStock;
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {

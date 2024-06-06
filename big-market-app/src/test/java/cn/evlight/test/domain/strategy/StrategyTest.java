@@ -59,7 +59,7 @@ public class StrategyTest {
     public void test3(){
         RaffleParamEntity raffleParamEntity = RaffleParamEntity.builder()
                 .strategyId(100001L)
-                .userId(16L)
+                .userId("12312")
                 .build();
         RaffleResultEntity raffleResultEntity = raffleStrategy.doRaffle(raffleParamEntity);
         System.err.println(JSON.toJSONString(raffleResultEntity));
@@ -134,7 +134,7 @@ public class StrategyTest {
         RuleFilterTreeEngine ruleFilterTreeEngine = ruleFilterTreeFactory.openRuleFilterTree(ruleTreeVO);
         RuleFilterParamEntity ruleFilterParamEntity = RuleFilterParamEntity.builder()
                 .strategyId(100001L)
-                .userId(16L)
+                .userId("123")
                 .awardId(109)
                 .build();
         DefaultRuleFilterTreeFactory.ResultData data = ruleFilterTreeEngine.process(ruleFilterParamEntity);
@@ -151,7 +151,7 @@ public class StrategyTest {
     public void test6(){
         RaffleParamEntity raffleParamEntity = RaffleParamEntity.builder()
                 .strategyId(100006L)
-                .userId(16L)
+                .userId("123")
                 .build();
         RaffleResultEntity result = raffleStrategy.doRaffle(raffleParamEntity);
         System.out.println(result);

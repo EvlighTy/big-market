@@ -87,7 +87,7 @@ public class RaffleController implements IRaffleService {
         try {
             RaffleResultEntity result = raffleStrategy.doRaffle(RaffleParamEntity.builder()
                     .strategyId(requestDTO.getStrategyId())
-                    .userId(0x1L)
+                    .userId("123")
                     .build());
             return Response.success(RaffleResponseDTO.builder()
                     .awardId(result.getAwardId())

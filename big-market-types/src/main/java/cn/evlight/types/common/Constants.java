@@ -34,6 +34,13 @@ public interface Constants {
         String INVALID_ACTIVITY_DATE = "当前时间未在活动日期范围内";
         String INVALID_ACTIVITY_STATE = "活动未开启";
         String ACTIVITY_STOCK_INSUFFICIENT = "活动剩余库存不足";
+        String USER_QUOTA_INSUFFICIENT = "用户额度不足";
+    }
+
+    interface DataBaseExceptionInfo {
+        String RAFFLE_ACTIVITY_ACCOUNT_UPDATE_FAILED = "用户总额度库存更新失败";
+        String RAFFLE_ACTIVITY_ACCOUNT_MONTH_UPDATE_FAILED = "用户月额度库存更新失败";
+        String RAFFLE_ACTIVITY_ACCOUNT_DAY_UPDATE_FAILED = "用户日额度库存更新失败";
     }
 
 }

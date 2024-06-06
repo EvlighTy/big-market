@@ -1,6 +1,6 @@
 package cn.evlight.trigger.listener;
 
-import cn.evlight.domain.activity.service.ISkuStock;
+import cn.evlight.domain.activity.service.IRaffleActivitySkuStock;
 import cn.evlight.types.event.BaseEvent;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
@@ -26,7 +26,7 @@ public class ActivitySkuStockZeroCustomer {
     private String topic;
 
     @Autowired
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStock skuStock;
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue("activity_sku_stock_zero"),
