@@ -30,7 +30,7 @@ public class ActivitySkuStockZeroCustomer {
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue("activity_sku_stock_zero"),
-            exchange = @Exchange(value = "activity_sku_stock_zero", delayed = "true")
+            exchange = @Exchange(value = "activity_sku_stock_zero")
     ))
     public void listener(String message) {
         try {

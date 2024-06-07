@@ -6,7 +6,9 @@ import cn.evlight.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.evlight.domain.activity.service.IRaffleActivityPartake;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
 import cn.evlight.domain.activity.service.quota.armory.IActivityArmory;
-import cn.evlight.infrastructure.persistent.dao.IRaffleActivityAccountDao;
+import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
+import cn.evlight.domain.award.model.valobj.AwardStateVO;
+import cn.evlight.domain.award.service.IAwardService;
 import cn.evlight.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -40,7 +43,9 @@ public class ActivityTest {
     private IRaffleActivityPartake raffleActivityPartake;
 
     @Autowired
-    private IRaffleActivityAccountDao raffleActivityAccountDao;
+    private IAwardService awardService;
+
+
 
     @Test
     public void test22(){
@@ -77,6 +82,24 @@ public class ActivityTest {
                 .userId("evlight")
                 .build());
         log.info("test24测试结果:{}", JSON.toJSONString(result));
+    }
+
+    @Test
+    public void test26() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            UserAwardRecordEntity userAwardRecordEntity = new UserAwardRecordEntity();
+            userAwardRecordEntity.setUserId("evlight");
+            userAwardRecordEntity.setActivityId(100301L);
+            userAwardRecordEntity.setStrategyId(100006L);
+            userAwardRecordEntity.setOrderId(RandomStringUtils.randomNumeric(12));
+            userAwardRecordEntity.setAwardId(101);
+            userAwardRecordEntity.setAwardTitle("OpenAI 增加使用次数");
+            userAwardRecordEntity.setAwardTime(LocalDateTime.now());
+            userAwardRecordEntity.setAwardState(AwardStateVO.create);
+            awardService.saveUserAwardRecord(userAwardRecordEntity);
+            Thread.sleep(500);
+        }
+        new CountDownLatch(1).await();
     }
 
 }

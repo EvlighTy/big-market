@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
@@ -24,9 +24,9 @@ public abstract class BaseEvent<T> {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class EventMessage<T> {
-        private String id;
-        private Date timestamp;
-        private T data;
+        private String id; //消息id
+        private LocalDateTime timestamp; //消息生成时间
+        private T data; //消息体
     }
 
 }

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
@@ -22,7 +22,7 @@ public class ActivitySkuStockZeroMessageEvent extends BaseEvent<Long> {
     public BaseEvent.EventMessage<Long> buildEventMessage(Long sku) {
         return EventMessage.<Long>builder()
                 .id(RandomStringUtils.randomNumeric(11))
-                .timestamp(new Date())
+                .timestamp(LocalDateTime.now())
                 .data(sku)
                 .build();
     }

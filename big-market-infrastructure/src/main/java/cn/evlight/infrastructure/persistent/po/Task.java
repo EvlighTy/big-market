@@ -1,13 +1,14 @@
 package cn.evlight.infrastructure.persistent.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author evlight
- * @since 2024-06-06
+ * @since 2024-06-07
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,9 +33,19 @@ public class Task implements Serializable {
     private Integer id;
 
     /**
+     * 用户ID
+     */
+    private String userId;
+
+    /**
      * 消息主题
      */
     private String topic;
+
+    /**
+     * 消息编号
+     */
+    private String messageId;
 
     /**
      * 消息主体
