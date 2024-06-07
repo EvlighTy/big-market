@@ -42,6 +42,11 @@ public class StrategyRepository implements IStrategyRepository {
     @Autowired
     private IRedisService redisService;
 
+    @Autowired
+    private IRaffleActivityDao raffleActivityDao;
+
+    @Autowired
+    private RaffleActivityAccountDayMapper raffleActivityAccountDayMapper;
 
     @Override
     public List<StrategyAwardEntity> getStrategyAwardList(Long strategyId) {
@@ -257,6 +262,25 @@ public class StrategyRepository implements IStrategyRepository {
                         .strategyId(strategyId)
                         .awardId(awardId)
                 .build());
+    }
+
+    @Override
+    public Long getStrategyIdByActivityId(Long activityId) {
+        return raffleActivityDao.queryStrategyIdByActivityId(activityId);
+    }
+
+    @Override
+    public Integer getUserRaffleCountToday(String userId, Long strategyId) {
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.queryRaffleActivityAccountDay(RaffleActivityAccountDay.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .day(RaffleActivityAccountDay.getCurrentDay())
+                .build());
+        if (raffleActivityAccountDay == null){
+            return 0;
+        }
+        return raffleActivityAccountDay.getDayCount() - raffleActivityAccountDay.getDayCountSurplus();
     }
 
 }

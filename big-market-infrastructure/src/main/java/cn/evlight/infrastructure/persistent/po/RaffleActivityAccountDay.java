@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * <p>
@@ -69,5 +70,10 @@ public class RaffleActivityAccountDay implements Serializable {
      */
     private LocalDateTime updateTime;
 
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public static String getCurrentDay(){
+        return dateTimeFormatter.format(LocalDateTime.now());
+    }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 活动预热装配实现类
@@ -23,12 +24,30 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch {
     private IActivityRepository activityRepository;
 
     @Override
-    public boolean assembleActivitySku(Long sku) {
+    public boolean assembleActivitySkuBySku(Long sku) {
         //查询活动SKU信息
-        ActivitySkuEntity activitySkuEntity = activityRepository.queryActivitySku(sku);
-        //缓存商品总库存
+        ActivitySkuEntity activitySkuEntity = activityRepository.queryActivitySkuBySku(sku);
+        //缓存活动信息
+        activityRepository.queryRaffleActivityByActivityId(activitySkuEntity.getActivityId());
+        //缓存活动限制次数
+        activityRepository.queryRaffleActivityCountByActivityCountId(activitySkuEntity.getActivityCountId());
+        //缓存活动库存
         cacheActivitySkuStockCount(sku, activitySkuEntity.getStockCount());
         return false;
+    }
+
+    @Override
+    public boolean assembleActivitySkuByActivityId(Long activityId) {
+        List<ActivitySkuEntity> activitySkuEntities = activityRepository.queryActivitySkuByActivityId(activityId);
+        for (ActivitySkuEntity activitySkuEntity : activitySkuEntities) {
+            //缓存活动库存
+            cacheActivitySkuStockCount(activitySkuEntity.getSku(), activitySkuEntity.getStockCount());
+            //缓存活动限制次数
+            activityRepository.queryRaffleActivityCountByActivityCountId(activitySkuEntity.getActivityCountId());
+        }
+        //缓存活动信息
+        activityRepository.queryRaffleActivityByActivityId(activityId);
+        return true;
     }
 
     private void cacheActivitySkuStockCount(Long sku, Integer stockCount) {

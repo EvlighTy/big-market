@@ -22,4 +22,6 @@ public interface UserRaffleOrderMapper extends BaseMapper<UserRaffleOrder> {
     UserRaffleOrder queryUnUsedRaffleOrder(UserRaffleOrder userRaffleOrder);
 
     void save(UserRaffleOrder userRaffleOrder);
+
+    int updateAfterRaffle(UserRaffleOrder userRaffleOrder);
 }

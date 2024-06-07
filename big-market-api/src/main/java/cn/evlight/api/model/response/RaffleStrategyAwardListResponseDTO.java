@@ -1,4 +1,4 @@
-package cn.evlight.api.model;
+package cn.evlight.api.model.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class StrategyAwardListResponseDTO {
+public class RaffleStrategyAwardListResponseDTO {
     private Integer awardId; //奖品ID
     private String awardTitle; //奖品标题
     private String awardSubtitle; //奖品副标题

@@ -35,6 +35,7 @@ public interface Constants {
         String INVALID_ACTIVITY_STATE = "活动未开启";
         String ACTIVITY_STOCK_INSUFFICIENT = "活动剩余库存不足";
         String USER_QUOTA_INSUFFICIENT = "用户额度不足";
+        String RAFFLE_ORDER_REUSE = "抽奖单重复使用";
     }
 
     interface DataBaseExceptionInfo {

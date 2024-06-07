@@ -25,7 +25,7 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
     private IStrategyRepository strategyRepository;
 
     @Override
-    public boolean generateStrategyRandomMap(Long strategyId) {
+    public boolean assembleRaffleStrategy(Long strategyId) {
         //配置策略总奖项
         log.info("配置策略总奖项:{}", strategyId);
         List<StrategyAwardEntity> strategyAwardEntities = strategyRepository.getStrategyAwardList(strategyId);
@@ -54,6 +54,13 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
             strategyAwardEntitiesClone.removeIf(strategyAwardEntity -> !ruleWeightValue.contains(strategyAwardEntity.getAwardId().toString()));
             doGenerateStrategyRandomMap(strategyId + ":" + key, strategyAwardEntitiesClone);
         }
+        return true;
+    }
+
+    @Override
+    public boolean assembleRaffleStrategyByActivityId(Long activityId) {
+        Long strategyId = strategyRepository.getStrategyIdByActivityId(activityId);
+        assembleRaffleStrategy(strategyId);
         return true;
     }
 

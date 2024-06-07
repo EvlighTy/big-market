@@ -23,7 +23,7 @@ public class RaffleActivitySupport {
     }
 
     public ActivitySkuEntity queryActivitySku(Long sku) {
-        return activityRepository.queryActivitySku(sku);
+        return activityRepository.queryActivitySkuBySku(sku);
     }
 
     public ActivityEntity queryRaffleActivityByActivityId(Long activityId) {

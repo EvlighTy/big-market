@@ -6,6 +6,7 @@ import cn.evlight.domain.activity.model.entity.*;
 import cn.evlight.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description: 活动仓储接口
@@ -20,7 +21,7 @@ public interface IActivityRepository {
     * @return:
     * @Date: 2024/6/2
     */
-    ActivitySkuEntity queryActivitySku(Long sku);
+    ActivitySkuEntity queryActivitySkuBySku(Long sku);
 
     /**
     * @Description: 查询抽奖活动实体
@@ -149,4 +150,12 @@ public interface IActivityRepository {
     * @Date: 2024/6/6
     */
     void savePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
+    /**
+    * @Description: 查询活动SKU信息
+    * @Param: [activityId]
+    * @return:
+    * @Date: 2024/6/7
+    */
+    List<ActivitySkuEntity> queryActivitySkuByActivityId(Long activityId);
 }

@@ -7,6 +7,21 @@ package cn.evlight.domain.activity.service.quota.armory;
  */
 public interface IActivityArmory {
 
-    boolean assembleActivitySku(Long sku);
+    /**
+    * @Description: 预热活动sku信息
+    * @Param: [sku]
+    * @return:
+    * @Date: 2024/6/7
+    */
+    boolean assembleActivitySkuBySku(Long sku);
+
+
+    /**
+    * @Description: 预热活动sku信息
+    * @Param: [activityId]
+    * @return:
+    * @Date: 2024/6/7
+    */
+    boolean assembleActivitySkuByActivityId(Long activityId);
 
 }

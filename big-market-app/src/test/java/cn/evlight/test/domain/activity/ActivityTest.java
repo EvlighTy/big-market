@@ -59,7 +59,7 @@ public class ActivityTest {
 
     @Test
     public void test23() throws InterruptedException {
-        activityArmory.assembleActivitySku(9011L);
+        activityArmory.assembleActivitySkuBySku(9011L);
         for (int i = 0; i < 10; i++) {
             try {
                 String orderId = raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()

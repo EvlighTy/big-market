@@ -1,4 +1,4 @@
-package cn.evlight.api.model;
+package cn.evlight.api.model.request;
 
 import lombok.Data;
 
@@ -9,6 +9,6 @@ import lombok.Data;
  */
 
 @Data
-public class StrategyAwardListRequestDTO {
+public class RaffleStrategyAwardListRequestDTO {
     private Long strategyId; //策略ID
 }

@@ -1,10 +1,10 @@
 package cn.evlight.trigger.http;
 
-import cn.evlight.api.IRaffleService;
-import cn.evlight.api.model.RaffleRequestDTO;
-import cn.evlight.api.model.RaffleResponseDTO;
-import cn.evlight.api.model.StrategyAwardListRequestDTO;
-import cn.evlight.api.model.StrategyAwardListResponseDTO;
+import cn.evlight.api.IRaffleStrategyService;
+import cn.evlight.api.model.request.RaffleStrategyRequestDTO;
+import cn.evlight.api.model.response.RaffleStrategyResponseDTO;
+import cn.evlight.api.model.request.RaffleStrategyAwardListRequestDTO;
+import cn.evlight.api.model.response.RaffleStrategyAwardListResponseDTO;
 import cn.evlight.domain.strategy.model.entity.RaffleParamEntity;
 import cn.evlight.domain.strategy.model.entity.RaffleResultEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
@@ -30,7 +30,7 @@ import java.util.List;
 @RestController()
 @CrossOrigin("${app.config.cross-origin}")
 @RequestMapping("/api/${app.config.api-version}/raffle/")
-public class RaffleController implements IRaffleService {
+public class RaffleStrategyController implements IRaffleStrategyService {
 
     @Autowired
     private IUserStrategyArmory userStrategyArmory;
@@ -49,7 +49,7 @@ public class RaffleController implements IRaffleService {
     public Response<Boolean> assembleRaffleStrategyArmory(@RequestParam Long strategyId) {
         log.info("装配抽奖策略库");
         try {
-            boolean result = managerStrategyArmory.generateStrategyRandomMap(strategyId);
+            boolean result = managerStrategyArmory.assembleRaffleStrategy(strategyId);
             return Response.success(result);
         }catch (Exception e){
             e.printStackTrace();
@@ -59,13 +59,13 @@ public class RaffleController implements IRaffleService {
 
     @PostMapping("raffle_award_list")
     @Override
-    public Response<List<StrategyAwardListResponseDTO>> getStrategyAwardList(@RequestBody StrategyAwardListRequestDTO requestDTO) {
+    public Response<List<RaffleStrategyAwardListResponseDTO>> getStrategyAwardList(@RequestBody RaffleStrategyAwardListRequestDTO requestDTO) {
         log.info("查询策略奖品列表");
         try {
             List<StrategyAwardEntity> strategyAwardList = raffleAward.getStrategyAwardList(requestDTO.getStrategyId());
-            ArrayList<StrategyAwardListResponseDTO> strategyAwardListResponseDTOS = new ArrayList<>();
+            ArrayList<RaffleStrategyAwardListResponseDTO> strategyAwardListResponseDTOS = new ArrayList<>();
             for (StrategyAwardEntity strategyAwardEntity : strategyAwardList) {
-                StrategyAwardListResponseDTO strategyAwardListResponseDTO = StrategyAwardListResponseDTO.builder()
+                RaffleStrategyAwardListResponseDTO strategyAwardListResponseDTO = RaffleStrategyAwardListResponseDTO.builder()
                                 .awardId(strategyAwardEntity.getAwardId())
                                 .awardTitle(strategyAwardEntity.getAwardTitle())
                                 .awardSubtitle(strategyAwardEntity.getAwardSubtitle())
@@ -82,14 +82,14 @@ public class RaffleController implements IRaffleService {
 
     @PostMapping("raffle")
     @Override
-    public Response<RaffleResponseDTO> raffle(@RequestBody RaffleRequestDTO requestDTO) {
+    public Response<RaffleStrategyResponseDTO> strategyRaffle(@RequestBody RaffleStrategyRequestDTO requestDTO) {
         log.info("抽奖");
         try {
             RaffleResultEntity result = raffleStrategy.doRaffle(RaffleParamEntity.builder()
                     .strategyId(requestDTO.getStrategyId())
                     .userId("123")
                     .build());
-            return Response.success(RaffleResponseDTO.builder()
+            return Response.success(RaffleStrategyResponseDTO.builder()
                     .awardId(result.getAwardId())
                     .awardIndex(result.getSort())
                     .build());

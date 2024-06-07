@@ -45,7 +45,7 @@ public class StrategyTest {
 
     @Test
     public void test1(){
-        managerStrategyArmory.generateStrategyRandomMap(100006L);
+        managerStrategyArmory.assembleRaffleStrategy(100006L);
     }
 
     @Test

@@ -113,4 +113,21 @@ public interface IStrategyRepository {
     * @Date: 2024/6/4
     */
     void updateStrategyAwardStock(Long strategyId, Integer awardId);
+
+    /**
+    * @Description: 根据活动ID查询策略ID
+    * @Param: [activityId]
+    * @return:
+    * @Date: 2024/6/7
+    */
+    Long getStrategyIdByActivityId(Long activityId);
+
+    /**
+    * @Description: 查询用户今天抽奖次数
+    * @Param: []
+    * @return:
+    * @Date: 2024/6/7
+    */
+    Integer getUserRaffleCountToday(String userId, Long strategyId);
+
 }

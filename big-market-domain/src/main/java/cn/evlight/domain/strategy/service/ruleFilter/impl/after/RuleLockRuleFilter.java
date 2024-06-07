@@ -2,10 +2,12 @@ package cn.evlight.domain.strategy.service.ruleFilter.impl.after;
 
 import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.model.valobj.RuleFilterStateVO;
+import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.ruleFilter.AbstractAfterRuleFilter;
 import cn.evlight.domain.strategy.service.ruleFilter.factory.after.DefaultRuleFilterTreeFactory;
 import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,11 +20,15 @@ import org.springframework.stereotype.Component;
 @Component("rule_lock")
 public class RuleLockRuleFilter extends AbstractAfterRuleFilter {
 
+    @Autowired
+    private IStrategyRepository strategyRepository;
+
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("奖品解锁门槛检查...");
         //查询用户抽奖次数
-        int raffleCount = 6;
+        Integer raffleCount = strategyRepository.getUserRaffleCountToday(ruleFilterParamEntity.getUserId(), ruleFilterParamEntity.getStrategyId());
+        log.info("用户[{}]本日抽奖累计次数;{}", ruleFilterParamEntity.getUserId(), raffleCount);
         //查询奖项解锁阈值
         String ruleValue = ruleFilterParamEntity.getRuleValue();
         if(ruleValue == null){

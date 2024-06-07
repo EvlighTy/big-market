@@ -1,4 +1,4 @@
-package cn.evlight.api.model;
+package cn.evlight.api.model.request;
 
 import lombok.Data;
 
@@ -8,6 +8,6 @@ import lombok.Data;
  * @Date: 2024/5/29
  */
 @Data
-public class RaffleRequestDTO {
+public class RaffleStrategyRequestDTO {
     private Long strategyId; //策略ID
 }

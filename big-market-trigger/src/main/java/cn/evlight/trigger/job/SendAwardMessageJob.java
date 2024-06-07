@@ -43,7 +43,7 @@ public class SendAwardMessageJob {
                         dbRouter.setTBKey(0);
                         List<TaskEntity> taskEntities = taskService.queryUnSendMessageTaskList();
                         if (taskEntities == null || taskEntities.isEmpty()){
-                            log.info("[发送中奖消息到MQ] 未查询到未发送的消息");
+                            log.info("定时任务 [发送中奖消息到MQ] 未查询到未发送的消息");
                             return;
                         }
                         for (TaskEntity taskEntity : taskEntities) {
@@ -52,7 +52,7 @@ public class SendAwardMessageJob {
                                     taskService.sendMessage(taskEntity);
                                     taskService.updateAfterCompleted(taskEntity.getUserId(), taskEntity.getMessageId());
                                 }catch (Exception e){
-                                    log.info("[发送中奖消息到MQ] 发送到MQ失败", e);
+                                    log.info("定时任务 [发送中奖消息到MQ] 发送到MQ失败", e);
                                     taskService.updateAfterFailed(taskEntity.getUserId(), taskEntity.getMessageId());
                                 }
                             });

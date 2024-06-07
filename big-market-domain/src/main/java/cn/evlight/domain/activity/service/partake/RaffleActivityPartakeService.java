@@ -47,7 +47,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake{
     protected CreatePartakeOrderAggregate checkAccount(Long activityId, String userId, LocalDateTime currentTime) {
         //查询总额度
         RaffleActivityAccountEntity raffleActivityAccountEntity = activityRepository.queryRaffleActivityAccount(activityId, userId);
-        if (raffleActivityAccountEntity == null || raffleActivityAccountEntity.getTotalCount() <=0){
+        if (raffleActivityAccountEntity == null || raffleActivityAccountEntity.getTotalCount() <= 0){
             //总额度账户不存在 或 总额度不足
             throw new AppException(Constants.ExceptionInfo.USER_QUOTA_INSUFFICIENT);
         }

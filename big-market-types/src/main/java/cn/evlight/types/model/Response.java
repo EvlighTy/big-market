@@ -25,6 +25,13 @@ public class Response<T> {
                 .build();
     }
 
+    public static <T> Response<T> success(){
+        return Response.<T>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .build();
+    }
+
     public static <T> Response<T> error(T data){
         return Response.<T>builder()
                 .code(ResponseCode.UN_ERROR.getCode())

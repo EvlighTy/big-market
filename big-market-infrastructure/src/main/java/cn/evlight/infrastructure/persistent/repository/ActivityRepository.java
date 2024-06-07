@@ -23,7 +23,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -76,7 +78,7 @@ public class ActivityRepository implements IActivityRepository {
     private ActivitySkuStockZeroMessageEvent activitySkuStockZeroMessageEvent;
 
     @Override
-    public ActivitySkuEntity queryActivitySku(Long sku) {
+    public ActivitySkuEntity queryActivitySkuBySku(Long sku) {
         RaffleActivitySku raffleActivitySku = raffleActivitySkuDao.queryActivitySku(sku);
         return ActivitySkuEntity.builder()
                 .sku(raffleActivitySku.getSku())
@@ -439,6 +441,23 @@ public class ActivityRepository implements IActivityRepository {
         } finally {
             dbRouter.clear();
         }
+    }
+
+    @Override
+    public List<ActivitySkuEntity> queryActivitySkuByActivityId(Long activityId) {
+        List<RaffleActivitySku> raffleActivitySkus = raffleActivitySkuDao.queryActivitySkuListByActivityId(activityId);
+        ArrayList<ActivitySkuEntity> activitySkuEntities = new ArrayList<>(raffleActivitySkus.size());
+        for (RaffleActivitySku raffleActivitySku : raffleActivitySkus) {
+            ActivitySkuEntity activitySkuEntity = ActivitySkuEntity.builder()
+                        .sku(raffleActivitySku.getSku())
+                        .activityId(raffleActivitySku.getActivityId())
+                        .activityCountId(raffleActivitySku.getActivityCountId())
+                        .stockCount(raffleActivitySku.getStockCount())
+                        .stockCountSurplus(raffleActivitySku.getStockCountSurplus())
+                        .build();
+            activitySkuEntities.add(activitySkuEntity);
+        }
+        return activitySkuEntities;
     }
 
 }

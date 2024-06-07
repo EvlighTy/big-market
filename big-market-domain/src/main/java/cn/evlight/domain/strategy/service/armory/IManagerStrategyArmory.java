@@ -13,6 +13,14 @@ public interface IManagerStrategyArmory {
      * @return: boolean
      * @Date: 2024/5/24
      */
-    boolean generateStrategyRandomMap(Long strategyId);
+    boolean assembleRaffleStrategy(Long strategyId);
+
+    /**
+    * @Description: 根据活动ID装配策略库
+    * @Param: [activityId]
+    * @return:
+    * @Date: 2024/6/7
+    */
+    boolean assembleRaffleStrategyByActivityId(Long activityId);
 
 }
