@@ -8,7 +8,7 @@ import cn.evlight.types.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -56,8 +56,8 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch {
     }
 
     @Override
-    public boolean subtractActivitySkuStockCount(Long sku, Date endDate) {
+    public boolean subtractActivitySkuStockCount(Long sku, LocalDateTime endDate) {
         String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_KEY + sku;
-        return activityRepository.subtractActivitySkuStockCount(cacheKey, sku, endDate);
+        return activityRepository.subtractActivitySkuStock(cacheKey, sku, endDate);
     }
 }

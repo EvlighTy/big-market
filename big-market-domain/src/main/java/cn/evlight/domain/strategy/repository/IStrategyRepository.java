@@ -1,14 +1,16 @@
 package cn.evlight.domain.strategy.repository;
 
-import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
+import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
 import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface IStrategyRepository {
 
@@ -107,6 +109,7 @@ public interface IStrategyRepository {
     StrategyAwardStockKeyVO takeQueueValue();
 
     /**
+     * tableL: strategy_award
     * @Description: 更新奖品库存
     * @Param: [strategyId, awardId]
     * @return:
@@ -115,6 +118,7 @@ public interface IStrategyRepository {
     void updateStrategyAwardStock(Long strategyId, Integer awardId);
 
     /**
+     * table: raffle_activity
     * @Description: 根据活动ID查询策略ID
     * @Param: [activityId]
     * @return:
@@ -123,6 +127,7 @@ public interface IStrategyRepository {
     Long getStrategyIdByActivityId(Long activityId);
 
     /**
+     * table: raffle_activity_account_day
     * @Description: 查询用户今天抽奖次数
     * @Param: []
     * @return:
@@ -130,4 +135,28 @@ public interface IStrategyRepository {
     */
     Integer getUserRaffleCountToday(String userId, Long strategyId);
 
+    /**
+     * table: rule_tree_node
+    * @Description: 查询策略奖品解锁阈值
+    * @Param: [treeIds]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    Map<String, Integer> getAwardRuleLockCount(String[] treeIds);
+
+    /**
+    * @Description: 扣减策略奖品库存
+    * @Param: [cacheKey, endDateTime]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    boolean subtractStrategyAwardStock(String cacheKey, LocalDateTime endDateTime);
+
+    /**
+    * @Description: 写入数据库库存更新延迟队列
+    * @Param: [strategyAwardStockKeyVO]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    void sendToStrategyAwardConsumeQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO);
 }

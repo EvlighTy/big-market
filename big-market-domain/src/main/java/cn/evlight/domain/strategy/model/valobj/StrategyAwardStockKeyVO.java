@@ -1,4 +1,4 @@
-package cn.evlight.domain.activity.model.valobj;
+package cn.evlight.domain.strategy.model.valobj;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

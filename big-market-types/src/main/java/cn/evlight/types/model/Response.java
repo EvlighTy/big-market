@@ -47,4 +47,11 @@ public class Response<T> {
                 .build();
     }
 
+    public static <T> Response<T> error(String info){
+        return Response.<T>builder()
+                .code(ResponseCode.UN_ERROR.getCode())
+                .info(info)
+                .build();
+    }
+
 }

@@ -9,7 +9,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * <p>
@@ -51,12 +50,12 @@ public class RaffleActivity implements Serializable {
     /**
      * 开始时间
      */
-    private Date beginDateTime;
+    private LocalDateTime beginDateTime;
 
     /**
      * 结束时间
      */
-    private Date endDateTime;
+    private LocalDateTime endDateTime;
 
     /**
      * 抽奖策略ID

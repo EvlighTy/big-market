@@ -18,6 +18,7 @@ public interface Constants {
         String STRATEGY_RULE_VALUE_KEY = "strategy:rule_value:";
         String STRATEGY_RULE_TREE_KEY = "strategy:rule_tree:";
         String STRATEGY_AWARD_KEY = "strategy:award:";
+        String STRATEGY_AWARD_STOCK_KEY = "strategy:award:stock:";
         String STRATEGY_ENTITY_MAP_KEY = "strategy:entity_map:";
         String STRATEGY_AWARD_COUNT_QUERY_KEY = "strategy:award_count_query:";
 
@@ -25,6 +26,7 @@ public interface Constants {
         String ACTIVITY_KEY = "activity:";
         String ACTIVITY_COUNT_KEY = "activity:count:";
         String ACTIVITY_SKU_STOCK_KEY = "activity:stock:";
+        String ACTIVITY_SKU_STOCK_ZERO_KEY = "activity:stock_zero:";
         String ACTIVITY_SKU_COUNT_QUERY_KEY = "activity:sku_count_query:";
     }
 

@@ -24,7 +24,7 @@ public class RuleLuckAwardRuleFilter extends AbstractAfterRuleFilter {
 
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("奖项兜底...");
+        log.info("策略奖品兜底...");
         return DefaultRuleFilterTreeFactory.Result.builder()
                 .state(RuleFilterStateVO.TAKE_OVER)
                 .data(DefaultRuleFilterTreeFactory.ResultData.builder()

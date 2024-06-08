@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @Description: 抽奖参数实体
  * @Author: evlight
@@ -16,8 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RaffleParamEntity {
-
     private String userId;
     private Long strategyId;
-
+    private LocalDateTime endDataTime;
 }

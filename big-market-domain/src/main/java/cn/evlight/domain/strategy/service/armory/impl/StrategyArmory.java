@@ -7,6 +7,7 @@ import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.armory.IManagerStrategyArmory;
 import cn.evlight.domain.strategy.service.armory.IUserStrategyArmory;
+import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -146,6 +148,12 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
     @Override
     public RuleTreeVO getRuleTree(String treeId) {
         return strategyRepository.getRuleTree(treeId);
+    }
+
+    @Override
+    public boolean subtractStrategyAwardStock(Long strategyId, Integer awardId, LocalDateTime endDateTime) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_STOCK_KEY + strategyId + Constants.Split.COLON + awardId;
+        return strategyRepository.subtractStrategyAwardStock(cacheKey, endDateTime);
     }
 
 }

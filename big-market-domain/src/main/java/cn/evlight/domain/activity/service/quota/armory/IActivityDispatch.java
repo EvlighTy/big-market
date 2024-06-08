@@ -1,6 +1,6 @@
 package cn.evlight.domain.activity.service.quota.armory;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Description: 活动调度接口
@@ -9,6 +9,6 @@ import java.util.Date;
  */
 public interface IActivityDispatch {
 
-    boolean subtractActivitySkuStockCount(Long sku, Date endDate);
+    boolean subtractActivitySkuStockCount(Long sku, LocalDateTime endDate);
 
 }

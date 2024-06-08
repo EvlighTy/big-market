@@ -23,7 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public abstract class AbstractRaffleActivityQuota extends RaffleActivitySupport implements IRaffleActivityQuota {
 
-
     public AbstractRaffleActivityQuota(IActivityRepository activityRepository, DefaultQuotaCheckChainFactory defaultCheckChainFactory) {
         super(activityRepository, defaultCheckChainFactory);
     }

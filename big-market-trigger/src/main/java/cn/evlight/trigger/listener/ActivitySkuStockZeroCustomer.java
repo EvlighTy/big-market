@@ -41,7 +41,7 @@ public class ActivitySkuStockZeroCustomer {
             //清空库存
             skuStock.clearActivitySkuStock(sku);
             //清空延迟更新队列
-            skuStock.clearQueueValue();
+//            skuStock.clearQueueValue(sku);
         } catch (Exception e) {
             log.error("监听sku库存消耗为0消息但消费失败 topic: {} message: {}", topic, message);
             throw e;

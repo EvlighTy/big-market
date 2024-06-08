@@ -2,6 +2,8 @@ package cn.evlight.domain.strategy.service.armory;
 
 import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
 
+import java.time.LocalDateTime;
+
 /**
 * @Description: 策略使用接口
 * @Author: evlight
@@ -33,4 +35,12 @@ public interface IUserStrategyArmory {
     * @Date: 2024/5/28
     */
     RuleTreeVO getRuleTree(String treeId);
+
+    /**
+    * @Description: 扣减策略奖品库存
+    * @Param: [strategyId, awardId, endDateTime]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    boolean subtractStrategyAwardStock(Long strategyId, Integer awardId, LocalDateTime endDateTime);
 }

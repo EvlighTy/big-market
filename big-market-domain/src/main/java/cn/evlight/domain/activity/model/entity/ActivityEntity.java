@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
@@ -37,12 +37,12 @@ public class ActivityEntity {
     /**
      * 开始时间
      */
-    private Date beginDateTime;
+    private LocalDateTime beginDateTime;
 
     /**
      * 结束时间
      */
-    private Date endDateTime;
+    private LocalDateTime endDateTime;
 
     /**
      * 活动参与次数配置

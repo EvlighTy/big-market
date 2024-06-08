@@ -1,6 +1,6 @@
 package cn.evlight.domain.strategy.service;
 
-import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
+import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 /**
  * @Description: 抽奖库存操作接口

@@ -62,8 +62,8 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
     }
 
     @Override
-    public void clearQueueValue() {
-        activityRepository.clearQueueValue();
+    public void clearQueueValue(Long sku) {
+        activityRepository.clearQueueValue(sku);
     }
 
     @Override
@@ -74,5 +74,15 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
     @Override
     public void clearActivitySkuStock(Long sku) {
         activityRepository.clearActivitySkuStock(sku);
+    }
+
+    @Override
+    public boolean SkuStockIsZero(String cacheKey) {
+        return activityRepository.SkuStockIsZero(cacheKey);
+    }
+
+    @Override
+    public Integer getUserRaffleCountToday(Long activityId, String userId) {
+        return activityRepository.getUserRaffleCountToday(activityId, userId);
     }
 }

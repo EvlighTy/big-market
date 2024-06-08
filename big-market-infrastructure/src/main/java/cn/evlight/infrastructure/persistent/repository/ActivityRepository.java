@@ -23,8 +23,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -197,7 +198,7 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
-    public boolean subtractActivitySkuStockCount(String cacheKey, Long sku, Date endDate) {
+    public boolean subtractActivitySkuStock(String cacheKey, Long sku, LocalDateTime endDate) {
         if(!redisService.isExists(cacheKey)){
             //商品不存在或未进行缓存预热
             log.info("商品不存在或未进行缓存预热");
@@ -214,7 +215,7 @@ public class ActivityRepository implements IActivityRepository {
             eventPublisher.publish(activitySkuStockZeroMessageEvent.topic(), activitySkuStockZeroMessageEvent.buildEventMessage(sku));
         }
         String lockKey = cacheKey + Constants.Split.COLON + (stockCount + 1);
-        long expired = endDate.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
+        long expired = endDate.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
         Boolean locked = redisService.setNx(lockKey, expired, TimeUnit.MILLISECONDS);
         if(!locked){
             //加锁失败
@@ -239,8 +240,8 @@ public class ActivityRepository implements IActivityRepository {
     }
 
     @Override
-    public void clearQueueValue() {
-        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY;
+    public void clearQueueValue(Long sku) {
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_COUNT_QUERY_KEY /*+ sku*/;
         RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
         blockingQueue.delete();
     }
@@ -252,6 +253,10 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void clearActivitySkuStock(Long sku) {
+        //缓存标志位表示当前sku库存已清空
+        String cacheKey = Constants.RedisKey.ACTIVITY_SKU_STOCK_ZERO_KEY + sku;
+        redisService.setNx(cacheKey);
+        //清空库存
         raffleActivitySkuDao.clearActivitySkuStock(sku);
     }
 
@@ -458,6 +463,21 @@ public class ActivityRepository implements IActivityRepository {
             activitySkuEntities.add(activitySkuEntity);
         }
         return activitySkuEntities;
+    }
+
+    @Override
+    public Integer getUserRaffleCountToday(Long activityId, String userId) {
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.queryRaffleActivityAccountDay(RaffleActivityAccountDay.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .day(RaffleActivityAccountDay.getCurrentDay())
+                .build());
+        return raffleActivityAccountDay == null ? 0 : raffleActivityAccountDay.getDayCount() - raffleActivityAccountDay.getDayCountSurplus();
+    }
+
+    @Override
+    public boolean SkuStockIsZero(String cacheKey) {
+        return redisService.isExists(cacheKey);
     }
 
 }

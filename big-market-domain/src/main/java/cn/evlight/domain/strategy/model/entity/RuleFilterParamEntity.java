@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @Description: 规则过滤参数
  * @Author: evlight
@@ -21,5 +23,6 @@ public class RuleFilterParamEntity {
     private Long strategyId;
     private Integer awardId;
     private String ruleValue;
+    private LocalDateTime endDateTime;
 
 }

@@ -1,6 +1,6 @@
 package cn.evlight.trigger.job;
 
-import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
+import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.service.IRaffleStock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

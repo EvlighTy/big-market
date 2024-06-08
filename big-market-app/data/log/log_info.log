@@ -1769,3 +1769,23 @@ Caused by: com.rabbitmq.client.ShutdownSignalException: channel error; protocol 
 24-06-07.15:05:51.175 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
 24-06-07.15:05:51.177 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
 24-06-07.15:05:51.177 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-06-07.22:29:24.645 [main            ] INFO  ActivityTest           - Starting ActivityTest using Java 1.8.0_412 on LAPTOP-QFVSPIET with PID 16876 (started by Evanescent Light in F:\3_next\SpringCloud\Code\big-market\big-market-app)
+24-06-07.22:29:24.645 [main            ] INFO  ActivityTest           - The following 1 profile is active: "dev"
+24-06-07.22:29:25.882 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-06-07.22:29:25.886 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+24-06-07.22:29:26.040 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 135 ms. Found 0 Redis repository interfaces.
+24-06-07.22:29:29.151 [main            ] INFO  Version                - Redisson 3.23.4
+24-06-07.22:29:29.885 [redisson-netty-2-4] INFO  MasterPubSubConnectionPool - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-06-07.22:29:29.900 [redisson-netty-2-13] INFO  MasterConnectionPool   - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+24-06-07.22:29:32.957 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+24-06-07.22:29:33.063 [main            ] INFO  CachingConnectionFactory - Attempting to connect to: [127.0.0.1:5672]
+24-06-07.22:29:33.143 [main            ] INFO  CachingConnectionFactory - Created new connection: rabbitConnectionFactory#5e0f2c82:0/SimpleConnection@28cf179c [delegate=amqp://admin@127.0.0.1:5672/, localPort= 59011]
+24-06-07.22:29:33.216 [main            ] INFO  ActivityTest           - Started ActivityTest in 9.052 seconds (JVM running for 10.528)
+24-06-07.22:29:33.221 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-06-07.22:29:33.222 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Waiting for workers to finish.
+24-06-07.22:29:33.656 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Starting...
+24-06-07.22:29:33.885 [main            ] INFO  HikariDataSource       - Retail_HikariCP - Start completed.
+24-06-07.22:29:34.202 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-06-07.22:29:34.214 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#1-2] INFO  SimpleMessageListenerContainer - Successfully waited for workers to finish.
+24-06-07.22:29:34.217 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped
+24-06-07.22:29:34.217 [SpringApplicationShutdownHook] INFO  SimpleMessageListenerContainer - Shutdown ignored - container is already stopped

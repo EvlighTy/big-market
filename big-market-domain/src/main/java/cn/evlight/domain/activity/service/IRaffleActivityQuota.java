@@ -9,6 +9,19 @@ import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
  */
 public interface IRaffleActivityQuota {
 
+    /**
+    * @Description: 创建抽奖次数流水单
+    * @Param: [raffleActivityQuotaEntity]
+    * @return:
+    * @Date: 2024/6/8
+    */
     String createQuotaOrder(RaffleActivityQuotaEntity raffleActivityQuotaEntity);
 
+    /**
+    * @Description: 查询用户今日累计抽奖次数
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    Integer getUserRaffleCountToday(Long activityId, String userId);
 }

@@ -16,4 +16,7 @@ public class RaffleStrategyAwardListResponseDTO {
     private String awardTitle; //奖品标题
     private String awardSubtitle; //奖品副标题
     private Integer sort; //排序
+    private Integer ruleLockCount; //解锁阈值
+    private Boolean isUnlocked; //是否解锁
+    private Integer toUnlockCount; //还需要抽奖几次才能解锁
 }

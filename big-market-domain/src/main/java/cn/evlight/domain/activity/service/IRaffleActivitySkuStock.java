@@ -23,7 +23,7 @@ public interface IRaffleActivitySkuStock {
     * @return:
     * @Date: 2024/6/4
     */
-    void clearQueueValue();
+    void clearQueueValue(Long sku);
 
     /**
     * @Description: 更新数据库sku库存
@@ -41,4 +41,11 @@ public interface IRaffleActivitySkuStock {
     */
     void clearActivitySkuStock(Long sku);
 
+    /**
+    * @Description: 判断库存是否已清空
+    * @Param: [cacheKey]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    boolean SkuStockIsZero(String cacheKey);
 }

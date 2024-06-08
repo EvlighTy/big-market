@@ -1,6 +1,6 @@
 package cn.evlight.infrastructure.persistent.repository;
 
-import cn.evlight.domain.activity.model.valobj.StrategyAwardStockKeyVO;
+import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
@@ -11,13 +11,20 @@ import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
+import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 public class StrategyRepository implements IStrategyRepository {
 
@@ -66,6 +73,7 @@ public class StrategyRepository implements IStrategyRepository {
                         .awardCount(strategyAward.getAwardCount())
                         .awardCountSurplus(strategyAward.getAwardCountSurplus())
                         .awardRate(strategyAward.getAwardRate())
+                        .ruleModels(strategyAward.getRuleModels())
                         .sort(strategyAward.getSort())
                         .build();
             strategyAwardEntities.add(strategyAwardEntity);
@@ -271,7 +279,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public Integer getUserRaffleCountToday(String userId, Long strategyId) {
-        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+                Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
         RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.queryRaffleActivityAccountDay(RaffleActivityAccountDay.builder()
                 .activityId(activityId)
                 .userId(userId)
@@ -281,6 +289,48 @@ public class StrategyRepository implements IStrategyRepository {
             return 0;
         }
         return raffleActivityAccountDay.getDayCount() - raffleActivityAccountDay.getDayCountSurplus();
+    }
+
+    @Override
+    public Map<String, Integer> getAwardRuleLockCount(String[] treeIds) {
+        if (treeIds == null || treeIds.length == 0){
+            return Collections.emptyMap();
+        }
+        List<RuleTreeNode> ruleTreeNodes = ruleTreeNodeMapper.getRuleLockValues(treeIds);
+        return ruleTreeNodes.stream()
+                .collect(Collectors.toMap(RuleTreeNode::getTreeId,
+                        ruleTreeNode -> Integer.parseInt(ruleTreeNode.getRuleValue())));
+    }
+
+    @Override
+    public boolean subtractStrategyAwardStock(String cacheKey, LocalDateTime endDateTime) {
+        long stock = redisService.decr(cacheKey);
+        if (stock < 0) {
+            //奖品库存不足
+            log.info("策略奖品库存不足:{}", cacheKey);
+            redisService.setAtomicLong(cacheKey, 0);
+            return false;
+        }
+        String lockKey = cacheKey + Constants.Split.COLON + (stock + 1);
+        Boolean lock;
+        if (endDateTime != null) {
+            long expireMillis = endDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
+            lock = redisService.setNx(lockKey, expireMillis, TimeUnit.MILLISECONDS);
+        } else {
+            lock = redisService.setNx(lockKey);
+        }
+        if (!lock) {
+            log.info("策略奖品库存加锁失败:{}", lockKey);
+        }
+        return lock;
+    }
+
+    @Override
+    public void sendToStrategyAwardConsumeQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUERY_KEY;
+        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(cacheKey);
+        RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
     }
 
 }

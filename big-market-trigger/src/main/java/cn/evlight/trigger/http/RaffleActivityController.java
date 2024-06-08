@@ -54,7 +54,7 @@ public class RaffleActivityController implements IRaffleActivityService {
     @GetMapping("/armory")
     @Override
     public Response<Boolean> assembleRaffleActivityArmory(@RequestParam Long activityId) {
-        log.info("抽奖活动装配");
+        log.info("活动抽奖装配");
         try {
             //装配策略
             managerStrategyArmory.assembleRaffleStrategyByActivityId(activityId);
@@ -91,6 +91,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             RaffleResultEntity raffleResultEntity = raffleStrategy.doRaffle(RaffleParamEntity.builder()
                     .strategyId(userRaffleOrderEntity.getStrategyId())
                     .userId(userId)
+                    .endDataTime(userRaffleOrderEntity.getEndDateTime())
                     .build());
             //保存中奖记录
             awardService.saveUserAwardRecord(UserAwardRecordEntity.builder()

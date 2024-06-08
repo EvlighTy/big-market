@@ -5,7 +5,7 @@ import cn.evlight.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import cn.evlight.domain.activity.model.entity.*;
 import cn.evlight.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -62,7 +62,7 @@ public interface IActivityRepository {
     * @return:
     * @Date: 2024/6/4
     */
-    boolean subtractActivitySkuStockCount(String cacheKey, Long sku, Date endDate);
+    boolean subtractActivitySkuStock(String cacheKey, Long sku, LocalDateTime endDate);
 
     /**
     * @Description: 发送消息到延迟队列延迟更新商品库存
@@ -86,7 +86,7 @@ public interface IActivityRepository {
     * @return:
     * @Date: 2024/6/4
     */
-    void clearQueueValue();
+    void clearQueueValue(Long sku);
 
     /**
      * table: raffle_activity_sku
@@ -158,4 +158,20 @@ public interface IActivityRepository {
     * @Date: 2024/6/7
     */
     List<ActivitySkuEntity> queryActivitySkuByActivityId(Long activityId);
+
+    /**
+    * @Description: 查询用户今日累计抽奖次数
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    Integer getUserRaffleCountToday(Long activityId, String userId);
+
+    /**
+    * @Description: 判断库存是否已清空
+    * @Param: [cacheKey]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    boolean SkuStockIsZero(String cacheKey);
 }
