@@ -112,7 +112,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .awardIndex(raffleResultEntity.getSort())
                     .build());
         } catch (AppException e) {
-            log.error("活动抽奖失败:{}", e.getMessage());
+            log.error("活动抽奖失败:{}", e.getCode());
         } catch (Exception e){
             log.error("活动抽奖失败:未知错误");
             e.printStackTrace();

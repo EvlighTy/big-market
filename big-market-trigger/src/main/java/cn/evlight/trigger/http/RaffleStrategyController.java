@@ -30,9 +30,9 @@ import java.util.*;
  */
 
 @Slf4j
-@RestController()
+@RestController
 @CrossOrigin("${app.config.cross-origin}")
-@RequestMapping("/api/${app.config.api-version}/raffle/")
+@RequestMapping("/api/${app.config.api-version}/raffle/strategy/")
 public class RaffleStrategyController implements IRaffleStrategyService {
 
     @Autowired
@@ -53,7 +53,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     @Autowired
     private IRaffleActivityQuota raffleActivityQuota;
 
-    @GetMapping("strategy_armory")
+    @GetMapping("/armory")
     @Override
     public Response<Boolean> assembleRaffleStrategyArmory(@RequestParam Long strategyId) {
         log.info("策略抽奖装配");
@@ -66,7 +66,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
         }
     }
 
-    @PostMapping("raffle_award_list")
+    @PostMapping("/raffle_award_list")
     @Override
     public Response<List<RaffleStrategyAwardListResponseDTO>> getStrategyAwardList(@RequestBody RaffleStrategyAwardListRequestDTO request) {
         log.info("查询策略奖品集合");
@@ -78,7 +78,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
         }
         try {
             //查询策略奖品集合
-            List<StrategyAwardEntity> strategyAwardList = raffleAward.getStrategyAwardList(activityId);
+            List<StrategyAwardEntity> strategyAwardList = raffleAward.getStrategyAwardListByActivityId(activityId);
             //查询奖品集合包含的规则
             String[] treeIds = strategyAwardList.stream()
                     .map(StrategyAwardEntity::getRuleModels)
@@ -97,9 +97,9 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                                 .awardId(strategyAwardEntity.getAwardId())
                                 .awardTitle(strategyAwardEntity.getAwardTitle())
                                 .awardSubtitle(strategyAwardEntity.getAwardSubtitle())
-                                .ruleLockCount(ruleLockCount)
-                                .isUnlocked(isUnlocked)
-                                .toUnlockCount(isUnlocked ? 0 : ruleLockCount - userRaffleCountToday)
+                                .awardRuleLockCount(ruleLockCount)
+                                .isAwardUnlock(isUnlocked)
+                                .waitUnLockCount(isUnlocked ? 0 : ruleLockCount - userRaffleCountToday)
                                 .sort(strategyAwardEntity.getSort())
                                 .build();
                 strategyAwardListResponseDTOS.add(strategyAwardListResponseDTO);
@@ -113,7 +113,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
         }
     }
 
-    @PostMapping("raffle")
+    @PostMapping("/raffle")
     @Override
     public Response<RaffleStrategyResponseDTO> strategyRaffle(@RequestBody RaffleStrategyRequestDTO requestDTO) {
         log.info("抽奖");

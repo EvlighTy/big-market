@@ -333,4 +333,12 @@ public class StrategyRepository implements IStrategyRepository {
         delayedQueue.offer(strategyAwardStockKeyVO, 3, TimeUnit.SECONDS);
     }
 
+    @Override
+    public void cacheStrategyAwardStock(String cacheKey, Integer awardCountSurplus) {
+        if(redisService.isExists(cacheKey)){
+            return;
+        }
+        redisService.setAtomicLong(cacheKey, awardCountSurplus);
+    }
+
 }

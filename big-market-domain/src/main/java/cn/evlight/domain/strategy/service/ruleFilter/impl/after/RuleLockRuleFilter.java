@@ -28,7 +28,7 @@ public class RuleLockRuleFilter extends AbstractAfterRuleFilter {
         log.info("策略奖品解锁门槛检查...");
         //查询用户抽奖次数
         Integer raffleCount = strategyRepository.getUserRaffleCountToday(ruleFilterParamEntity.getUserId(), ruleFilterParamEntity.getStrategyId());
-        log.info("用户[{}]本日抽奖累计次数;{}", ruleFilterParamEntity.getUserId(), raffleCount);
+        log.info("用户[{}]本日抽奖累计次数:{}", ruleFilterParamEntity.getUserId(), raffleCount);
         //查询奖项解锁阈值
         String ruleValue = ruleFilterParamEntity.getRuleValue();
         if(ruleValue == null){
@@ -36,6 +36,7 @@ public class RuleLockRuleFilter extends AbstractAfterRuleFilter {
         }
         if(raffleCount >= Integer.parseInt(ruleValue)){
             //大于阈值放行
+            log.info("用户达到解锁门槛");
             return DefaultRuleFilterTreeFactory.Result.builder()
                     .state(RuleFilterStateVO.ALLOW)
                     .data(DefaultRuleFilterTreeFactory.ResultData.builder()

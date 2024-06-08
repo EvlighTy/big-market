@@ -159,4 +159,12 @@ public interface IStrategyRepository {
     * @Date: 2024/6/8
     */
     void sendToStrategyAwardConsumeQueue(StrategyAwardStockKeyVO strategyAwardStockKeyVO);
+
+    /**
+    * @Description: 缓存策略奖品库存
+    * @Param: [strategyId, awardId, awardCountSurplus]
+    * @return:
+    * @Date: 2024/6/8
+    */
+    void cacheStrategyAwardStock(String cacheKey, Integer awardCountSurplus);
 }

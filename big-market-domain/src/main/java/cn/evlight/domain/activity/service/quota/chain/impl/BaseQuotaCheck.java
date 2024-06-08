@@ -10,7 +10,7 @@ import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Description: 基础校验
@@ -29,8 +29,8 @@ public class BaseQuotaCheck extends AbstractQuotaQuotaCheckChain {
             //活动未开启
             throw new AppException(Constants.ExceptionInfo.INVALID_ACTIVITY_STATE);
         }
-        Date currentDate = new Date();
-        if(activityEntity.getBeginDateTime().after(currentDate) || activityEntity.getEndDateTime().before(currentDate)){
+        LocalDateTime now = LocalDateTime.now();
+        if(activityEntity.getBeginDateTime().isAfter(now) || activityEntity.getEndDateTime().isBefore(now)){
             //当前日期未在活动时间范围内
             throw new AppException(Constants.ExceptionInfo.INVALID_ACTIVITY_DATE);
         }

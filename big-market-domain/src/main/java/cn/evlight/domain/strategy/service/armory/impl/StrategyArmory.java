@@ -31,6 +31,8 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
         //配置策略总奖项
         log.info("配置策略总奖项:{}", strategyId);
         List<StrategyAwardEntity> strategyAwardEntities = strategyRepository.getStrategyAwardList(strategyId);
+        //缓存策略奖品库存
+        cacheStrategyAwardStock(strategyId, strategyAwardEntities);
         doGenerateStrategyRandomMap(strategyId.toString(), strategyAwardEntities);
         //配置策略权重奖项
         StrategyEntity strategyEntity = strategyRepository.getStrategyEntity(strategyId);
@@ -57,6 +59,13 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
             doGenerateStrategyRandomMap(strategyId + ":" + key, strategyAwardEntitiesClone);
         }
         return true;
+    }
+
+    private void cacheStrategyAwardStock(Long strategyId, List<StrategyAwardEntity> strategyAwardEntities) {
+        for (StrategyAwardEntity strategyAwardEntity : strategyAwardEntities) {
+            String cacheKey = Constants.RedisKey.STRATEGY_AWARD_STOCK_KEY + strategyId + Constants.Split.COLON + strategyAwardEntity.getAwardId();
+            strategyRepository.cacheStrategyAwardStock(cacheKey, strategyAwardEntity.getAwardCountSurplus());
+        }
     }
 
     @Override
