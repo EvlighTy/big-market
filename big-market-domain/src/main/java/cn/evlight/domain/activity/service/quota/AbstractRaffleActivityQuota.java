@@ -30,7 +30,7 @@ public abstract class AbstractRaffleActivityQuota extends RaffleActivitySupport 
     @Override
     public String createQuotaOrder(RaffleActivityQuotaEntity raffleActivityQuotaEntity) {
         Long sku = raffleActivityQuotaEntity.getSku();
-        String outBusinessNo = raffleActivityQuotaEntity.getOutBusinessNo();
+        String outBusinessNo = raffleActivityQuotaEntity.getOutBizId();
         String userId = raffleActivityQuotaEntity.getUserId();
         //参数校验
         if(sku == null || StringUtils.isBlank(outBusinessNo) || StringUtils.isBlank(userId)){

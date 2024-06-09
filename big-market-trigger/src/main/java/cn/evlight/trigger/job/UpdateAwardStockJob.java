@@ -23,16 +23,16 @@ public class UpdateAwardStockJob {
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {
         try {
-            log.info("定时任务 [更新奖品库存] 开始执行...");
+            log.info("[Scheduled Task]-[更新奖品库存] 开始执行...");
             StrategyAwardStockKeyVO strategyAwardStockKeyVO = raffleStock.takeQueueValue();
             if (null == strategyAwardStockKeyVO){
-                log.info("定时任务 [更新奖品库存] 未查询到消息");
+                log.info("[Scheduled Task]-[更新奖品库存] 未查询到消息");
                 return;
             }
-            log.info("定时任务 [更新奖品库存] 查询到消息 strategyId:{} awardId:{}", strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
+            log.info("[Scheduled Task]-[更新奖品库存] 查询到消息 strategyId:{} awardId:{}", strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
             raffleStock.updateStrategyAwardStock(strategyAwardStockKeyVO.getStrategyId(), strategyAwardStockKeyVO.getAwardId());
         } catch (Exception e) {
-            log.error("定时任务 [更新奖品库存] 执行失败", e);
+            log.error("[Scheduled Task]-[更新奖品库存] 执行失败", e);
         }
     }
 

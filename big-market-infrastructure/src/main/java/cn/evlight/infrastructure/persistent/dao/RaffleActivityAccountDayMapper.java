@@ -22,4 +22,6 @@ public interface RaffleActivityAccountDayMapper extends BaseMapper<RaffleActivit
     int raffleOrderConsume(RaffleActivityAccountDay raffleActivityAccountDay);
 
     void save(RaffleActivityAccountDay raffleActivityAccountDay);
+
+    void addQuota(RaffleActivityAccountDay raffleActivityAccountDay);
 }

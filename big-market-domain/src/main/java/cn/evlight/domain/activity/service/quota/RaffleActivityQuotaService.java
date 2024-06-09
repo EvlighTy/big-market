@@ -45,7 +45,7 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
         activityOrderEntity.setDayCount(activityCountEntity.getDayCount());
         activityOrderEntity.setMonthCount(activityCountEntity.getMonthCount());
         activityOrderEntity.setState(OrderStateVO.completed);
-        activityOrderEntity.setOutBusinessNo(raffleActivityQuotaEntity.getOutBusinessNo());
+        activityOrderEntity.setOutBusinessNo(raffleActivityQuotaEntity.getOutBizId());
 
         // 构建聚合对象
         return CreateQuotaOrderAggregate.builder()

@@ -153,6 +153,7 @@ public class ActivityRepository implements IActivityRepository {
                         .outBusinessNo(activityOrderEntity.getOutBusinessNo())
                         .build();
             //账户对象
+            //总额度账户
             RaffleActivityAccount raffleActivityAccount = RaffleActivityAccount.builder()
                         .userId(createQuotaOrderAggregate.getUserId())
                         .activityId(createQuotaOrderAggregate.getActivityId())
@@ -163,19 +164,38 @@ public class ActivityRepository implements IActivityRepository {
                         .monthCount(activityOrderEntity.getMonthCount())
                         .monthCountSurplus(activityOrderEntity.getMonthCount())
                         .build();
-            //以用户ID作为切分键，通过 doRouter 设定路由【这样就保证了下面的操作，都是同一个链接下，也就保证了事务的特性】
+            //月额度账户
+            RaffleActivityAccountMonth raffleActivityAccountMonth = RaffleActivityAccountMonth.builder()
+                        .userId(activityOrderEntity.getUserId())
+                        .activityId(activityOrderEntity.getActivityId())
+                        .month(RaffleActivityAccountMonth.getCurrentMonth())
+                        .monthCount(activityOrderEntity.getMonthCount())
+                        .monthCountSurplus(activityOrderEntity.getMonthCount())
+                        .build();
+            //日额度账户
+            RaffleActivityAccountDay raffleActivityAccountDay = RaffleActivityAccountDay.builder()
+                        .userId(activityOrderEntity.getUserId())
+                        .activityId(activityOrderEntity.getActivityId())
+                        .day(RaffleActivityAccountDay.getCurrentDay())
+                        .dayCount(activityOrderEntity.getDayCount())
+                        .dayCountSurplus(activityOrderEntity.getDayCount())
+                        .build();
+            //事务
             dbRouter.doRouter(createQuotaOrderAggregate.getUserId());
-            //编程式事务
             transactionTemplate.execute(status -> {
                 try {
                     //保存订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
-                    //更新账户
+                    //更新总额度账户
                     int count = raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
                     if (count == 0) {
-                        //账户不存在创建
+                        //总额度账户账户不存在 创建
                         raffleActivityAccountDao.insert(raffleActivityAccount);
                     }
+                    //更新月额度账户
+                    raffleActivityAccountMonthMapper.addQuota(raffleActivityAccountMonth);
+                    //更新日额度账户
+                    raffleActivityAccountDayMapper.addQuota(raffleActivityAccountDay);
                     return 1;
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();

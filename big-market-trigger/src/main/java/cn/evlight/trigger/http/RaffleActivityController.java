@@ -10,6 +10,9 @@ import cn.evlight.domain.activity.service.quota.armory.IActivityArmory;
 import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
 import cn.evlight.domain.award.model.valobj.AwardStateVO;
 import cn.evlight.domain.award.service.IAwardService;
+import cn.evlight.domain.rebate.model.entity.BehaviorEntity;
+import cn.evlight.domain.rebate.model.valobj.BehaviorTypeVO;
+import cn.evlight.domain.rebate.service.IBehaviorRebateService;
 import cn.evlight.domain.strategy.model.entity.RaffleParamEntity;
 import cn.evlight.domain.strategy.model.entity.RaffleResultEntity;
 import cn.evlight.domain.strategy.service.IRaffleStrategy;
@@ -23,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @Description: 活动抽奖服务api
@@ -50,6 +55,11 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Autowired
     private IAwardService awardService;
+
+    @Autowired
+    private IBehaviorRebateService behaviorRebateService;
+
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     @GetMapping("/armory")
     @Override
@@ -118,5 +128,25 @@ public class RaffleActivityController implements IRaffleActivityService {
             e.printStackTrace();
         }
         return Response.error();
+    }
+
+    @RequestMapping(value = "sign_rebate", method = RequestMethod.POST)
+    @Override
+    public Response<Boolean> signInRebate(@RequestParam String userId) {
+        try {
+            log.info("行为返利...");
+            List<String> orderIds = behaviorRebateService.createOrder(BehaviorEntity.builder()
+                    .userId(userId)
+                    .outBizId(dateTimeFormatter.format(LocalDateTime.now()))
+                    .behaviorTypeVO(BehaviorTypeVO.SIGN)
+                    .build());
+            log.info("返利成功 结果:{}", orderIds);
+            return Response.success(Boolean.TRUE);
+        } catch (AppException e){
+            log.info("返利失败 失败原因:{}", e.getCode());
+        } catch (Exception e){
+            log.info("返利失败 失败原因:未知错误");
+        }
+        return Response.error(Boolean.FALSE);
     }
 }

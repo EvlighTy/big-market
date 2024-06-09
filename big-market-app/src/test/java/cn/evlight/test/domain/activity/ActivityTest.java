@@ -52,7 +52,7 @@ public class ActivityTest {
         String orderId = raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
                 .sku(9011L)
                 .userId("evlight")
-                .outBusinessNo("123")
+                .outBizId("123")
                 .build());
         log.info("test22测试结果:{}", orderId);
     }
@@ -65,7 +65,7 @@ public class ActivityTest {
                 String orderId = raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
                         .sku(9011L)
                         .userId("evlight")
-                        .outBusinessNo(RandomStringUtils.randomNumeric(12))
+                        .outBizId(RandomStringUtils.randomNumeric(12))
                         .build());
                 log.info("test23测试结果：{}", orderId);
             } catch (AppException e) {

@@ -13,11 +13,6 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, user_id, activity_id, month, month_count, month_count_surplus, create_time, update_time
-    </sql>
-
     <update id="raffleOrderConsume" parameterType="cn.evlight.infrastructure.persistent.po.RaffleActivityAccountMonth">
         update raffle_activity_account_month
         set month_count_surplus = month_count_surplus - 1, update_time = now()
@@ -30,6 +25,14 @@
         values (
                    #{userId}, #{activityId}, #{month}, #{monthCount}, #{monthCountSurplus}, now(), now())
     </insert>
+
+    <update id="addQuota" parameterType="cn.evlight.infrastructure.persistent.po.RaffleActivityAccountMonth">
+        update raffle_activity_account_month
+        set month_count_surplus = month_count_surplus + #{monthCountSurplus},
+            month_count = month_count + #{monthCount},
+            update_time = now()
+        where user_id = #{userId} and activity_id = #{activityId} and month = #{month}
+    </update>
 
     <select id="queryRaffleActivityAccountMonth" parameterType="cn.evlight.infrastructure.persistent.po.RaffleActivityAccountMonth" resultMap="dataMap">
         select user_id, activity_id, month, month_count, month_count_surplus

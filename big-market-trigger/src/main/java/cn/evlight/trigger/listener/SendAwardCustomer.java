@@ -26,9 +26,9 @@ public class SendAwardCustomer {
     ))
     public void listener(String message) {
         try {
-            log.info("监听用户奖品发送消息 topic: {} message: {}", topic, message);
+            log.info("[MQ]-[用户奖品发放] topic: {} message: {}", topic, message);
         } catch (Exception e) {
-            log.error("监听用户奖品发送消息，消费失败 topic: {} message: {}", topic, message);
+            log.error("[MQ]-[用户奖品发放]，消费失败 topic: {} message: {}", topic, message);
             throw e;
         }
     }

@@ -10,6 +10,12 @@ import cn.evlight.domain.activity.model.entity.UserRaffleOrderEntity;
  */
 public interface IRaffleActivityPartake {
 
+    /**
+    * @Description: 创建抽奖单
+    * @Param: [raffleActivityPartakeEntity]
+    * @return:
+    * @Date: 2024/6/9
+    */
     UserRaffleOrderEntity createPartakeOrder(RaffleActivityPartakeEntity raffleActivityPartakeEntity);
 
 }

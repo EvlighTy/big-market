@@ -41,7 +41,7 @@ public interface IActivityRepository {
 
     /**
      * table: raffle_activity_order, raffle_activity_account
-    * @Description: 保存订单
+    * @Description: 保存额度订单
     * @Param: [createQuotaOrderAggregate]
     * @return:
     * @Date: 2024/6/2

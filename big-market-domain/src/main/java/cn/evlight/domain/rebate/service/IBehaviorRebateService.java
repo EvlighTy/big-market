@@ -11,6 +11,12 @@ import java.util.List;
  */
 public interface IBehaviorRebateService {
 
+    /**
+    * @Description: 保存行为返利订单
+    * @Param: [behaviorEntity]
+    * @return:
+    * @Date: 2024/6/9
+    */
     List<String> createOrder(BehaviorEntity behaviorEntity);
 
 }

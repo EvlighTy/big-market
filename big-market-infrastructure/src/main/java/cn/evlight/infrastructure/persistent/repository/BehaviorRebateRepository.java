@@ -25,6 +25,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @Description: 行为返利仓库实现类
@@ -74,6 +75,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
 
     @Override
     public void saveUserBehaviorRebateOrder(ArrayList<BehaviorRebateAggregate> behaviorRebateAggregates) {
+        AtomicBoolean success = new AtomicBoolean(false);
         try {
             dbRouter.doRouter(behaviorRebateAggregates.get(0).getUserId());
             transactionTemplate.execute(status -> {
@@ -105,6 +107,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                     //批量插入
                     userBehaviorRebateOrderMapper.saveBatch(userBehaviorRebateOrders);
                     taskMapper.saveBatch(tasks);
+                    success.set(true);
                     return behaviorRebateAggregates.size();
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();
@@ -115,6 +118,9 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
             dbRouter.clear();
         }
         //发送消息到MQ
+        if(!success.get()){
+            return;
+        }
         ArrayList<Task> successSendTasks = new ArrayList<>(behaviorRebateAggregates.size());
         ArrayList<Task> failSendTasks = new ArrayList<>(behaviorRebateAggregates.size());
         for (BehaviorRebateAggregate behaviorRebateAggregate : behaviorRebateAggregates) {

@@ -27,4 +27,12 @@ public interface IRaffleActivityService {
     */
     Response<RaffleActivityResponseDTO> activityRaffle(RaffleActivityRequestDTO requestDTO);
 
+    /**
+    * @Description: 签到返利
+    * @Param: [userId]
+    * @return:
+    * @Date: 2024/6/9
+    */
+    Response<Boolean> signInRebate(String userId);
+
 }
