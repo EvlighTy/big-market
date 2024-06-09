@@ -13,31 +13,52 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, topic, message, state, create_time, update_time
-    </sql>
-
     <insert id="save" parameterType="cn.evlight.infrastructure.persistent.po.UserAwardRecord">
-        insert into task(
-            user_id, topic, message_id, message, state, create_time, update_time
-        ) values (
-                     #{userId},#{topic},#{messageId},#{message},#{state},now(),now()
-                 )
+        insert into
+            task( user_id, topic, message_id, message, state, create_time, update_time )
+        values
+            ( #{userId}, #{topic}, #{messageId}, #{message}, #{state}, now(), now() )
     </insert>
 
-    <update id="updateAfterCompleted"
-            parameterType="cn.evlight.infrastructure.persistent.po.UserAwardRecord">
+    <update id="updateAfterCompleted" parameterType="cn.evlight.infrastructure.persistent.po.Task">
         update task
         set state = 'completed', update_time = now()
         where user_id = #{userId} and message_id = #{messageId}
     </update>
 
-    <update id="updateAfterFailed" parameterType="cn.evlight.infrastructure.persistent.po.UserAwardRecord">
+    <update id="updateAfterFailed" parameterType="cn.evlight.infrastructure.persistent.po.Task">
         update task
         set state = 'fail', update_time = now()
         where user_id = #{userId} and message_id = #{messageId}
     </update>
+
+    <update id="updateBatchAfterCompleted" parameterType="java.util.List">
+        <foreach collection="tasks" item="task" separator=";">
+            update task
+            set state = 'completed', update_time = now()
+            where user_id = #{task.userId} and message_id = #{task.messageId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchAfterFailed" parameterType="java.util.List">
+        <foreach collection="tasks" item="task" separator=";">
+            update task
+            set state = 'fail', update_time = now()
+            where user_id = #{task.userId} and message_id = #{task.messageId}
+        </foreach>
+    </update>
+
+    <insert id="saveBatch" parameterType="cn.evlight.infrastructure.persistent.po.Task">
+        insert into task
+            (user_id, topic, message_id, message, state, create_time, update_time)
+        values
+            <foreach collection="tasks" item="task" separator=",">
+                (
+                #{task.userId}, #{task.topic}, #{task.messageId}, #{task.message}, #{task.state}, now(), now()
+                )
+            </foreach>
+
+    </insert>
 
     <select id="queryUnSendMessageTaskList" resultMap="dataMap">
         select user_id, topic, message_id, message

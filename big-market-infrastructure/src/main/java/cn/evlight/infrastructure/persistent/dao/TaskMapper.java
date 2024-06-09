@@ -19,12 +19,19 @@ import java.util.List;
 public interface TaskMapper extends BaseMapper<Task> {
 
     void save(Task task);
+    void saveBatch(List<Task> tasks);
 
     @DBRouter
     void updateAfterCompleted(Task task);
 
     @DBRouter
+    void updateBatchAfterCompleted(List<Task> tasks);
+
+    @DBRouter
     void updateAfterFailed(Task task);
+
+    @DBRouter
+    void updateBatchAfterFailed(List<Task> tasks);
 
     List<Task> queryUnSendMessageTaskList();
 }
