@@ -1,5 +1,6 @@
 package cn.evlight.types.model;
 
+import cn.evlight.types.common.Constants;
 import cn.evlight.types.enums.ResponseCode;
 import lombok.Builder;
 import lombok.Data;
@@ -51,6 +52,13 @@ public class Response<T> {
         return Response.<T>builder()
                 .code(ResponseCode.UN_ERROR.getCode())
                 .info(info)
+                .build();
+    }
+
+    public static <T> Response<T> error(Constants.Exception e){
+        return Response.<T>builder()
+                .code(e.getCode())
+                .info(e.getInfo())
                 .build();
     }
 

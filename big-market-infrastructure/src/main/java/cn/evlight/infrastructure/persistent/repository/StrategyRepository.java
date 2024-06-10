@@ -1,11 +1,11 @@
 package cn.evlight.infrastructure.persistent.repository;
 
-import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.evlight.domain.strategy.model.valobj.*;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
+import cn.evlight.domain.strategy.service.ruleFilter.factory.before.DefaultRuleFilterChainFactory;
 import cn.evlight.infrastructure.persistent.dao.*;
 import cn.evlight.infrastructure.persistent.po.*;
 import cn.evlight.infrastructure.persistent.redis.IRedisService;
@@ -54,6 +54,9 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Autowired
     private RaffleActivityAccountDayMapper raffleActivityAccountDayMapper;
+
+    @Autowired
+    private IRaffleActivityAccountDao raffleActivityAccountDao;
 
     @Override
     public List<StrategyAwardEntity> getStrategyAwardList(Long strategyId) {
@@ -232,7 +235,7 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public StrategyAwardEntity getStrategyAwardEntity(Long strategyId, Integer awardId) {
         //先查询redis
-        String key = Constants.RedisKey.STRATEGY_ENTITY_MAP_KEY + strategyId;
+        String key = Constants.RedisKey.STRATEGY_AWARD_MAP_KEY + strategyId;
         RMap<Integer, StrategyAwardEntity> strategyAwardEntityMap = redisService.getMap(key);
         StrategyAwardEntity strategyAwardEntity = strategyAwardEntityMap.get(awardId);
         if(strategyAwardEntity != null){
@@ -339,6 +342,79 @@ public class StrategyRepository implements IStrategyRepository {
             return;
         }
         redisService.setAtomicLong(cacheKey, awardCountSurplus);
+    }
+
+    @Override
+    public Integer getUserAccountTotalUsedCount(Long strategyId, String userId) {
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.getUserAccountQuota(RaffleActivityAccount.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build());
+        //todo
+        return (raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus()) * 100;
+    }
+
+    @Override
+    public List<RuleWeightVO> getStrategyRuleWeightDetail(Long strategyId) {
+        //先查询Redis
+        String key = Constants.RedisKey.STRATEGY_RULE_WEIGHT_KEY + strategyId;
+        List<RuleWeightVO> ruleWeightVOS = redisService.getValue(key);
+        if (ruleWeightVOS != null) return ruleWeightVOS;
+        //再查询数据库
+        //查询策略规则
+        StrategyRule strategyRule = strategyRuleMapper.queryStrategyRule(StrategyRule.builder()
+                .strategyId(strategyId)
+                .ruleModel(DefaultRuleFilterChainFactory.RuleModel.RULE_WEIGHT.getCode())
+                .build());
+        if(strategyRule == null){
+            //没有配置权重规则
+            return null;
+        }
+        StrategyRuleEntity strategyRuleEntity = StrategyRuleEntity.builder()
+                .strategyId(strategyRule.getStrategyId())
+                .awardId(strategyRule.getAwardId())
+                .ruleType(strategyRule.getRuleType())
+                .ruleModel(strategyRule.getRuleModel())
+                .ruleValue(strategyRule.getRuleValue())
+                .ruleDesc(strategyRule.getRuleDesc())
+                .build();
+        Map<Integer, List<Integer>> ruleWeightValuesMap = strategyRuleEntity.getRuleWeightValues();
+        if(ruleWeightValuesMap == null){
+            return null;
+        }
+        Set<Integer> ruleWeightValues = ruleWeightValuesMap.keySet();
+        ruleWeightVOS = new ArrayList<>(ruleWeightValuesMap.size());
+        //先查询缓存
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_MAP_KEY + strategyId;
+        RMap<Integer, StrategyAwardEntity> strategyAwardEntityMap = redisService.getMap(cacheKey);
+        for (Integer ruleWeightValue : ruleWeightValues) {
+            List<Integer> awardIds = ruleWeightValuesMap.get(ruleWeightValue);
+            ArrayList<RuleWeightVO.Award> awards = new ArrayList<>();
+            for (Integer awardId : awardIds) {
+                //查询策略奖品信息
+                //先查询缓存
+                StrategyAwardEntity strategyAwardEntity = strategyAwardEntityMap.get(awardId);
+                if(strategyAwardEntity == null){
+                    //再查询数据库
+                    strategyAwardEntity = getStrategyAwardEntity(strategyId, awardId);
+                }
+                //每项权重值的奖品的信息
+                awards.add(RuleWeightVO.Award.builder()
+                        .awardId(awardId)
+                        .awardTitle(strategyAwardEntity.getAwardTitle())
+                        .build());
+            }
+            //每项权重值的信息
+            ruleWeightVOS.add(RuleWeightVO.builder()
+                    .ruleValue(strategyRule.getRuleValue())
+                    .weight(ruleWeightValue)
+                    .awardIds(awardIds)
+                    .awardList(awards)
+                    .build());
+        }
+        redisService.setValue(key, ruleWeightVOS);
+        return ruleWeightVOS;
     }
 
 }

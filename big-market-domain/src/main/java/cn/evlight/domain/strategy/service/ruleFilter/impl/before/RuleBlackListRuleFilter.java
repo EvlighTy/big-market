@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @Description: 黑名单过滤器
@@ -30,15 +30,15 @@ public class RuleBlackListRuleFilter extends AbstractBeforeRuleFilter {
         log.info("黑名单过滤...");
         //查询黑名单
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleEntity(ruleFilterParamEntity.getStrategyId(), ruleModel());
-        HashMap<String, Set<String>> ruleBlacklistValues = strategyRuleEntity.getRuleBlacklistValues();
+        HashMap<Integer, List<String>> ruleBlacklistValues = strategyRuleEntity.getRuleBlacklistValues();
         //过滤黑名单用户
-        for (String key : ruleBlacklistValues.keySet()) {
-            Set<String> blacklist = ruleBlacklistValues.get(key);
-            if (blacklist.contains(ruleFilterParamEntity.getUserId().toString())){
+        for (Integer key : ruleBlacklistValues.keySet()) {
+            List<String> blacklist = ruleBlacklistValues.get(key);
+            if (blacklist.contains(ruleFilterParamEntity.getUserId())){
                 //是黑名单用户
                 log.info("黑名单用户被拦截:{}", ruleFilterParamEntity.getUserId());
                 return DefaultRuleFilterChainFactory.ResultData.builder()
-                        .awardId(Integer.parseInt(key))
+                        .awardId(key)
                         .ruleModel(ruleModel())
                         .build();
             }

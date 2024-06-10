@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +21,6 @@ import java.util.ArrayList;
 public interface UserBehaviorRebateOrderMapper extends BaseMapper<UserBehaviorRebateOrder> {
 
     void saveBatch(ArrayList<UserBehaviorRebateOrder> userBehaviorRebateOrders);
+
+    List<UserBehaviorRebateOrder> getUserBehaviorRebateOrderByOutBizId(UserBehaviorRebateOrder userBehaviorRebateOrder);
 }

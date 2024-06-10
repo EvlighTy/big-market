@@ -1,5 +1,8 @@
 package cn.evlight.types.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 public interface Constants {
 
     interface Split{
@@ -16,10 +19,10 @@ public interface Constants {
         String STRATEGY_RATE_RANGE_KEY = "strategy:rate_range:";
         String STRATEGY_KEY = "strategy:";
         String STRATEGY_RULE_VALUE_KEY = "strategy:rule_value:";
+        String STRATEGY_RULE_WEIGHT_KEY = "strategy:rule_weight:";
         String STRATEGY_RULE_TREE_KEY = "strategy:rule_tree:";
-        String STRATEGY_AWARD_KEY = "strategy:award:";
         String STRATEGY_AWARD_STOCK_KEY = "strategy:award:stock:";
-        String STRATEGY_ENTITY_MAP_KEY = "strategy:entity_map:";
+        String STRATEGY_AWARD_MAP_KEY = "strategy:award_map:";
         String STRATEGY_AWARD_COUNT_QUERY_KEY = "strategy:award_count_query:";
 
         //活动
@@ -44,6 +47,17 @@ public interface Constants {
         String RAFFLE_ACTIVITY_ACCOUNT_UPDATE_FAILED = "用户总额度库存更新失败";
         String RAFFLE_ACTIVITY_ACCOUNT_MONTH_UPDATE_FAILED = "用户月额度库存更新失败";
         String RAFFLE_ACTIVITY_ACCOUNT_DAY_UPDATE_FAILED = "用户日额度库存更新失败";
+    }
+
+    @Getter
+    @AllArgsConstructor
+    enum Exception {
+
+        invalid_params("invalid_params", "参数不合法")
+        ;
+
+        private final String code;
+        private final String info;
     }
 
 }

@@ -1,5 +1,8 @@
 package cn.evlight.domain.strategy.service;
 
+import cn.evlight.domain.strategy.model.valobj.RuleWeightVO;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,4 +20,19 @@ public interface IRaffleRule {
     */
     Map<String, Integer> getAwardRuleLockCount(String... treeIds);
 
+    /**
+     * @Description: 查询策略权重规则详细信息
+     * @Param: [strategyId]
+     * @return:
+     * @Date: 2024/6/10
+     */
+    List<RuleWeightVO> getStrategyRuleWeightDetail(Long strategyId);
+
+    /**
+    * @Description: 查询策略权重规则详细信息
+    * @Param: [activityId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    List<RuleWeightVO> getStrategyRuleWeightDetailByActivityId(Long activityId);
 }

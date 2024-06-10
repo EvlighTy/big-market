@@ -1,6 +1,7 @@
 package cn.evlight.infrastructure.persistent.dao;
 
 import cn.bugstack.middleware.db.router.annotation.DBRouter;
+import cn.evlight.infrastructure.persistent.po.RaffleActivityAccount;
 import cn.evlight.infrastructure.persistent.po.RaffleActivityAccountMonth;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,7 @@ public interface RaffleActivityAccountMonthMapper extends BaseMapper<RaffleActiv
     void save(RaffleActivityAccountMonth raffleActivityAccountMonth);
 
     void addQuota(RaffleActivityAccountMonth raffleActivityAccountMonth);
+
+    @DBRouter
+    RaffleActivityAccountMonth getUserAccountQuota(RaffleActivityAccount raffleActivityAccount);
 }

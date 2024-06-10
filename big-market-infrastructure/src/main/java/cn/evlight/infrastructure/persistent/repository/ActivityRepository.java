@@ -500,4 +500,65 @@ public class ActivityRepository implements IActivityRepository {
         return redisService.isExists(cacheKey);
     }
 
+    @Override
+    public RaffleActivityAccountEntity getUserAccountQuota(Long activityId, String userId) {
+        //总额度账户
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.getUserAccountQuota(RaffleActivityAccount.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build());
+        if (raffleActivityAccount == null){
+            //总额度账户不存在
+            return RaffleActivityAccountEntity.builder()
+                    .userId(userId)
+                    .activityId(activityId)
+                    .totalCount(0)
+                    .totalCountSurplus(0)
+                    .dayCount(0)
+                    .dayCountSurplus(0)
+                    .monthCount(0)
+                    .monthCountSurplus(0)
+                    .build();
+        }
+        RaffleActivityAccountEntity raffleActivityAccountEntity = RaffleActivityAccountEntity.builder()
+                .userId(raffleActivityAccount.getUserId())
+                .activityId(raffleActivityAccount.getActivityId())
+                .totalCount(raffleActivityAccount.getTotalCount())
+                .totalCountSurplus(raffleActivityAccount.getTotalCountSurplus())
+                .dayCount(raffleActivityAccount.getDayCount())
+                .dayCountSurplus(raffleActivityAccount.getDayCountSurplus())
+                .monthCount(raffleActivityAccount.getMonthCount())
+                .monthCountSurplus(raffleActivityAccount.getMonthCountSurplus())
+                .build();
+        //月额度账户
+        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthMapper.getUserAccountQuota(RaffleActivityAccount.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build());
+        if (raffleActivityAccountMonth != null){
+            raffleActivityAccountEntity.setMonthCount(raffleActivityAccountMonth.getMonthCount());
+            raffleActivityAccountEntity.setMonthCountSurplus(raffleActivityAccountMonth.getMonthCountSurplus());
+        }
+
+        //日额度账户
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.getUserAccountQuota(RaffleActivityAccount.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build());
+        if (raffleActivityAccountDay != null){
+            raffleActivityAccountEntity.setMonthCount(raffleActivityAccountDay.getDayCount());
+            raffleActivityAccountEntity.setMonthCountSurplus(raffleActivityAccountDay.getDayCountSurplus());
+        }
+        return raffleActivityAccountEntity;
+    }
+
+    @Override
+    public Integer getUserRaffleCount(Long activityId, String userId) {
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.getUserAccountQuota(RaffleActivityAccount.builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build());
+        return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
+    }
+
 }

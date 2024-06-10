@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,18 +34,16 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
     @Override
     public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
         log.info("规则权重过滤...");
-        //查询用户积分值 todo
-        long userScore = 2000L;
-
+        //查询用户积分值
+        Integer userScore = strategyRepository.getUserAccountTotalUsedCount(ruleFilterParamEntity.getStrategyId(), ruleFilterParamEntity.getUserId());
         //查询策略权重规则
         StrategyRuleEntity strategyRuleEntity = strategyRepository.getStrategyRuleEntity(ruleFilterParamEntity.getStrategyId(), ruleModel());
         if(strategyRuleEntity == null){
             //没有配置权重规则
             return next().doFilter(ruleFilterParamEntity);
         }
-        Map<String, Set<String>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
+        Map<Integer, List<Integer>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
         List<Integer> thresholdList = ruleWeightValues.keySet().stream()
-                .map(Integer::parseInt)
                 .sorted()
                 .collect(Collectors.toList());
         Collections.reverse(thresholdList);

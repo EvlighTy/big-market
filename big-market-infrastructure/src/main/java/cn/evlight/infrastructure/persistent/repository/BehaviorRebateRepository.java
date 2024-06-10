@@ -2,7 +2,7 @@ package cn.evlight.infrastructure.persistent.repository;
 
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import cn.evlight.domain.rebate.model.aggregate.BehaviorRebateAggregate;
-import cn.evlight.domain.rebate.model.entity.BehaviorRebateOrderEntity;
+import cn.evlight.domain.rebate.model.entity.UserBehaviorRebateOrderEntity;
 import cn.evlight.domain.rebate.model.entity.TaskEntity;
 import cn.evlight.domain.rebate.model.valobj.BehaviorTypeVO;
 import cn.evlight.domain.rebate.model.valobj.DailyBehaviorRebateVO;
@@ -84,7 +84,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                     ArrayList<Task> tasks = new ArrayList<>();
                     for (BehaviorRebateAggregate behaviorRebateAggregate : behaviorRebateAggregates) {
                         //订单对象
-                        BehaviorRebateOrderEntity behaviorRebateOrderEntity = behaviorRebateAggregate.getBehaviorRebateOrderEntity();
+                        UserBehaviorRebateOrderEntity behaviorRebateOrderEntity = behaviorRebateAggregate.getBehaviorRebateOrderEntity();
                         UserBehaviorRebateOrder userBehaviorRebateOrder = new UserBehaviorRebateOrder();
                         userBehaviorRebateOrder.setUserId(behaviorRebateOrderEntity.getUserId());
                         userBehaviorRebateOrder.setOrderId(behaviorRebateOrderEntity.getOrderId());
@@ -92,6 +92,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                         userBehaviorRebateOrder.setRebateDesc(behaviorRebateOrderEntity.getRebateDesc());
                         userBehaviorRebateOrder.setRebateType(behaviorRebateOrderEntity.getRebateType());
                         userBehaviorRebateOrder.setRebateConfig(behaviorRebateOrderEntity.getRebateConfig());
+                        userBehaviorRebateOrder.setOutBusinessNo(behaviorRebateOrderEntity.getOutBusinessNo());
                         userBehaviorRebateOrder.setBizId(behaviorRebateOrderEntity.getBizId());
                         userBehaviorRebateOrders.add(userBehaviorRebateOrder);
                         //任务对象
@@ -142,6 +143,29 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
         if(!failSendTasks.isEmpty()){
             taskMapper.updateBatchAfterFailed(failSendTasks);
         }
+    }
+
+    @Override
+    public List<UserBehaviorRebateOrderEntity> getUserBehaviorRebateOrderEntityByOutBizId(String userId, String outBizId) {
+        UserBehaviorRebateOrder userBehaviorRebateOrder = new UserBehaviorRebateOrder();
+        userBehaviorRebateOrder.setUserId(userId);
+        userBehaviorRebateOrder.setOutBusinessNo(outBizId);
+        List<UserBehaviorRebateOrder> userBehaviorRebateOrders = userBehaviorRebateOrderMapper.getUserBehaviorRebateOrderByOutBizId(userBehaviorRebateOrder);
+        ArrayList<UserBehaviorRebateOrderEntity> userBehaviorRebateOrderEntities = new ArrayList<>(userBehaviorRebateOrders.size());
+        for (UserBehaviorRebateOrder behaviorRebateOrder : userBehaviorRebateOrders) {
+            UserBehaviorRebateOrderEntity userBehaviorRebateOrderEntity = UserBehaviorRebateOrderEntity.builder()
+                        .userId(behaviorRebateOrder.getUserId())
+                        .orderId(behaviorRebateOrder.getOrderId())
+                        .behaviorType(behaviorRebateOrder.getBehaviorType())
+                        .rebateDesc(behaviorRebateOrder.getRebateDesc())
+                        .rebateType(behaviorRebateOrder.getRebateType())
+                        .rebateConfig(behaviorRebateOrder.getRebateConfig())
+                        .bizId(behaviorRebateOrder.getBizId())
+                        .outBusinessNo(behaviorRebateOrder.getOutBusinessNo())
+                        .build();
+            userBehaviorRebateOrderEntities.add(userBehaviorRebateOrderEntity);
+        }
+        return userBehaviorRebateOrderEntities;
     }
 
 }

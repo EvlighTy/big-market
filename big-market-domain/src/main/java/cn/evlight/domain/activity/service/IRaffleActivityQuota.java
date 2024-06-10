@@ -1,5 +1,6 @@
 package cn.evlight.domain.activity.service;
 
+import cn.evlight.domain.activity.model.entity.RaffleActivityAccountEntity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
 
 /**
@@ -24,4 +25,21 @@ public interface IRaffleActivityQuota {
     * @Date: 2024/6/8
     */
     Integer getUserRaffleCountToday(Long activityId, String userId);
+
+    /**
+    * @Description: 查询用户总额度账户
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    RaffleActivityAccountEntity getUserAccountQuota(Long activityId, String userId);
+
+    /**
+    * @Description: 查询用户累计抽奖次数
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    Integer getUserRaffleCount(Long activityId, String userId);
+
 }

@@ -1,7 +1,9 @@
 package cn.evlight.api;
 
-import cn.evlight.api.model.request.RaffleActivityRequestDTO;
-import cn.evlight.api.model.response.RaffleActivityResponseDTO;
+import cn.evlight.api.dto.request.AccountQuotaRequestDTO;
+import cn.evlight.api.dto.request.RaffleActivityRequestDTO;
+import cn.evlight.api.dto.response.AccountQuotaResponseDTO;
+import cn.evlight.api.dto.response.RaffleActivityResponseDTO;
 import cn.evlight.types.model.Response;
 
 /**
@@ -25,7 +27,7 @@ public interface IRaffleActivityService {
     * @return:
     * @Date: 2024/6/7
     */
-    Response<RaffleActivityResponseDTO> activityRaffle(RaffleActivityRequestDTO requestDTO);
+    Response<RaffleActivityResponseDTO> activityRaffle(RaffleActivityRequestDTO request);
 
     /**
     * @Description: 签到返利
@@ -34,5 +36,21 @@ public interface IRaffleActivityService {
     * @Date: 2024/6/9
     */
     Response<Boolean> signInRebate(String userId);
+
+    /**
+    * @Description: 查询用户今日是否已签到
+    * @Param: [userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    Response<Boolean> isSignOrNot(String userId);
+
+    /**
+     * @Description: 查询用户总账户额度
+     * @Param: [request]
+     * @return:
+     * @Date: 2024/6/10
+     */
+    Response<AccountQuotaResponseDTO> getUserAccountQuota(AccountQuotaRequestDTO request);
 
 }

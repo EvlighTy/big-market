@@ -1,16 +1,21 @@
 package cn.evlight.trigger.http;
 
 import cn.evlight.api.IRaffleActivityService;
-import cn.evlight.api.model.request.RaffleActivityRequestDTO;
-import cn.evlight.api.model.response.RaffleActivityResponseDTO;
+import cn.evlight.api.dto.request.AccountQuotaRequestDTO;
+import cn.evlight.api.dto.request.RaffleActivityRequestDTO;
+import cn.evlight.api.dto.response.AccountQuotaResponseDTO;
+import cn.evlight.api.dto.response.RaffleActivityResponseDTO;
+import cn.evlight.domain.activity.model.entity.RaffleActivityAccountEntity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityPartakeEntity;
 import cn.evlight.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.evlight.domain.activity.service.IRaffleActivityPartake;
+import cn.evlight.domain.activity.service.IRaffleActivityQuota;
 import cn.evlight.domain.activity.service.quota.armory.IActivityArmory;
 import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
 import cn.evlight.domain.award.model.valobj.AwardStateVO;
 import cn.evlight.domain.award.service.IAwardService;
 import cn.evlight.domain.rebate.model.entity.BehaviorEntity;
+import cn.evlight.domain.rebate.model.entity.UserBehaviorRebateOrderEntity;
 import cn.evlight.domain.rebate.model.valobj.BehaviorTypeVO;
 import cn.evlight.domain.rebate.service.IBehaviorRebateService;
 import cn.evlight.domain.strategy.model.entity.RaffleParamEntity;
@@ -51,6 +56,9 @@ public class RaffleActivityController implements IRaffleActivityService {
     private IRaffleStrategy raffleStrategy;
 
     @Autowired
+    private IRaffleActivityQuota raffleActivityQuota;
+
+    @Autowired
     private IRaffleActivityPartake raffleActivityPartake;
 
     @Autowired
@@ -64,18 +72,18 @@ public class RaffleActivityController implements IRaffleActivityService {
     @GetMapping("/armory")
     @Override
     public Response<Boolean> assembleRaffleActivityArmory(@RequestParam Long activityId) {
-        log.info("活动抽奖装配");
+        log.info("[request]-[活动抽奖装配]");
         try {
             //装配策略
             managerStrategyArmory.assembleRaffleStrategyByActivityId(activityId);
             //装配活动
             activityArmory.assembleActivitySkuByActivityId(activityId);
-            log.info("装配成功");
+            log.info("[request]-[活动抽奖装配] 成功");
             return Response.success();
         } catch (AppException e) {
-            log.error("装配失败:{}",e.getMessage());
+            log.error("[request]-[活动抽奖装配] 失败:{}",e.getMessage());
         }catch (Exception e){
-            log.error("装配失败:未知错误");
+            log.error("[request]-[活动抽奖装配] 失败:未知错误");
             e.printStackTrace();
         }
         return Response.error();
@@ -83,12 +91,12 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @PostMapping("/raffle")
     @Override
-    public Response<RaffleActivityResponseDTO> activityRaffle(@RequestBody RaffleActivityRequestDTO requestDTO) {
-        log.info("活动抽奖");
+    public Response<RaffleActivityResponseDTO> activityRaffle(@RequestBody RaffleActivityRequestDTO request) {
+        log.info("[request]-[活动抽奖]");
         try {
             //参数校验
-            Long activityId = requestDTO.getActivityId();
-            String userId = requestDTO.getUserId();
+            Long activityId = request.getActivityId();
+            String userId = request.getUserId();
             if(activityId == null || StringUtils.isBlank(userId)){
                 throw new AppException(Constants.ExceptionInfo.INVALID_PARAMS);
             }
@@ -114,7 +122,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .awardTime(LocalDateTime.now())
                             .awardState(AwardStateVO.create)
                     .build());
-            log.info("活动抽奖成功");
+            log.info("[request]-[活动抽奖] 成功");
             //返回结果
             return Response.success(RaffleActivityResponseDTO.builder()
                             .awardId(raffleResultEntity.getAwardId())
@@ -122,31 +130,92 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .awardIndex(raffleResultEntity.getSort())
                     .build());
         } catch (AppException e) {
-            log.error("活动抽奖失败:{}", e.getCode());
+            log.error("[request]-[活动抽奖] 失败:{}", e.getCode());
         } catch (Exception e){
-            log.error("活动抽奖失败:未知错误");
+            log.error("[request]-[活动抽奖] 失败:未知错误");
             e.printStackTrace();
         }
         return Response.error();
     }
 
-    @RequestMapping(value = "sign_rebate", method = RequestMethod.POST)
+    @PostMapping("/sign_rebate")
     @Override
     public Response<Boolean> signInRebate(@RequestParam String userId) {
         try {
-            log.info("行为返利...");
+            log.info("[request]-[行为返利]");
             List<String> orderIds = behaviorRebateService.createOrder(BehaviorEntity.builder()
                     .userId(userId)
                     .outBizId(dateTimeFormatter.format(LocalDateTime.now()))
                     .behaviorTypeVO(BehaviorTypeVO.SIGN)
                     .build());
-            log.info("返利成功 结果:{}", orderIds);
+            log.info("[request]-[行为返利] 成功 结果:{}", orderIds);
             return Response.success(Boolean.TRUE);
         } catch (AppException e){
-            log.info("返利失败 失败原因:{}", e.getCode());
+            log.info("[request]-[行为返利] 失败:{}", e.getCode());
         } catch (Exception e){
-            log.info("返利失败 失败原因:未知错误");
+            log.info("[request]-[行为返利] 失败:未知错误");
         }
         return Response.error(Boolean.FALSE);
     }
+
+    @PostMapping("/is_sign_or_not")
+    @Override
+    public Response<Boolean> isSignOrNot(@RequestParam String userId) {
+        try {
+            log.info("[request]-[查询用户今日是否已签到]");
+            String outBizId = dateTimeFormatter.format(LocalDateTime.now());
+            List<UserBehaviorRebateOrderEntity> userBehaviorRebateOrderEntities = behaviorRebateService.getUserBehaviorRebateOrderEntityByOutBizId(userId, outBizId);
+            log.info("[request]-[查询用户今日是否已签到] 结果:{}", !userBehaviorRebateOrderEntities.isEmpty());
+            return Response.success(userBehaviorRebateOrderEntities.isEmpty());
+        } catch (AppException e){
+            log.info("[request]-[查询用户今日是否已签到] 失败:{}", e.getCode());
+        } catch (Exception e){
+            log.info("[request]-[查询用户今日是否已签到] 失败:未知错误");
+        }
+        return Response.error(Boolean.FALSE);
+    }
+
+    @PostMapping("/account_quota")
+    @Override
+    public Response<AccountQuotaResponseDTO> getUserAccountQuota(@RequestBody AccountQuotaRequestDTO request) {
+        try {
+            log.info("[request]-[查询用户总额度账户]");
+            //参数校验
+            Long activityId = request.getActivityId();
+            String userId = request.getUserId();
+            if(activityId == null || StringUtils.isBlank(userId)){
+                return Response.error(Constants.Exception.invalid_params);
+            }
+            RaffleActivityAccountEntity raffleActivityAccount = raffleActivityQuota.getUserAccountQuota(activityId, userId);
+            AccountQuotaResponseDTO accountQuotaResponseDTO = AccountQuotaResponseDTO.builder()
+                    .totalCount(raffleActivityAccount.getTotalCount())
+                    .totalCountSurplus(raffleActivityAccount.getTotalCountSurplus())
+                    .dayCount(raffleActivityAccount.getDayCount())
+                    .dayCountSurplus(raffleActivityAccount.getDayCountSurplus())
+                    .monthCount(raffleActivityAccount.getMonthCount())
+                    .monthCountSurplus(raffleActivityAccount.getMonthCountSurplus())
+                    .build();
+            log.info("[request]-[查询用户总额度账户] 成功");
+            return Response.success(accountQuotaResponseDTO);
+        } catch (AppException e){
+            log.info("[request]-[查询用户总额度账户] 失败:{}", e.getCode());
+        } catch (Exception e){
+            log.info("[request]-[查询用户总额度账户] 失败:未知错误");
+        }
+        return Response.error();
+    }
+
+    /*
+    log.info("[request]-[]");
+    try {
+        log.info("[request]-[] 成功");
+        return Response.success();
+    } catch (AppException e){
+        log.info("[request]-[] 失败:{}", e.getCode());
+    } catch (Exception e){
+        log.info("[request]-[] 失败:未知错误");
+    }
+    return Response.error();
+    */
+
 }

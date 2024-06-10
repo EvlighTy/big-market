@@ -40,4 +40,10 @@
         where user_id = #{userId} and activity_id = #{activityId} and month = #{month}
     </select>
 
+    <select id="getUserAccountQuota" parameterType="cn.evlight.infrastructure.persistent.po.RaffleActivityAccountMonth" resultMap="dataMap">
+        select user_id, activity_id, month, month_count, month_count_surplus
+        from raffle_activity_account_month
+        where user_id = #{userId} and activity_id = #{activityId} and month = #{month}
+    </select>
+
 </mapper>

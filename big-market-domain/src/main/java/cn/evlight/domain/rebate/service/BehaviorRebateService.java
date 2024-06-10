@@ -4,7 +4,7 @@ import cn.evlight.domain.award.model.valobj.TaskStateVO;
 import cn.evlight.domain.rebate.event.SendRebateEventMessage;
 import cn.evlight.domain.rebate.model.aggregate.BehaviorRebateAggregate;
 import cn.evlight.domain.rebate.model.entity.BehaviorEntity;
-import cn.evlight.domain.rebate.model.entity.BehaviorRebateOrderEntity;
+import cn.evlight.domain.rebate.model.entity.UserBehaviorRebateOrderEntity;
 import cn.evlight.domain.rebate.model.entity.TaskEntity;
 import cn.evlight.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 import cn.evlight.domain.rebate.repository.IBehaviorRebateRepository;
@@ -48,13 +48,14 @@ public class BehaviorRebateService implements IBehaviorRebateService{
             String bizId = behaviorEntity.getUserId() + Constants.Split.UNDERLINE +
                     dailyBehaviorRebateVO.getRebateType() + Constants.Split.UNDERLINE +
                     behaviorEntity.getOutBizId();
-            BehaviorRebateOrderEntity behaviorRebateOrderEntity = BehaviorRebateOrderEntity.builder()
+            UserBehaviorRebateOrderEntity behaviorRebateOrderEntity = UserBehaviorRebateOrderEntity.builder()
                         .userId(behaviorEntity.getUserId())
                         .orderId(RandomStringUtils.randomNumeric(12))
                         .behaviorType(dailyBehaviorRebateVO.getBehaviorType())
                         .rebateDesc(dailyBehaviorRebateVO.getRebateDesc())
                         .rebateType(dailyBehaviorRebateVO.getRebateType())
                         .rebateConfig(dailyBehaviorRebateVO.getRebateConfig())
+                        .outBusinessNo(behaviorEntity.getOutBizId())
                         .bizId(bizId)
                         .build();
             //订单id
@@ -84,6 +85,11 @@ public class BehaviorRebateService implements IBehaviorRebateService{
         }
         behaviorRebateRepository.saveUserBehaviorRebateOrder(behaviorRebateAggregates);
         return orderIds;
+    }
+
+    @Override
+    public List<UserBehaviorRebateOrderEntity> getUserBehaviorRebateOrderEntityByOutBizId(String userId, String outBizId) {
+        return behaviorRebateRepository.getUserBehaviorRebateOrderEntityByOutBizId(userId, outBizId);
     }
 
 }

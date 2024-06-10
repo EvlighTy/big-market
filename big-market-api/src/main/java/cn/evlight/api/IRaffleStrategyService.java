@@ -1,9 +1,11 @@
 package cn.evlight.api;
 
-import cn.evlight.api.model.request.RaffleStrategyRequestDTO;
-import cn.evlight.api.model.response.RaffleStrategyResponseDTO;
-import cn.evlight.api.model.request.RaffleStrategyAwardListRequestDTO;
-import cn.evlight.api.model.response.RaffleStrategyAwardListResponseDTO;
+import cn.evlight.api.dto.request.RaffleStrategyAwardListRequestDTO;
+import cn.evlight.api.dto.request.RaffleStrategyRequestDTO;
+import cn.evlight.api.dto.request.StrategyRuleWeightRequestDTO;
+import cn.evlight.api.dto.response.RaffleStrategyAwardListResponseDTO;
+import cn.evlight.api.dto.response.RaffleStrategyResponseDTO;
+import cn.evlight.api.dto.response.StrategyRuleWeightResponseDTO;
 import cn.evlight.types.model.Response;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public interface IRaffleStrategyService {
     * @return:
     * @Date: 2024/5/29
     */
-    Response<List<RaffleStrategyAwardListResponseDTO>> getStrategyAwardList(RaffleStrategyAwardListRequestDTO requestDTO);
+    Response<List<RaffleStrategyAwardListResponseDTO>> getStrategyAwardList(RaffleStrategyAwardListRequestDTO request);
 
     /**
     * @Description: 抽奖
@@ -37,6 +39,14 @@ public interface IRaffleStrategyService {
     * @return:
     * @Date: 2024/5/29
     */
-    Response<RaffleStrategyResponseDTO> strategyRaffle(RaffleStrategyRequestDTO requestDTO);
+    Response<RaffleStrategyResponseDTO> strategyRaffle(RaffleStrategyRequestDTO request);
+
+    /**
+    * @Description: 查询策略权重抽奖规则的值
+    * @Param: [request]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    Response<List<StrategyRuleWeightResponseDTO>> getStrategyRuleWeight(StrategyRuleWeightRequestDTO request);
 
 }

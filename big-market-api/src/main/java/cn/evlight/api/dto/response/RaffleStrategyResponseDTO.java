@@ -1,4 +1,4 @@
-package cn.evlight.api.model.response;
+package cn.evlight.api.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

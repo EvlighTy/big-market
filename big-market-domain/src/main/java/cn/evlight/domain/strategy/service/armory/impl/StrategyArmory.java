@@ -51,12 +51,12 @@ public class StrategyArmory implements IUserStrategyArmory, IManagerStrategyArmo
             throw new AppException(strategyId + ":权重规则没有配置值");
         }
         log.info("配置策略权重奖项:{}", strategyId);
-        Map<String, Set<String>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
-        for (String key : ruleWeightValues.keySet()) {
-            Set<String> ruleWeightValue = ruleWeightValues.get(key);
+        Map<Integer, List<Integer>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
+        for (Integer key : ruleWeightValues.keySet()) {
+            List<Integer> ruleWeightValue = ruleWeightValues.get(key);
             ArrayList<StrategyAwardEntity> strategyAwardEntitiesClone = new ArrayList<>(strategyAwardEntities);
-            strategyAwardEntitiesClone.removeIf(strategyAwardEntity -> !ruleWeightValue.contains(strategyAwardEntity.getAwardId().toString()));
-            doGenerateStrategyRandomMap(strategyId + ":" + key, strategyAwardEntitiesClone);
+            strategyAwardEntitiesClone.removeIf(strategyAwardEntity -> !ruleWeightValue.contains(strategyAwardEntity.getAwardId()));
+            doGenerateStrategyRandomMap(strategyId + Constants.Split.COLON + key, strategyAwardEntitiesClone);
         }
         return true;
     }

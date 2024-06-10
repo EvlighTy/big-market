@@ -1,6 +1,7 @@
 package cn.evlight.domain.rebate.service;
 
 import cn.evlight.domain.rebate.model.entity.BehaviorEntity;
+import cn.evlight.domain.rebate.model.entity.UserBehaviorRebateOrderEntity;
 
 import java.util.List;
 
@@ -18,5 +19,13 @@ public interface IBehaviorRebateService {
     * @Date: 2024/6/9
     */
     List<String> createOrder(BehaviorEntity behaviorEntity);
+
+    /**
+    * @Description: 根据业务防重ID查询用户行为返利订单记录
+    * @Param: [userId, outBizId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    List<UserBehaviorRebateOrderEntity> getUserBehaviorRebateOrderEntityByOutBizId(String userId, String outBizId);
 
 }

@@ -85,4 +85,15 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
     public Integer getUserRaffleCountToday(Long activityId, String userId) {
         return activityRepository.getUserRaffleCountToday(activityId, userId);
     }
+
+    @Override
+    public RaffleActivityAccountEntity getUserAccountQuota(Long activityId, String userId) {
+        return activityRepository.getUserAccountQuota(activityId, userId);
+    }
+
+    @Override
+    public Integer getUserRaffleCount(Long activityId, String userId) {
+        return activityRepository.getUserRaffleCount(activityId, userId);
+    }
+
 }

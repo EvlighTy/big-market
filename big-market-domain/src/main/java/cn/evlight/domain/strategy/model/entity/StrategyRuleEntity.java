@@ -1,5 +1,6 @@
 package cn.evlight.domain.strategy.model.entity;
 
+import cn.evlight.domain.strategy.service.ruleFilter.factory.before.DefaultRuleFilterChainFactory;
 import cn.evlight.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,8 +58,21 @@ public class StrategyRuleEntity {
     * @return:
     * @Date: 2024/5/25
     */
-    public Map<String, Set<String>> getRuleWeightValues(){
-        return getRuleValues("rule_weight");
+    public Map<Integer, List<Integer>> getRuleWeightValues(){
+        if (!ruleModel.equals(DefaultRuleFilterChainFactory.RuleModel.RULE_WEIGHT.getCode()) || ruleValue == null || ruleValue.isEmpty()) return null;
+        HashMap<Integer, List<Integer>> ruleValues = new HashMap<>();
+        String[] thresholds = ruleValue.split(Constants.Split.SPACE);
+        for (String threshold : thresholds) {
+            String[] split = threshold.split(Constants.Split.COLON);
+            if (split.length != 2) {
+                throw new RuntimeException("invalid formatter");
+            }
+            List<Integer> values = Arrays.stream(split[1].split(Constants.Split.COMMA))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+            ruleValues.put(Integer.parseInt(split[0]), values);
+        }
+        return ruleValues;
     }
 
     /**
@@ -67,21 +81,18 @@ public class StrategyRuleEntity {
      * @return:
      * @Date: 2024/5/26
      */
-    public HashMap<String, Set<String>> getRuleBlacklistValues(){
-        return getRuleValues("rule_blacklist");
-    }
-
-    private HashMap<String, Set<String>> getRuleValues(String ruleModel) {
-        if (!this.ruleModel.equals(ruleModel) || ruleValue == null || ruleValue.isEmpty()) return null;
-        HashMap<String, Set<String>> ruleValues = new HashMap<>();
+    public HashMap<Integer, List<String>> getRuleBlacklistValues(){
+        if (!ruleModel.equals(DefaultRuleFilterChainFactory.RuleModel.RULE_BLACKLIST.getCode()) || ruleValue == null || ruleValue.isEmpty()) return null;
+        HashMap<Integer, List<String>> ruleValues = new HashMap<>();
         String[] thresholds = ruleValue.split(Constants.Split.SPACE);
         for (String threshold : thresholds) {
             String[] split = threshold.split(Constants.Split.COLON);
             if (split.length != 2) {
                 throw new RuntimeException("invalid formatter");
             }
-            Set<String> values = Arrays.stream(split[1].split(Constants.Split.COMMA)).collect(Collectors.toSet());
-            ruleValues.put(split[0], values);
+            List<String> values = Arrays.stream(split[1].split(Constants.Split.COMMA))
+                    .collect(Collectors.toList());
+            ruleValues.put(Integer.parseInt(split[0]), values);
         }
         return ruleValues;
     }

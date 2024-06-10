@@ -4,6 +4,7 @@ import cn.evlight.domain.strategy.model.entity.RuleFilterParamEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.valobj.AwardRuleModelVO;
 import cn.evlight.domain.strategy.model.valobj.RuleTreeVO;
+import cn.evlight.domain.strategy.model.valobj.RuleWeightVO;
 import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.repository.IStrategyRepository;
 import cn.evlight.domain.strategy.service.AbstractRaffleStrategy;
@@ -95,5 +96,16 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
     @Override
     public Map<String, Integer> getAwardRuleLockCount(String... treeIds) {
         return strategyRepository.getAwardRuleLockCount(treeIds);
+    }
+
+    @Override
+    public List<RuleWeightVO> getStrategyRuleWeightDetail(Long strategyId) {
+        return strategyRepository.getStrategyRuleWeightDetail(strategyId);
+    }
+
+    @Override
+    public List<RuleWeightVO> getStrategyRuleWeightDetailByActivityId(Long activityId) {
+        Long strategyId = strategyRepository.getStrategyIdByActivityId(activityId);
+        return getStrategyRuleWeightDetail(strategyId);
     }
 }

@@ -1,4 +1,4 @@
-package cn.evlight.api.model.request;
+package cn.evlight.api.dto.request;
 
 import lombok.Data;
 

@@ -1,13 +1,13 @@
 package cn.evlight.infrastructure.persistent.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -18,6 +18,9 @@ import lombok.experimental.Accessors;
  * @since 2024-06-09
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("user_behavior_rebate_order_000")
@@ -65,6 +68,11 @@ public class UserBehaviorRebateOrder implements Serializable {
      * 业务ID - 拼接的唯一值
      */
     private String bizId;
+
+    /**
+     * 业务防重ID - 外部透传，方便查询使用
+     */
+    private String outBusinessNo;
 
     /**
      * 创建时间

@@ -1,6 +1,7 @@
 package cn.evlight.domain.rebate.repository;
 
 import cn.evlight.domain.rebate.model.aggregate.BehaviorRebateAggregate;
+import cn.evlight.domain.rebate.model.entity.UserBehaviorRebateOrderEntity;
 import cn.evlight.domain.rebate.model.valobj.BehaviorTypeVO;
 import cn.evlight.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 
@@ -29,4 +30,13 @@ public interface IBehaviorRebateRepository {
     * @Date: 2024/6/9
     */
     void saveUserBehaviorRebateOrder(ArrayList<BehaviorRebateAggregate> behaviorRebateAggregates);
+
+    /**
+     * table: user_behavior_rebate_order
+    * @Description: 根据业务防重ID查询用户行为返利订单记录
+    * @Param: [userId, outBizId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    List<UserBehaviorRebateOrderEntity> getUserBehaviorRebateOrderEntityByOutBizId(String userId, String outBizId);
 }

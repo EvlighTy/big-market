@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BehaviorRebateOrderEntity {
+public class UserBehaviorRebateOrderEntity {
 
     /** 用户ID */
     private String userId;
@@ -30,5 +30,7 @@ public class BehaviorRebateOrderEntity {
     private String rebateConfig;
     /** 业务ID - 拼接的唯一值 */
     private String bizId;
+    /** 业务防重ID */
+    private String outBusinessNo;
 
 }

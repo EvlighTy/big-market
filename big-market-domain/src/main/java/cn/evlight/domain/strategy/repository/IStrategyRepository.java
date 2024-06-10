@@ -1,5 +1,6 @@
 package cn.evlight.domain.strategy.repository;
 
+import cn.evlight.domain.strategy.model.valobj.RuleWeightVO;
 import cn.evlight.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.evlight.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.evlight.domain.strategy.model.entity.StrategyEntity;
@@ -167,4 +168,20 @@ public interface IStrategyRepository {
     * @Date: 2024/6/8
     */
     void cacheStrategyAwardStock(String cacheKey, Integer awardCountSurplus);
+
+    /**
+    * @Description: 查询用户累计抽奖积分值
+    * @Param: [strategyId, userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    Integer getUserAccountTotalUsedCount(Long strategyId, String userId);
+
+    /**
+    * @Description: 查询策略权重规则详细信息
+    * @Param: [strategyId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    List<RuleWeightVO> getStrategyRuleWeightDetail(Long strategyId);
 }

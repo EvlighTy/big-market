@@ -174,4 +174,22 @@ public interface IActivityRepository {
     * @Date: 2024/6/8
     */
     boolean SkuStockIsZero(String cacheKey);
+
+    /**
+     * table: raffle_activity_account
+    * @Description: 查询用户总额度账户
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    RaffleActivityAccountEntity getUserAccountQuota(Long activityId, String userId);
+
+    /**
+    * @Description: 查询用户累计抽奖次数
+    * @Param: [activityId, userId]
+    * @return:
+    * @Date: 2024/6/10
+    */
+    Integer getUserRaffleCount(Long activityId, String userId);
+
 }
