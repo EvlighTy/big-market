@@ -18,4 +18,12 @@
         limit 10
     </select>
 
+    <select id="getAwardConfig" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select award_config from award where award_id = #{awardId}
+    </select>
+
+    <select id="getAwardKey" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select award_key from award where award_id = #{awardId}
+    </select>
+
 </mapper>

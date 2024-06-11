@@ -25,7 +25,7 @@ public class RuleLockRuleFilter extends AbstractAfterRuleFilter {
 
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("策略奖品解锁门槛检查...");
+        log.info("[后置规则过滤] 奖品解锁门槛次数");
         //查询用户抽奖次数
         Integer raffleCount = strategyRepository.getUserRaffleCountToday(ruleFilterParamEntity.getUserId(), ruleFilterParamEntity.getStrategyId());
         log.info("用户[{}]本日抽奖累计次数:{}", ruleFilterParamEntity.getUserId(), raffleCount);

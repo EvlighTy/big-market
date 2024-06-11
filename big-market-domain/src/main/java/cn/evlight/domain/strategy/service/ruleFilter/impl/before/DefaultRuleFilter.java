@@ -23,7 +23,7 @@ public class DefaultRuleFilter extends AbstractBeforeRuleFilter {
 
     @Override
     public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("执行默认抽奖规则...");
+        log.info("[前置规则过滤] 默认抽奖");
         Integer awardId = userStrategyArmory.getRandomAwardId(ruleFilterParamEntity.getStrategyId());
         return DefaultRuleFilterChainFactory.ResultData.builder()
                 .awardId(awardId)

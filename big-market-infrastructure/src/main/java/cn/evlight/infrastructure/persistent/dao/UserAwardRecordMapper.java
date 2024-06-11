@@ -18,4 +18,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserAwardRecordMapper extends BaseMapper<UserAwardRecord> {
 
     void save(UserAwardRecord userAwardRecord);
+
+    int updateAfterCompleted(UserAwardRecord userAwardRecord);
 }

@@ -1,5 +1,6 @@
 package cn.evlight.infrastructure.persistent.dao;
 
+import cn.bugstack.middleware.db.router.annotation.DBRouter;
 import cn.bugstack.middleware.db.router.annotation.DBRouterStrategy;
 import cn.evlight.infrastructure.persistent.po.UserBehaviorRebateOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -22,5 +23,6 @@ public interface UserBehaviorRebateOrderMapper extends BaseMapper<UserBehaviorRe
 
     void saveBatch(ArrayList<UserBehaviorRebateOrder> userBehaviorRebateOrders);
 
+    @DBRouter
     List<UserBehaviorRebateOrder> getUserBehaviorRebateOrderByOutBizId(UserBehaviorRebateOrder userBehaviorRebateOrder);
 }

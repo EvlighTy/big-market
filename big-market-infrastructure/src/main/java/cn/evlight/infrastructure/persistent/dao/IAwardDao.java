@@ -15,4 +15,7 @@ public interface IAwardDao {
 
     List<Award> queryAwardList();
 
+    String getAwardConfig(Award award);
+
+    String getAwardKey(Award award);
 }

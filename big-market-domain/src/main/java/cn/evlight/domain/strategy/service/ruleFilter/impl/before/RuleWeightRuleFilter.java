@@ -33,7 +33,7 @@ public class RuleWeightRuleFilter extends AbstractBeforeRuleFilter {
 
     @Override
     public DefaultRuleFilterChainFactory.ResultData doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("规则权重过滤...");
+        log.info("[前置规则过滤] 权重规则抽奖");
         //查询用户积分值
         Integer userScore = strategyRepository.getUserAccountTotalUsedCount(ruleFilterParamEntity.getStrategyId(), ruleFilterParamEntity.getUserId());
         //查询策略权重规则

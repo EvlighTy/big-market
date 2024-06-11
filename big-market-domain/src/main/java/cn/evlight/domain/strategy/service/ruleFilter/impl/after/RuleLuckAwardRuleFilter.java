@@ -20,7 +20,7 @@ public class RuleLuckAwardRuleFilter extends AbstractAfterRuleFilter {
 
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("策略奖品兜底...");
+        log.info("[后置规则过滤] 奖品兜底");
         String[] split = ruleFilterParamEntity.getRuleValue().split(Constants.Split.COLON);
         if (split.length == 0) {
             log.error("规则过滤-兜底奖品，兜底奖品未配置告警");

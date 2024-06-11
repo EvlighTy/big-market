@@ -31,6 +31,9 @@ public interface Constants {
         String ACTIVITY_SKU_STOCK_KEY = "activity:stock:";
         String ACTIVITY_SKU_STOCK_ZERO_KEY = "activity:stock_zero:";
         String ACTIVITY_SKU_COUNT_QUERY_KEY = "activity:sku_count_query:";
+
+        //奖品
+        String AWARD_KEY_KEY = "award:key:";
     }
 
     interface ExceptionInfo {
@@ -41,6 +44,7 @@ public interface Constants {
         String ACTIVITY_STOCK_INSUFFICIENT = "活动剩余库存不足";
         String USER_QUOTA_INSUFFICIENT = "用户额度不足";
         String RAFFLE_ORDER_REUSE = "抽奖单重复使用";
+        String AWARD_CONFIG_ERROR_CONFIGURED = "奖品配置错误";
     }
 
     interface DataBaseExceptionInfo {

@@ -531,9 +531,10 @@ public class ActivityRepository implements IActivityRepository {
                 .monthCountSurplus(raffleActivityAccount.getMonthCountSurplus())
                 .build();
         //月额度账户
-        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthMapper.getUserAccountQuota(RaffleActivityAccount.builder()
+        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthMapper.getUserAccountQuota(RaffleActivityAccountMonth.builder()
                 .activityId(activityId)
                 .userId(userId)
+                .month(RaffleActivityAccountMonth.getCurrentMonth())
                 .build());
         if (raffleActivityAccountMonth != null){
             raffleActivityAccountEntity.setMonthCount(raffleActivityAccountMonth.getMonthCount());
@@ -541,9 +542,10 @@ public class ActivityRepository implements IActivityRepository {
         }
 
         //日额度账户
-        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.getUserAccountQuota(RaffleActivityAccount.builder()
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayMapper.getUserAccountQuota(RaffleActivityAccountDay.builder()
                 .activityId(activityId)
                 .userId(userId)
+                .day(RaffleActivityAccountDay.getCurrentDay())
                 .build());
         if (raffleActivityAccountDay != null){
             raffleActivityAccountEntity.setMonthCount(raffleActivityAccountDay.getDayCount());

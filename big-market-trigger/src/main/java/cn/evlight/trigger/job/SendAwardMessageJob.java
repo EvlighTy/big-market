@@ -43,7 +43,7 @@ public class SendAwardMessageJob {
                         dbRouter.setTBKey(0);
                         List<TaskEntity> taskEntities = taskService.queryUnSendMessageTaskList();
                         if (taskEntities == null || taskEntities.isEmpty()){
-                            log.info("[Scheduled Task]-[发送中奖消息到MQ] 未查询到未发送的消息");
+                            log.info("[Scheduled Task]-[发送中奖消息到MQ] " + current + "库未查询到未发送的消息");
                             return;
                         }
                         for (TaskEntity taskEntity : taskEntities) {

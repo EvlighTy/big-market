@@ -52,6 +52,8 @@ public class DefaultRuleFilterChainFactory {
         private Integer awardId;
         /**  */
         private String ruleModel;
+
+        private String awardConfig;
     }
 
     @Getter

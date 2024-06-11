@@ -29,7 +29,7 @@ public class RuleStockRuleFilter extends AbstractAfterRuleFilter {
 
     @Override
     public DefaultRuleFilterTreeFactory.Result doFilter(RuleFilterParamEntity ruleFilterParamEntity) {
-        log.info("策略奖品库存检查...");
+        log.info("[后置规则过滤] 奖品库存");
         boolean success = userStrategyArmory.subtractStrategyAwardStock(ruleFilterParamEntity.getStrategyId(),
                 ruleFilterParamEntity.getAwardId(),
                 ruleFilterParamEntity.getEndDateTime());

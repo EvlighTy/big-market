@@ -17,14 +17,14 @@ import java.time.LocalDateTime;
  * @create 2024-04-06 09:43
  */
 @Component
-public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.SendAwardMessage> {
+public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.Message> {
 
     @Value("${spring.rabbitmq.topic.send_award}")
     private String topic;
 
     @Override
-    public BaseEvent.EventMessage<SendAwardMessage> buildEventMessage(SendAwardMessage data) {
-        return EventMessage.<SendAwardMessage>builder()
+    public BaseEvent.EventMessage<Message> buildEventMessage(Message data) {
+        return EventMessage.<Message>builder()
                 .id(RandomStringUtils.randomNumeric(11))
                 .timestamp(LocalDateTime.now())
                 .data(data)
@@ -40,7 +40,7 @@ public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.SendA
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class SendAwardMessage {
+    public static class Message {
         /**
          * 用户ID
          */
@@ -49,10 +49,14 @@ public class SendAwardMessageEvent extends BaseEvent<SendAwardMessageEvent.SendA
          * 奖品ID
          */
         private Integer awardId;
+
+        private String orderId;
         /**
          * 奖品标题（名称）
          */
         private String awardTitle;
+
+        private String awardConfig;
     }
 
 }

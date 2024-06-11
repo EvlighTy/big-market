@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -113,6 +114,9 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                 } catch (DuplicateKeyException e) {
                     status.setRollbackOnly();
                     throw new AppException(Constants.ExceptionInfo.DUPLICATE_KEY);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
                 }
             });
         } finally {
@@ -151,6 +155,10 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
         userBehaviorRebateOrder.setUserId(userId);
         userBehaviorRebateOrder.setOutBusinessNo(outBizId);
         List<UserBehaviorRebateOrder> userBehaviorRebateOrders = userBehaviorRebateOrderMapper.getUserBehaviorRebateOrderByOutBizId(userBehaviorRebateOrder);
+        if(userBehaviorRebateOrders == null || userBehaviorRebateOrders.isEmpty()){
+            //没有记录
+            return Collections.emptyList();
+        }
         ArrayList<UserBehaviorRebateOrderEntity> userBehaviorRebateOrderEntities = new ArrayList<>(userBehaviorRebateOrders.size());
         for (UserBehaviorRebateOrder behaviorRebateOrder : userBehaviorRebateOrders) {
             UserBehaviorRebateOrderEntity userBehaviorRebateOrderEntity = UserBehaviorRebateOrderEntity.builder()

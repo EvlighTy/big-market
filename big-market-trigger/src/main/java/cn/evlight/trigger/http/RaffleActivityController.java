@@ -119,6 +119,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                             .orderId(userRaffleOrderEntity.getOrderId())
                             .awardId(raffleResultEntity.getAwardId())
                             .awardTitle(raffleResultEntity.getAwardTitle())
+                            .awardConfig(raffleResultEntity.getAwardConfig())
                             .awardTime(LocalDateTime.now())
                             .awardState(AwardStateVO.create)
                     .build());
@@ -166,7 +167,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             String outBizId = dateTimeFormatter.format(LocalDateTime.now());
             List<UserBehaviorRebateOrderEntity> userBehaviorRebateOrderEntities = behaviorRebateService.getUserBehaviorRebateOrderEntityByOutBizId(userId, outBizId);
             log.info("[request]-[查询用户今日是否已签到] 结果:{}", !userBehaviorRebateOrderEntities.isEmpty());
-            return Response.success(userBehaviorRebateOrderEntities.isEmpty());
+            return Response.success(!userBehaviorRebateOrderEntities.isEmpty());
         } catch (AppException e){
             log.info("[request]-[查询用户今日是否已签到] 失败:{}", e.getCode());
         } catch (Exception e){

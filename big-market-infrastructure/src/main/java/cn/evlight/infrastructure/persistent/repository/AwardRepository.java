@@ -1,17 +1,17 @@
 package cn.evlight.infrastructure.persistent.repository;
 
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
+import cn.evlight.domain.award.model.aggregate.DistributeAwardsAggregate;
 import cn.evlight.domain.award.model.aggregate.UserAwardRecordAggregate;
+import cn.evlight.domain.award.model.entity.CreditAwardEntity;
 import cn.evlight.domain.award.model.entity.TaskEntity;
 import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
+import cn.evlight.domain.award.model.valobj.AccountStatusVO;
 import cn.evlight.domain.award.repository.IAwardRepository;
 import cn.evlight.infrastructure.event.EventPublisher;
-import cn.evlight.infrastructure.persistent.dao.TaskMapper;
-import cn.evlight.infrastructure.persistent.dao.UserAwardRecordMapper;
-import cn.evlight.infrastructure.persistent.dao.UserRaffleOrderMapper;
-import cn.evlight.infrastructure.persistent.po.Task;
-import cn.evlight.infrastructure.persistent.po.UserAwardRecord;
-import cn.evlight.infrastructure.persistent.po.UserRaffleOrder;
+import cn.evlight.infrastructure.persistent.dao.*;
+import cn.evlight.infrastructure.persistent.po.*;
+import cn.evlight.infrastructure.persistent.redis.IRedisService;
 import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
@@ -46,6 +46,15 @@ public class AwardRepository implements IAwardRepository {
 
     @Autowired
     private UserRaffleOrderMapper userRaffleOrderMapper;
+
+    @Autowired
+    private UserCreditAccountMapper userCreditAccountMapper;
+
+    @Autowired
+    private IAwardDao awardDao;
+
+    @Autowired
+    private IRedisService redisService;
 
     @Override
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
@@ -99,7 +108,7 @@ public class AwardRepository implements IAwardRepository {
         }
         //发送消息到mq
         try {
-            eventPublisher.publish(task.getTopic(), task.getMessage());
+            eventPublisher.publish(task.getTopic(), taskEntity.getMessage());
             //发送成功更新任务状态
             log.info("[保存用户中奖记录] 发送MQ消息成功 userId: {} topic: {}", userAwardRecord.getUserId(), task.getTopic());
             taskDao.updateAfterCompleted(task);
@@ -109,4 +118,90 @@ public class AwardRepository implements IAwardRepository {
             taskDao.updateAfterFailed(task);
         }
     }
+
+    @Override
+    public void saveDistributeAwardsAggregate(DistributeAwardsAggregate distributeAwardsAggregate) {
+        UserAwardRecordEntity userAwardRecordEntity = distributeAwardsAggregate.getUserAwardRecordEntity();
+        CreditAwardEntity creditAwardEntity = distributeAwardsAggregate.getCreditAwardEntity();
+        UserAwardRecord userAwardRecord = UserAwardRecord.builder()
+                .userId(userAwardRecordEntity.getUserId())
+                .activityId(userAwardRecordEntity.getActivityId())
+                .strategyId(userAwardRecordEntity.getStrategyId())
+                .orderId(userAwardRecordEntity.getOrderId())
+                .awardId(userAwardRecordEntity.getAwardId())
+                .awardTitle(userAwardRecordEntity.getAwardTitle())
+                .awardTime(userAwardRecordEntity.getAwardTime())
+                .awardState(userAwardRecordEntity.getAwardState().getCode())
+                .build();
+        UserCreditAccount userCreditAccount = UserCreditAccount.builder()
+                .userId(creditAwardEntity.getUserId())
+                .totalAmount(creditAwardEntity.getCreditAmount())
+                .availableAmount(creditAwardEntity.getCreditAmount())
+                .accountStatus(AccountStatusVO.open.getCode())
+                .build();
+        try {
+            dbRouter.doRouter(distributeAwardsAggregate.getUserId());
+            transactionTemplate.execute(status -> {
+                try {
+                    //更新用户积分账户
+                    int updated = userCreditAccountMapper.addAmount(userCreditAccount);
+                    if(updated != 1){
+                        //积分账户不存在 创建
+                        userCreditAccountMapper.save(userCreditAccount);
+                    }
+                    //更新奖品记录
+                    updated = userAwardRecordDao.updateAfterCompleted(userAwardRecord);
+                    if(updated != 1){
+                        log.warn("重复更新奖品记录");
+                    }
+                    return 1;
+                } catch (DuplicateKeyException e) {
+                    status.setRollbackOnly();
+                    log.error("[更新用户中奖记录] 唯一索引冲突");
+                    throw new AppException(Constants.ExceptionInfo.DUPLICATE_KEY);
+                }
+            });
+        } finally {
+            dbRouter.clear();
+        }
+    }
+
+    @Override
+    public String getAwardConfig(Integer awardId) {
+        return awardDao.getAwardConfig(Award.builder()
+                        .awardId(awardId)
+                .build());
+    }
+
+    @Override
+    public String getAwardKey(Integer awardId) {
+        //先查询缓存
+        String cacheKey = Constants.RedisKey.AWARD_KEY_KEY + awardId;
+        String awardKey = redisService.getValue(cacheKey);
+        if(awardKey != null) return awardKey;
+        //再查询数据库
+        awardKey = awardDao.getAwardKey(Award.builder()
+                        .awardId(awardId)
+                .build());
+        redisService.setValue(cacheKey, awardKey);
+        return awardKey;
+    }
+
+    /*
+    try {
+        dbRouter.doRouter();
+        transactionTemplate.execute(status -> {
+            try {
+                return 1;
+            } catch (DuplicateKeyException e) {
+                status.setRollbackOnly();
+                log.error("[更新用户中奖记录] 唯一索引冲突");
+                throw new AppException(Constants.ExceptionInfo.DUPLICATE_KEY);
+            }
+        });
+    } finally {
+        dbRouter.clear();
+    }
+    */
+
 }

@@ -41,7 +41,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         Integer awardId = beforeRaffleResult.getAwardId();
         if(beforeRaffleResult.getRuleModel().equals(DefaultRuleFilterChainFactory.RuleModel.RULE_BLACKLIST.getCode())){
             //黑名单用户
-            return buildResult(strategyId, awardId, null);
+            return buildResult(strategyId, awardId, beforeRaffleResult.getAwardConfig());
         }
         ruleFilterParamEntity.setAwardId(awardId);
         //后置过滤器
@@ -55,13 +55,13 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
     * @return:
     * @Date: 2024/5/30
     */
-    private RaffleResultEntity buildResult(Long strategyId, Integer awardId, String awardRuleValue) {
+    private RaffleResultEntity buildResult(Long strategyId, Integer awardId, String awardConfig) {
         //查询策略奖品实体
         StrategyAwardEntity strategyAwardEntity = strategyRepository.getStrategyAwardEntity(strategyId, awardId);
         return RaffleResultEntity.builder()
                 .awardId(awardId)
                 .sort(strategyAwardEntity.getSort())
-                .awardConfig(awardRuleValue)
+                .awardConfig(awardConfig)
                 .awardTitle(strategyAwardEntity.getAwardTitle())
                 .build();
     }

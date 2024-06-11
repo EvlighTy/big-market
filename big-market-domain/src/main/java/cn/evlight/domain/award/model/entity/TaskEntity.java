@@ -26,7 +26,7 @@ public class TaskEntity {
     /** 消息编号 */
     private String messageId;
     /** 消息主体 */
-    private BaseEvent.EventMessage<SendAwardMessageEvent.SendAwardMessage> message;
+    private BaseEvent.EventMessage<SendAwardMessageEvent.Message> message;
     /** 任务状态；create-创建、completed-完成、fail-失败 */
     private TaskStateVO state;
 
