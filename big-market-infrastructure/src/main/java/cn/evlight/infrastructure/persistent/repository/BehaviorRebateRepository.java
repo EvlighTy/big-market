@@ -137,7 +137,7 @@ public class BehaviorRebateRepository implements IBehaviorRebateRepository {
                 eventPublisher.publish(taskEntity.getTopic(), taskEntity.getMessage());
                 successSendTasks.add(task);
             }catch (Exception e){
-                log.info("[保存行为返利订单记录] 发送MQ消息失败");
+                log.info("[MQ]-[保存行为返利订单记录]-[publisher] 发送MQ消息失败");
                 failSendTasks.add(task);
             }
         }

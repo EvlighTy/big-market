@@ -35,7 +35,7 @@ public class SendAwardCustomer {
             exchange = @Exchange(value = "send_award")
     ))
     public void listener(String message) {
-        log.info("[MQ]-[用户奖品发放] topic: {} message: {}", topic, message);
+        log.info("[MQ]-[consumer]-[用户奖品发放] topic: {} message: {}", topic, message);
         try {
 
             BaseEvent.EventMessage<SendAwardMessageEvent.Message> eventMessage = JSON.parseObject(message,
@@ -50,7 +50,7 @@ public class SendAwardCustomer {
                         .build();
             awardService.distributeAward(distributeAwardEntity);
         } catch (Exception e) {
-            log.error("[MQ]-[用户奖品发放]，消费失败 topic: {} message: {}", topic, message);
+            log.error("[MQ]-[consumer]-[用户奖品发放]，消费失败 topic: {} message: {}", topic, message);
             throw e;
         }
     }

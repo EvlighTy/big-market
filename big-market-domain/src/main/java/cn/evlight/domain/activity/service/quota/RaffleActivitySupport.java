@@ -17,9 +17,9 @@ public class RaffleActivitySupport {
 
     protected IActivityRepository activityRepository;
 
-    public RaffleActivitySupport(IActivityRepository activityRepository, DefaultQuotaCheckChainFactory defaultCheckChainFactory) {
-        this.activityRepository = activityRepository;
+    public RaffleActivitySupport(DefaultQuotaCheckChainFactory defaultCheckChainFactory, IActivityRepository activityRepository) {
         this.defaultCheckChainFactory = defaultCheckChainFactory;
+        this.activityRepository = activityRepository;
     }
 
     public ActivitySkuEntity queryActivitySku(Long sku) {

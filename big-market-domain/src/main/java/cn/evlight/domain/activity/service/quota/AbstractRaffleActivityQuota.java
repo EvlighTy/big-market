@@ -9,11 +9,14 @@ import cn.evlight.domain.activity.repository.IActivityRepository;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
 import cn.evlight.domain.activity.service.quota.chain.IQuotaCheckChain;
 import cn.evlight.domain.activity.service.quota.chain.factory.DefaultQuotaCheckChainFactory;
+import cn.evlight.domain.activity.service.quota.policy.ITradePolicy;
 import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Map;
 
 /**
 * @Description: 抽奖活动抽象类
@@ -23,9 +26,13 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public abstract class AbstractRaffleActivityQuota extends RaffleActivitySupport implements IRaffleActivityQuota {
 
-    public AbstractRaffleActivityQuota(IActivityRepository activityRepository, DefaultQuotaCheckChainFactory defaultCheckChainFactory) {
-        super(activityRepository, defaultCheckChainFactory);
+    protected final Map<String, ITradePolicy> tradePolicyMap;
+
+    public AbstractRaffleActivityQuota(DefaultQuotaCheckChainFactory defaultCheckChainFactory, IActivityRepository activityRepository, Map<String, ITradePolicy> tradePolicyMap) {
+        super(defaultCheckChainFactory, activityRepository);
+        this.tradePolicyMap = tradePolicyMap;
     }
+
 
     @Override
     public String createQuotaOrder(RaffleActivityQuotaEntity raffleActivityQuotaEntity) {
@@ -52,7 +59,12 @@ public abstract class AbstractRaffleActivityQuota extends RaffleActivitySupport 
         //构建活动订单聚合对象
         CreateQuotaOrderAggregate createQuotaOrderAggregate = buildQuotaOrderAggregate(raffleActivityQuotaEntity, activitySkuEntity, activityEntity, activityCountEntity);
         //保存订单
-        saveOrder(createQuotaOrderAggregate);
+        ITradePolicy tradePolicy = tradePolicyMap.get(raffleActivityQuotaEntity.getOrderTradeTypeVO().getCode());
+        if(tradePolicy == null){
+            log.error("没有对应的交易策略实现类");
+            return null;
+        }
+        tradePolicy.trade(createQuotaOrderAggregate);
         //返回订单ID
         return createQuotaOrderAggregate.getActivityOrderEntity().getOrderId();
     }
@@ -63,7 +75,7 @@ public abstract class AbstractRaffleActivityQuota extends RaffleActivitySupport 
     * @return:
     * @Date: 2024/6/2
     */
-    protected abstract void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+//    protected abstract void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
 
     /**
     * @Description: 构建订单聚合对象

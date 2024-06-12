@@ -1,5 +1,6 @@
 package cn.evlight.domain.credit.model.aggregate;
 
+import cn.evlight.domain.credit.model.entity.TaskEntity;
 import cn.evlight.domain.credit.model.entity.UserCreditAccountEntity;
 import cn.evlight.domain.credit.model.entity.UserCreditOrderEntity;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,5 @@ public class CreditAggregate {
     private UserCreditAccountEntity userCreditAccountEntity;
     // 积分订单实体
     private UserCreditOrderEntity userCreditOrderEntity;
+    private TaskEntity taskEntity;
 }

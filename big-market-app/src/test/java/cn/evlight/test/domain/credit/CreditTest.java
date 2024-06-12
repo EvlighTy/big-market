@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @Description: 积分领域测试
@@ -35,6 +36,19 @@ public class CreditTest {
                 .amount(new BigDecimal("10.19"))
                 .outBusinessNo("100009909911")
                 .build());
+    }
+
+    @Test
+    public void test_createOrder_pay() throws InterruptedException {
+        creditService.createOrder(CreditEntity.builder()
+                .userId("evlight")
+                .tradeName(TradeNameVO.CONVERT_SKU)
+                .tradeType(TradeTypeVO.REVERSE)
+                .amount(new BigDecimal("-1.68"))
+                .outBusinessNo("70009240609007")
+                .build());
+
+        new CountDownLatch(1).await();
     }
 
 }

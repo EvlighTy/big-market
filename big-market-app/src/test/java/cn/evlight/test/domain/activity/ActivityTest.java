@@ -3,9 +3,10 @@ package cn.evlight.test.domain.activity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityPartakeEntity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
 import cn.evlight.domain.activity.model.entity.UserRaffleOrderEntity;
+import cn.evlight.domain.activity.model.valobj.OrderTradeTypeVO;
 import cn.evlight.domain.activity.service.IRaffleActivityPartake;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
-import cn.evlight.domain.activity.service.quota.armory.IActivityArmory;
+import cn.evlight.domain.activity.service.armory.IActivityArmory;
 import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
 import cn.evlight.domain.award.model.valobj.AwardStateVO;
 import cn.evlight.domain.award.service.IAwardService;
@@ -44,8 +45,6 @@ public class ActivityTest {
 
     @Autowired
     private IAwardService awardService;
-
-
 
     @Test
     public void test22(){
@@ -100,6 +99,17 @@ public class ActivityTest {
             Thread.sleep(500);
         }
         new CountDownLatch(1).await();
+    }
+
+    @Test
+    public void test_credit_pay_trade() {
+        String orderId = raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
+                .userId("evlight")
+                .sku(9011L)
+                .outBizId("70009240609007")
+                .orderTradeTypeVO(OrderTradeTypeVO.credit_pay_trade)
+                .build());
+        log.info("测试结果：{}", orderId);
     }
 
 }

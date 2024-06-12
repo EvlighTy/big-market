@@ -112,11 +112,11 @@ public class AwardRepository implements IAwardRepository {
         try {
             eventPublisher.publish(task.getTopic(), taskEntity.getMessage());
             //发送成功更新任务状态
-            log.info("[保存用户中奖记录] 发送MQ消息成功 userId: {} topic: {}", userAwardRecord.getUserId(), task.getTopic());
+            log.info("[MQ]-[保存用户中奖记录]-[publisher] 发送成功 userId: {} topic: {}", userAwardRecord.getUserId(), task.getTopic());
             taskDao.updateAfterCompleted(task);
         } catch (Exception e) {
             //发送失败更新任务状态
-            log.error("[保存用户中奖记录] 发送MQ消息失败 userId: {} topic: {}", userAwardRecord.getUserId(), task.getTopic());
+            log.error("[MQ]-[保存用户中奖记录]-[publisher] 发送失败 userId: {} topic: {}", userAwardRecord.getUserId(), task.getTopic());
             taskDao.updateAfterFailed(task);
         }
     }
@@ -125,6 +125,7 @@ public class AwardRepository implements IAwardRepository {
     public void saveDistributeAwardsAggregate(DistributeAwardsAggregate distributeAwardsAggregate) {
         UserAwardRecordEntity userAwardRecordEntity = distributeAwardsAggregate.getUserAwardRecordEntity();
         CreditAwardEntity creditAwardEntity = distributeAwardsAggregate.getCreditAwardEntity();
+        //中奖记录
         UserAwardRecord userAwardRecord = UserAwardRecord.builder()
                 .userId(userAwardRecordEntity.getUserId())
                 .activityId(userAwardRecordEntity.getActivityId())
@@ -135,13 +136,15 @@ public class AwardRepository implements IAwardRepository {
                 .awardTime(userAwardRecordEntity.getAwardTime())
                 .awardState(userAwardRecordEntity.getAwardState().getCode())
                 .build();
+        //积分账户
         UserCreditAccount userCreditAccount = UserCreditAccount.builder()
                 .userId(creditAwardEntity.getUserId())
                 .totalAmount(creditAwardEntity.getCreditAmount())
                 .availableAmount(creditAwardEntity.getCreditAmount())
                 .accountStatus(AccountStatusVO.open.getCode())
                 .build();
-        String lockKey = Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + distributeAwardsAggregate.getUserId();
+        //事务
+        String lockKey = Constants.RedisKey.AWARD_CREDIT_ACCOUNT_LOCK + distributeAwardsAggregate.getUserId();
         RLock lock = redisService.getLock(lockKey);
         try {
             lock.lock(3, TimeUnit.SECONDS);
@@ -157,7 +160,7 @@ public class AwardRepository implements IAwardRepository {
                     //更新奖品记录
                     updated = userAwardRecordDao.updateAfterCompleted(userAwardRecord);
                     if(updated != 1){
-                        log.warn("重复更新奖品记录");
+                        log.warn("[更新用户中奖记录] 重复更新");
                     }
                     return 1;
                 } catch (DuplicateKeyException e) {

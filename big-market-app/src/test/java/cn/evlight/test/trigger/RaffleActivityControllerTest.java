@@ -28,6 +28,12 @@ public class RaffleActivityControllerTest {
     private IRaffleActivityService raffleActivityService;
 
     @Test
+    public void test_armory() {
+        Response<Boolean> response = raffleActivityService.assembleRaffleActivityArmory(100301L);
+        log.info("测试结果：{}", JSON.toJSONString(response));
+    }
+
+    @Test
     public void blacklist_user_raffle_test() throws InterruptedException {
         RaffleActivityRequestDTO request = new RaffleActivityRequestDTO();
         request.setActivityId(100301L);
@@ -35,7 +41,7 @@ public class RaffleActivityControllerTest {
         Response<RaffleActivityResponseDTO> response = raffleActivityService.activityRaffle(request);
         log.info("请求参数：{}", JSON.toJSONString(request));
         log.info("测试结果：{}", JSON.toJSONString(response));
-        // 让程序挺住方便测试，也可以去掉
+
         new CountDownLatch(1).await();
     }
 

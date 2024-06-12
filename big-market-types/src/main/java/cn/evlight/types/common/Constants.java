@@ -37,7 +37,9 @@ public interface Constants {
 
         //锁
         String ACTIVITY_ACCOUNT_LOCK = "activity_account_lock:";
+        String CREDIT_ACTIVITY_ACCOUNT_LOCK = "credit_activity_account_lock:";
         String CREDIT_ACCOUNT_LOCK = "credit_account_lock:";
+        String AWARD_CREDIT_ACCOUNT_LOCK = "award_credit_account_lock:";
     }
 
     interface ExceptionInfo {

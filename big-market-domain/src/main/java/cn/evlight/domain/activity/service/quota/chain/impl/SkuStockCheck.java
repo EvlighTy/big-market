@@ -5,7 +5,7 @@ import cn.evlight.domain.activity.model.entity.ActivityEntity;
 import cn.evlight.domain.activity.model.entity.ActivitySkuEntity;
 import cn.evlight.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.evlight.domain.activity.repository.IActivityRepository;
-import cn.evlight.domain.activity.service.quota.armory.IActivityDispatch;
+import cn.evlight.domain.activity.service.armory.IActivityDispatch;
 import cn.evlight.domain.activity.service.quota.chain.AbstractQuotaQuotaCheckChain;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +36,9 @@ public class SkuStockCheck extends AbstractQuotaQuotaCheckChain {
             log.info("库存扣减成功");
             //发送消息到延迟队列，延迟更新数据库库存
             activityRepository.sendToActivityStockConsumeQueue(ActivitySkuStockKeyVO.builder()
-                            .sku(sku)
-                            .activityId(activityEntity.getActivityId())
-                    .build());
+                        .sku(sku)
+                        .activityId(activityEntity.getActivityId())
+                        .build());
             return true;
         }
         log.info("库存扣减失败");

@@ -7,10 +7,12 @@ import cn.evlight.domain.activity.model.valobj.OrderStateVO;
 import cn.evlight.domain.activity.repository.IActivityRepository;
 import cn.evlight.domain.activity.service.IRaffleActivitySkuStock;
 import cn.evlight.domain.activity.service.quota.chain.factory.DefaultQuotaCheckChainFactory;
+import cn.evlight.domain.activity.service.quota.policy.ITradePolicy;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @Description: 抽奖活动服务
@@ -21,13 +23,8 @@ import java.util.Date;
 @Service
 public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota implements IRaffleActivitySkuStock {
 
-    public RaffleActivityQuotaService(IActivityRepository activityRepository, DefaultQuotaCheckChainFactory defaultCheckChainFactory) {
-        super(activityRepository, defaultCheckChainFactory);
-    }
-
-    @Override
-    protected void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate) {
-        activityRepository.saveOrder(createQuotaOrderAggregate);
+    public RaffleActivityQuotaService(DefaultQuotaCheckChainFactory defaultCheckChainFactory, IActivityRepository activityRepository, Map<String, ITradePolicy> tradePolicyMap) {
+        super(defaultCheckChainFactory, activityRepository, tradePolicyMap);
     }
 
     @Override
@@ -46,6 +43,7 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
         activityOrderEntity.setMonthCount(activityCountEntity.getMonthCount());
         activityOrderEntity.setState(OrderStateVO.completed);
         activityOrderEntity.setOutBusinessNo(raffleActivityQuotaEntity.getOutBizId());
+        activityOrderEntity.setPayAmount(activitySkuEntity.getProductAmount());
 
         // 构建聚合对象
         return CreateQuotaOrderAggregate.builder()
@@ -94,6 +92,11 @@ public class RaffleActivityQuotaService extends AbstractRaffleActivityQuota impl
     @Override
     public Integer getUserRaffleCount(Long activityId, String userId) {
         return activityRepository.getUserRaffleCount(activityId, userId);
+    }
+
+    @Override
+    public void creditExchange(CreditExchangeEntity creditExchangeEntity) {
+        activityRepository.creditExchange(creditExchangeEntity);
     }
 
 }

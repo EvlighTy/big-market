@@ -10,7 +10,7 @@ import cn.evlight.domain.activity.model.entity.RaffleActivityPartakeEntity;
 import cn.evlight.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.evlight.domain.activity.service.IRaffleActivityPartake;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
-import cn.evlight.domain.activity.service.quota.armory.IActivityArmory;
+import cn.evlight.domain.activity.service.armory.IActivityArmory;
 import cn.evlight.domain.award.model.entity.UserAwardRecordEntity;
 import cn.evlight.domain.award.model.valobj.AwardStateVO;
 import cn.evlight.domain.award.service.IAwardService;

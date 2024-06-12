@@ -1,5 +1,6 @@
 package cn.evlight.domain.activity.service;
 
+import cn.evlight.domain.activity.model.entity.CreditExchangeEntity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityAccountEntity;
 import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
 
@@ -42,4 +43,11 @@ public interface IRaffleActivityQuota {
     */
     Integer getUserRaffleCount(Long activityId, String userId);
 
+    /**
+    * @Description: 用户积分兑换
+    * @Param: [creditExchangeEntity]
+    * @return:
+    * @Date: 2024/6/12
+    */
+    void creditExchange(CreditExchangeEntity creditExchangeEntity);
 }

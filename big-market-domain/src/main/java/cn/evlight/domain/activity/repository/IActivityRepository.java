@@ -46,7 +46,7 @@ public interface IActivityRepository {
     * @return:
     * @Date: 2024/6/2
     */
-    void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+//    void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
 
     /**
     * @Description: 缓存商品库存
@@ -192,4 +192,28 @@ public interface IActivityRepository {
     */
     Integer getUserRaffleCount(Long activityId, String userId);
 
+    /**
+    * @Description: 保存积分支付类型的订单
+    * @Param: [createQuotaOrderAggregate]
+    * @return:
+    * @Date: 2024/6/12
+    */
+    void CreditTradeOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+
+    /**
+    * @Description: 保存返利支付类型的订单
+    * @Param: [createQuotaOrderAggregate]
+    * @return:
+    * @Date: 2024/6/12
+    */
+    void saveRebateTradeOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
+
+    /**
+     * table: raffle_activity_account,
+    * @Description: 用户积分兑换
+    * @Param: [creditExchangeEntity]
+    * @return:
+    * @Date: 2024/6/12
+    */
+    void creditExchange(CreditExchangeEntity creditExchangeEntity);
 }

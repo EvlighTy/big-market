@@ -1,6 +1,7 @@
 package cn.evlight.trigger.listener;
 
 import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
+import cn.evlight.domain.activity.model.valobj.OrderTradeTypeVO;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
 import cn.evlight.domain.credit.model.entity.CreditEntity;
 import cn.evlight.domain.credit.model.valobj.TradeNameVO;
@@ -45,7 +46,7 @@ public class BehaviorRebateConsumer {
             exchange = @Exchange(value = "send_rebate")
     ))
     public void listener(String message) {
-        log.info("[MQ]-[行为返利] topic: {} message: {}", topic, message);
+        log.info("[MQ]-[consumer]-[行为返利] topic: {} message: {}", topic, message);
         try {
             BaseEvent.EventMessage<SendRebateEventMessage.Message> eventMessage = JSON.parseObject(message,
                     new TypeReference<BaseEvent.EventMessage<SendRebateEventMessage.Message>>(){}.getType());
@@ -56,6 +57,7 @@ public class BehaviorRebateConsumer {
                     raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
                             .userId(rebateMessage.getUserId())
                             .sku(Long.parseLong(rebateMessage.getRebateConfig()))
+                            .orderTradeTypeVO(OrderTradeTypeVO.rebate_no_pay_trade)
                             .outBizId(rebateMessage.getBizId())
                             .build());
                     break;
@@ -70,10 +72,10 @@ public class BehaviorRebateConsumer {
                     break;
             }
         }catch (AppException e){
-            log.info("[MQ]-[行为返利] 消费失败 原因:{}", e.getCode());
+            log.info("[MQ]-[consumer]-[行为返利] 消费失败 原因:{}", e.getCode());
             throw e;
         }catch (Exception e){
-            log.info("[MQ]-[行为返利] 消费失败 原因:未知错误");
+            log.info("[MQ]-[consumer]-[行为返利] 消费失败 原因:未知错误");
         }
     }
 

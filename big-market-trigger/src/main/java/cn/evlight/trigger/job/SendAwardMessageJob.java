@@ -50,9 +50,10 @@ public class SendAwardMessageJob {
                             executor.execute(() -> {
                                 try {
                                     taskService.sendMessage(taskEntity);
+                                    log.info("[Scheduled Task]-[发送中奖消息到MQ] 发送成功");
                                     taskService.updateAfterCompleted(taskEntity.getUserId(), taskEntity.getMessageId());
                                 }catch (Exception e){
-                                    log.info("定时任务-[发送中奖消息到MQ] 发送到MQ失败", e);
+                                    log.info("[Scheduled Task]-[发送中奖消息到MQ] 发送失败", e);
                                     taskService.updateAfterFailed(taskEntity.getUserId(), taskEntity.getMessageId());
                                 }
                             });
