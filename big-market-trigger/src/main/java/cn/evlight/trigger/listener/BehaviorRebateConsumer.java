@@ -2,12 +2,15 @@ package cn.evlight.trigger.listener;
 
 import cn.evlight.domain.activity.model.entity.RaffleActivityQuotaEntity;
 import cn.evlight.domain.activity.service.IRaffleActivityQuota;
+import cn.evlight.domain.credit.model.entity.CreditEntity;
+import cn.evlight.domain.credit.model.valobj.TradeNameVO;
+import cn.evlight.domain.credit.model.valobj.TradeTypeVO;
+import cn.evlight.domain.credit.service.ICreditService;
 import cn.evlight.domain.rebate.event.SendRebateEventMessage;
-import cn.evlight.domain.rebate.model.valobj.RebateTypeVO;
 import cn.evlight.types.event.BaseEvent;
 import cn.evlight.types.exception.AppException;
-import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -16,6 +19,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 /**
  * @Description: 行为返利消息消费者
@@ -28,6 +33,9 @@ public class BehaviorRebateConsumer {
 
     @Autowired
     private IRaffleActivityQuota raffleActivityQuota;
+
+    @Autowired
+    private ICreditService creditService;
 
     @Value("${spring.rabbitmq.topic.send_rebate}")
     private String topic;
@@ -42,15 +50,25 @@ public class BehaviorRebateConsumer {
             BaseEvent.EventMessage<SendRebateEventMessage.Message> eventMessage = JSON.parseObject(message,
                     new TypeReference<BaseEvent.EventMessage<SendRebateEventMessage.Message>>(){}.getType());
             SendRebateEventMessage.Message rebateMessage = eventMessage.getData();
-            if (!rebateMessage.getRebateType().equals(RebateTypeVO.SKU.getCode())){
-                //非sku返利不需要处理
-                return;
+            String rebateType = rebateMessage.getRebateType();
+            switch (rebateType){
+                case "sku":
+                    raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
+                            .userId(rebateMessage.getUserId())
+                            .sku(Long.parseLong(rebateMessage.getRebateConfig()))
+                            .outBizId(rebateMessage.getBizId())
+                            .build());
+                    break;
+                case "integral":
+                    creditService.createOrder(CreditEntity.builder()
+                            .userId(rebateMessage.getUserId())
+                            .tradeName(TradeNameVO.REBATE)
+                            .tradeType(TradeTypeVO.FORWARD)
+                            .amount(new BigDecimal(rebateMessage.getRebateConfig()))
+                            .outBusinessNo(rebateMessage.getBizId())
+                            .build());
+                    break;
             }
-            raffleActivityQuota.createQuotaOrder(RaffleActivityQuotaEntity.builder()
-                    .userId(rebateMessage.getUserId())
-                    .sku(Long.parseLong(rebateMessage.getRebateConfig()))
-                    .outBizId(rebateMessage.getBizId())
-                    .build());
         }catch (AppException e){
             log.info("[MQ]-[行为返利] 消费失败 原因:{}", e.getCode());
             throw e;

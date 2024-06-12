@@ -34,6 +34,10 @@ public interface Constants {
 
         //奖品
         String AWARD_KEY_KEY = "award:key:";
+
+        //锁
+        String ACTIVITY_ACCOUNT_LOCK = "activity_account_lock:";
+        String CREDIT_ACCOUNT_LOCK = "credit_account_lock:";
     }
 
     interface ExceptionInfo {

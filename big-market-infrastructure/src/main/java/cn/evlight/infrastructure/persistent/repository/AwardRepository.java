@@ -16,12 +16,14 @@ import cn.evlight.types.common.Constants;
 import cn.evlight.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: 抽奖仓库实现类
@@ -139,7 +141,10 @@ public class AwardRepository implements IAwardRepository {
                 .availableAmount(creditAwardEntity.getCreditAmount())
                 .accountStatus(AccountStatusVO.open.getCode())
                 .build();
+        String lockKey = Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + distributeAwardsAggregate.getUserId();
+        RLock lock = redisService.getLock(lockKey);
         try {
+            lock.lock(3, TimeUnit.SECONDS);
             dbRouter.doRouter(distributeAwardsAggregate.getUserId());
             transactionTemplate.execute(status -> {
                 try {
@@ -163,6 +168,7 @@ public class AwardRepository implements IAwardRepository {
             });
         } finally {
             dbRouter.clear();
+            lock.unlock();
         }
     }
 

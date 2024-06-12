@@ -18,6 +18,7 @@ import cn.evlight.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -135,7 +136,10 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void saveOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate) {
+        String lockKey = Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + createQuotaOrderAggregate.getUserId() + Constants.Split.COLON + createQuotaOrderAggregate.getActivityId();
+        RLock lock = redisService.getLock(lockKey);
         try {
+            lock.lock(3, TimeUnit.SECONDS);
             //订单对象
             ActivityOrderEntity activityOrderEntity = createQuotaOrderAggregate.getActivityOrderEntity();
             RaffleActivityOrder raffleActivityOrder = RaffleActivityOrder.builder()
@@ -205,6 +209,7 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
+            lock.unlock();
         }
     }
 
